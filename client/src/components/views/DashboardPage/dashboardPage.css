@@ -1,7 +1,7 @@
 .dashboardContainer {
     height: 100vh;
     display: grid;
-    grid-template-columns: 10% 90%;
+    grid-template-columns: 13% 87%;
 }
 .dashboardLeftNav{
     background: linear-gradient(to top, #325062 30%, #fa7730);
@@ -34,4 +34,15 @@
 .accountCardRows{
     display: flex;
     justify-content: space-between;
+}
+p a {
+    display: block;
+    font-size: 20px;
+    line-height: 35px;
+}
+.verifiedText {
+    color: green;
+}
+.unapprovedText{
+    color: red;
 }

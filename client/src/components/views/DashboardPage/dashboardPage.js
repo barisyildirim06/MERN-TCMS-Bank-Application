@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './dashboardPage.css'
 
-function DashboardPage({ nzdAccount, usdAccount, audAccount }) {
-    console.log(audAccount)
+function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [currentCurrency, setCurrentCurrency] = useState('NZD')
     var formatter = new Intl.NumberFormat('en-US', {
@@ -33,12 +32,11 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount }) {
                 <div>
                     <div style={{ height: '7vh' }}/>
                     <i className='fas fa-user' style={{ color: '#e7eced', backgroundColor: 'grey', fontSize: '5vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}></i>
+                    <div style={{ height: '2vh' }}/>
+                    <h4>{user?.userData?.companyName}</h4>
+                    {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <p className='unapprovedText'>Unapproved</p>}
                     <div style={{ height: '7vh' }}/>
-                    <button onClick={handleNzdClick}>NZD</button>
-                    <br />
-                    <button onClick={handleUsdClick}>USD</button>
-                    <br />
-                    <button onClick={handleAudClick}>AUD</button>
+                    <p><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
                 </div>
             </div>
             <div className='dashboardRight'>
@@ -56,7 +54,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount }) {
                     </div>
                     <div className='accountCardRows'>
                         <div>
-                        interestAcrrued:
+                            Interest Acrrued:
                         </div>
                         <div>
                             {currentAccount?.interestAcrrued  !== undefined ?  formatter.format(currentAccount?.interestAcrrued): null}
@@ -67,7 +65,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount }) {
                     <br />
                     <div className='accountCardRows'>
                         <div>
-                        Fees:
+                            Fees:
                         </div>
                         <div>
                             {currentAccount?.fees  !== undefined ?  formatter.format(currentAccount?.fees): null}
@@ -75,7 +73,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount }) {
                     </div>
                     <div className='accountCardRows'>
                         <div>
-                        Withdrawls:
+                            Withdrawls:
                         </div>
                         <div>
                             {currentAccount?.withdrawls  !== undefined ?  formatter.format(currentAccount?.withdrawls): null}
@@ -83,7 +81,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount }) {
                     </div>
                     <div className='accountCardRows'>
                         <div>
-                        PendingWithdrawls:
+                            Pending Withdrawls:
                         </div>
                         <div>
                             {currentAccount?.pendingWithdrawls !== undefined ?  formatter.format(currentAccount?.pendingWithdrawls): null}
@@ -94,7 +92,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount }) {
                     <br />
                     <div className='accountCardRows'>
                         <div>
-                        AvailableBalance:
+                            Available Balance:
                         </div>
                         <div>
                             {currentAccount?.availableBalance !== undefined ?  formatter.format(currentAccount?.availableBalance): null}

@@ -19,11 +19,10 @@
   /* globals */
   a {
     text-decoration: none;
-    color: black;
+    color: white;
   }
   a:hover {
-    text-decoration: underline;
-    color: black;
+    color: white;
   }
   body {
     text-align: center;
