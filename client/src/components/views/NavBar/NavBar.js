@@ -44,7 +44,7 @@ function Navbar(props) {
                         :
                         <ul className="nav-sign ">
                             <li>
-                                <Link onClick={logoutHandler}>Logout</Link>
+                                <a onClick={logoutHandler}>Logout</a>
                             </li>
                         </ul>}
                 </div>
