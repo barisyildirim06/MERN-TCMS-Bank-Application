@@ -1,0 +1,37 @@
+.dashboardContainer {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 10% 90%;
+}
+.dashboardLeftNav{
+    background: linear-gradient(to top, #325062 30%, #fa7730);
+}
+.profileIcon{
+    color: #e7eced
+}
+.dashboardRight{
+    background:linear-gradient(to left top, rgba(162,211,215,255) 0%, #e1e5e9 60%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.accountCardTop{
+    padding: 10px 50px;
+    margin-top: 7vh;
+    height: 48vh;
+    width: 56vw;
+    background-color: white;
+    font-size: 20px;
+}
+.accountCardBottom{
+    margin-top: 7vh;
+    margin-bottom: 8vh;
+    height: 30vh;
+    width: 56vw;
+    background-color: white;
+}
+.accountCardRows{
+    display: flex;
+    justify-content: space-between;
+}

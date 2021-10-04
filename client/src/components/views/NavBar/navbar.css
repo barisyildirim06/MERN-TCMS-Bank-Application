@@ -1,0 +1,65 @@
+p span {
+    display: block;
+}
+
+/* start of navbar */
+#navbar {
+    position: fixed;
+    background: linear-gradient(to right, #325062, #fa7730);
+    width: 100%;
+    padding: 1.5vh 0rem;
+    height: 15vh;
+    opacity: 0.9;
+    z-index: 1;
+}
+.nav-text{
+    color:white;
+    font-family:sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    letter-spacing: 0.1vw;
+    text-align: left;
+    line-height: 2vw;
+    margin: 20px;
+}
+.nav-logo {
+    margin-left: 10px;
+    height: 18px;
+    position: absolute;
+    width: 100vh;
+    height: 12vh;
+    display: flex
+}
+
+.nav-login {
+    float: right;
+    text-align: right;
+}
+
+.nav-sign {
+    /* height: 0;
+    overflow: hidden; */
+    display: flex;
+    transition: var(--mainTransition);
+    list-style-type: none;
+}
+  
+.nav-sign a {
+    display: block;
+    text-decoration: none;
+    padding: 1rem 0;
+    color: var(--mainWhite);
+    transition: var(--mainTransition);
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0px;
+    margin: 0 0.5rem;
+    padding: 0rem 0;
+    padding-top: 0.5rem;
+}
+.nav-sign a:hover {
+    color: #0cbd8c;
+    text-decoration: none;
+}
