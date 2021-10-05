@@ -31,7 +31,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
             <div className='dashboardLeftNav'>
                 <div>
                     <div style={{ height: '7vh' }}/>
-                    <i className='fas fa-user' style={{ color: '#e7eced', backgroundColor: 'grey', fontSize: '5vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}></i>
+                    <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                     <div style={{ height: '2vh' }}/>
                     <h4>{user?.userData?.companyName}</h4>
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <p className='unapprovedText'>Unapproved</p>}

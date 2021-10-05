@@ -11,6 +11,7 @@ import DashboardPage from './views/DashboardPage/dashboardPage';
 import 'antd/dist/antd.css';
 import './app.css'
 import general from '../hoc/general';
+import VerifyPage from './views/VerifyPage/VerifyPage';
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
@@ -24,6 +25,7 @@ function App() {
                     <Route exact path="/dashboard" component={Auth(general(DashboardPage),true)} />
                     <Route exact path="/login" component={Auth(LoginPage, false)} />
                     <Route exact path="/register" component={Auth(Register, false)} />
+                    <Route exact path="/verify" component={Auth(VerifyPage, true)} />
                 </Switch>
             </div>
         </Suspense>
