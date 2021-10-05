@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
-
+const { userUpdate } = require('../controllers/user.js')
 const { auth } = require("../middleware/auth");
 const multer = require('multer');
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/')
+        cb(null, 'client/public/static/img/')
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}_${file.originalname}`)
@@ -33,6 +33,7 @@ router.post("/uploadImage", auth, (req, res) => {
         if (err) {
             return res.json({ success: false, err })
         }
+        console.log(res.req.file)
         return res.json({ success: true, image: res.req.file.path, fileName: res.req.file.filename })
     })
 
@@ -51,6 +52,9 @@ router.get("/auth", auth, (req, res) => {
         lastname: req.user.lastname,
         verified: req.user.verified,
         image: req.user.image,
+        agentFirstName: req.user.agentFirstName,
+        agentLastName: req.user.agentLastName,
+        agentJobTitle: req.user.agentJobTitle,
     });
 });
 
@@ -100,5 +104,7 @@ router.get("/logout", auth, (req, res) => {
         });
     });
 });
+
+router.post('/update/:id',userUpdate)
 
 module.exports = router;
