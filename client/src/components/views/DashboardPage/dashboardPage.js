@@ -3,11 +3,14 @@ import './dashboardPage.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { USER_SERVER } from '../../Config';
+import { Slider, Modal } from 'antd';
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [currentCurrency, setCurrentCurrency] = useState('NZD')
+    const [amount, setAmount] = useState('');
+
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -16,14 +19,17 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     const handleNzdClick = () => {
         setCurrentAccount(nzdAccount)
         setCurrentCurrency('NZD');
+        setAmount('');
     }
     const handleUsdClick = () => {
         setCurrentAccount(usdAccount)
         setCurrentCurrency('USD');
+        setAmount('');
     }
     const handleAudClick = () => {
         setCurrentAccount(audAccount)
         setCurrentCurrency('AUD');
+        setAmount('');
     }
 
     const logoutHandler = () => {
@@ -31,6 +37,16 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
 
         });
     };
+
+    const handleSliderChange = (value) => {
+        if(currentAccount?.availableBalance) {
+            setAmount(currentAccount.availableBalance * value[1] / 100)
+        }
+    }
+
+    const handleSubmit = () => {
+
+    }
 
     useEffect(() => {
         setCurrentAccount(nzdAccount)
@@ -117,7 +133,15 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                     </div>
                 </div>
                 <div className='accountCardBottom'>
-                
+                    <p>Withdrawal</p>
+                    <div style={{ height: '3vh' }}/>
+                    <div className='withdrawalInputContainer'>
+                        <input value={amount} placeholder={`Amount ${currentCurrency}`} id='withdrawlInput' className='withdrawlInput' width='100%'/>
+                        <span className="dolarSuffix">$</span>
+                    </div>
+                    <div style={{ height: '3vh' }}/>
+                    <Slider range defaultValue={[0,0]} onChange={handleSliderChange}/>
+                    <button className='nextButton' onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
         </div>

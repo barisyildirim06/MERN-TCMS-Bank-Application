@@ -2,6 +2,7 @@
     height: 100vh;
     display: grid;
     grid-template-columns: 13% 87%;
+    font-family: sans-serif;
 }
 .dashboardLeftNav{
     background: linear-gradient(to top, #325062 30%, #fa7730);
@@ -30,6 +31,8 @@
     height: 30vh;
     width: 56vw;
     background-color: white;
+    padding: 10px 50px;
+    font-size: 20px;
 }
 .accountCardRows{
     display: flex;
@@ -45,4 +48,25 @@ p a {
 }
 .unapprovedText{
     color: red;
+}
+.withdrawalInputContainer{
+    margin: auto;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+.withdrawlInput {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: black;
+    width: 100%;
+    padding-right: 35px;
+}
+.withdrawlInput:focus {
+    border-color: black;
+}
+.dolarSuffix{
+    position: absolute;
+    top: 0;
+    right: 10px;
 }

@@ -74,9 +74,9 @@
     text-shadow: 0px 1px, 1px 0px, 1px 0px;
   }
   
-  ::placeholder {
+  /* ::placeholder {
     color: white;
-  }
+  } */
   
   .btn-primary {
     display: inline-block;
