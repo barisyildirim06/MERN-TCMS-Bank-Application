@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './dashboardPage.css'
+import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { USER_SERVER } from '../../Config';
+
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     const [currentAccount, setCurrentAccount] = useState(null);
@@ -22,6 +26,12 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
         setCurrentCurrency('AUD');
     }
 
+    const logoutHandler = () => {
+        axios.get(`${USER_SERVER}/logout`).then(response => {
+
+        });
+    };
+
     useEffect(() => {
         setCurrentAccount(nzdAccount)
     }, [nzdAccount]);
@@ -31,12 +41,19 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
             <div className='dashboardLeftNav'>
                 <div>
                     <div style={{ height: '7vh' }}/>
-                    <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                    <div style={{ height: '12vh' }}>
+                        <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                    </div>
                     <div style={{ height: '2vh' }}/>
-                    <h4>{user?.userData?.companyName}</h4>
-                    {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <p className='unapprovedText'>Unapproved</p>}
-                    <div style={{ height: '7vh' }}/>
-                    <p><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
+                    <div style={{ height: '15vh' }}>
+                        <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
+                        {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
+                    </div>
+                    <div style={{ height: '2vh' }}/>
+                    <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
+                    <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
+                        <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                    </div>
                 </div>
             </div>
             <div className='dashboardRight'>
@@ -100,7 +117,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                     </div>
                 </div>
                 <div className='accountCardBottom'>
-
+                
                 </div>
             </div>
         </div>

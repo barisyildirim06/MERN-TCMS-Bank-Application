@@ -69,6 +69,7 @@ function VerifyPage(props) {
     const handleSave = () => {
         if(!validate()) return;
         Axios.post(`/api/users/update/${props.user.userData._id}`, {...props?.user?.userData, ...values})
+        props.history.push('/dashboard')
     }
 
     const test = {
