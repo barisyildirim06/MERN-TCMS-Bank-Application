@@ -10,6 +10,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [currentCurrency, setCurrentCurrency] = useState('NZD')
     const [amount, setAmount] = useState('');
+    const [persentage, setPersentage] = useState(0)
 
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -39,6 +40,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     };
 
     const handleSliderChange = (value) => {
+        setPersentage(value[1]);
         if(currentAccount?.availableBalance) {
             setAmount(currentAccount.availableBalance * value[1] / 100)
         }
@@ -134,13 +136,14 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                 </div>
                 <div className='accountCardBottom'>
                     <p>Withdrawal</p>
-                    <div style={{ height: '3vh' }}/>
+                    <div style={{ height: '2vh' }}/>
                     <div className='withdrawalInputContainer'>
                         <input value={amount} placeholder={`Amount ${currentCurrency}`} id='withdrawlInput' className='withdrawlInput' width='100%'/>
                         <span className="dolarSuffix">$</span>
                     </div>
-                    <div style={{ height: '3vh' }}/>
+                    <div style={{ height: '2vh' }}/>
                     <Slider range defaultValue={[0,0]} onChange={handleSliderChange}/>
+                    <div style={{ display:'flex', flexDirection:'row-reverse' }}>{`${persentage}%`}</div>
                     <button className='nextButton' onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
