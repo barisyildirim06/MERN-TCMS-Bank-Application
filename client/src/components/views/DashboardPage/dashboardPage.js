@@ -138,7 +138,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                     <p>Withdrawal</p>
                     <div style={{ height: '2vh' }}/>
                     <div className='withdrawalInputContainer'>
-                        <input value={amount} placeholder={`Amount ${currentCurrency}`} id='withdrawlInput' className='withdrawlInput' width='100%'/>
+                        <input value={amount} placeholder={`Amount ${currentCurrency}`} className='withdrawlInput' width='100%'/>
                         <span className="dolarSuffix">$</span>
                     </div>
                     <div style={{ height: '2vh' }}/>

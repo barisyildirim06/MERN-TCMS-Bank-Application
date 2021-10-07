@@ -57,10 +57,13 @@ p a {
 }
 .withdrawlInput {
     outline: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: right;
     border-width: 0 0 2px;
     border-color: black;
     width: 100%;
-    padding-right: 35px;
+    padding-left: 35px;
 }
 .withdrawlInput:focus {
     border-color: black;
@@ -68,5 +71,5 @@ p a {
 .dolarSuffix{
     position: absolute;
     top: 0;
-    right: 10px;
+    left: 0px;
 }
