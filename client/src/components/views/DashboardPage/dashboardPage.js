@@ -50,6 +50,18 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
 
     }
 
+    const handleSupportClick = () => {
+        Modal.info({
+            title: 'Support',
+            content: (
+              <div>
+                <p>We provide personalised support for all our clients, if you are having any trouble contact us at <a href = "mailto: support@tcms.co.nz" style={{ color: 'black' }}>support@tcms.co.nz</a> </p>
+              </div>
+            ),
+            onOk() {},
+          });
+    }
+
     useEffect(() => {
         setCurrentAccount(nzdAccount)
     }, [nzdAccount]);
@@ -71,6 +83,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                     <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
                     <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                         <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                        <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                     </div>
                 </div>
             </div>
