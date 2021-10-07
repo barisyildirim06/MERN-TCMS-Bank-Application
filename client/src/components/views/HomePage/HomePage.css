@@ -1,0 +1,313 @@
+.backgroundimage0{
+    /* top: 0px;
+    position: absolute; */
+    background-image: url(./images/Background_2.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    width: 100vw;
+    height: 146vh;
+    position: absolute;
+}
+.backgroundimage1{
+    /* top: 0px;
+    position: absolute; */
+    top: 146vh;
+    z-index: -1;
+    background-image: url(./images/Background_1.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 267vh;
+    position: absolute;
+}
+.gradientColor0{
+    position: absolute;
+    width: 100vw;
+    height: 200vh;
+    top: 0px;
+    left: 0px;
+    opacity:1;
+    background: linear-gradient(214.48deg, rgba(255, 93, 0, 0.76) 15.64%, rgba(3, 33, 51, 0.76) 46.43%);
+}
+.gradientColor1{
+    position: absolute;
+    width: 100vw;
+    height: 213vh;
+    top: 200vh;
+    left: 0px;
+    opacity:1;
+    background: linear-gradient(206.91deg, rgba(255, 93, 0, 0.76) 4.12%, rgba(3, 33, 51, 0.76) 44.59%);
+    transform: rotate(-180deg);
+}
+
+.whatWeDo {
+    position: absolute;
+    top: 73vh;
+    width: 80vw;
+    margin: 0px 10vw;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: repeat(3, minmax(0, 1fr));
+    background-color: white;
+}
+
+.background1{
+    background-image: url(./images/background1.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 44vh;
+    margin: 1.5vw 0.75vw 0px 1.5vw;
+}
+.background2{
+    background-image: url(./images/background2.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 44vh;
+    margin: 0vw 1.5vw 0vw 0.75vw;
+}
+.background3{
+    background-image: url(./images/background3.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 44vh;
+    margin: 0vw 0.75vw 1.5vw 1.5vw;
+}
+.gridContainer2080{
+    background-color: white;
+    display: grid;
+    grid-template-rows: 20% 80%;
+}
+.gridContainer2080text0{
+    text-align: right;
+    margin-right: 2vw;
+    font-weight: 400;
+    font-size: 72px;
+    letter-spacing: 1vw;
+}
+.gridContainerInnerText0{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    font-size: 20px;
+    margin-right: 3vw;
+    margin-left: 0.5vw;
+}
+.whiteFlexContainer{
+    background-color: white;
+    display: flex
+}
+
+.getToKnowUs {
+    position: absolute;
+    top: 240vh;
+    width: 80vw;
+    margin: 0px 10vw;
+    display: grid;
+    background-color: white;
+}
+
+.getToKnowUsText{
+    margin-right: 7vw;
+    font-family:sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 80px;
+    letter-spacing: 1vw;
+    color: #11384b;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.advisoryBoardText {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: start;
+    margin-left: 5vw;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 2vh;
+    letter-spacing: 9px;
+    color: #000005;
+}
+
+.cardsListGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 3.5vw;
+    margin: 0 5vw 0 5vw
+}
+
+.cardStyle{
+    background-color: #c5cfd5;
+    height: 38vh;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+}
+
+@media (max-width: 1000px) {
+    .cardsListGrid {
+        display: none;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+}
+
+.cardImage0{
+    background-image: url(./images/person0.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px 3px;
+    font-size: 24px;
+    color: white;
+}
+.cardImage1{
+    background-image: url(./images/person1.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px 3px;
+    font-size: 24px;
+    color: white;
+}
+.cardImage2{
+    background-image: url(./images/person2.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px 3px;
+    font-size: 24px;
+    color: white;
+}
+.cardImage3{
+    background-image: url(./images/person3.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px 3px;
+    font-size: 24px;
+    color: white;
+}
+.cardImage4{
+    background-image: url(./images/person4.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px 3px;
+    font-size: 24px;
+    color: white;
+}
+.cardImage5{
+    background-image: url(./images/person5.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px 3px;
+    font-size: 24px;
+    color: white;
+}
+.cardTextArea{
+    display: grid;
+    grid-template-areas: 20% 80%;
+}
+.cardTextType0{
+    display: flex;
+    padding: 10px 3px;
+    font-size: 24px;
+    flex-direction: row;
+}
+.cardTextType1{
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    padding: 10px 3px;
+    line-height: 170%;
+    align-items: baseline;
+}
+.gotQuestions {
+    font-family: Lato;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 58px;
+    letter-spacing: 0.075em;
+    text-align: right;
+    display:flex;
+    flex-direction:column-reverse;
+    width:50vw;
+    height:100%;
+}
+.contactUs {
+    display:flex;
+    width:50vw;
+    height:100%;
+}
+.contactUsText {
+    font-family: Lato;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 44px;
+    letter-spacing: 0.075em;
+    text-align: left;
+    color: #324D5D;
+}
+.tcmsMailText {
+    color: #FF5D00;
+    font-family: Lato;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 27px;
+    letter-spacing: 0.075em;
+    text-align: left;
+}
+.homePageFooterImage {
+    background-image: url(./images/background_3.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    width: 100vw;
+    height: 33vh;
+    top: 446vh;
+    position: absolute;
+}
+.homePageFooterContainer {
+    z-index: 1;
+    width: 100vw;
+    height: 33vh;
+    top: 446vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+.homePageFooterText {
+    font-family: Lato;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 44px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    color: white;
+    z-index: 1;
+}
+.homePageFooterBackgroundColor {
+    width: 100vw;
+    height: 33vh;
+    top: 446vh;
+    position: absolute;
+    background: linear-gradient(215.47deg, rgba(255, 93, 0, 0.76) 22.77%, rgba(3, 33, 51, 0.76) 54.62%);
+    transform: matrix(1, 0, 0, -1, 0, 0);
+}

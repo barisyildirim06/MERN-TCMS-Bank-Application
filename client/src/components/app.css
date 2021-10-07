@@ -25,6 +25,7 @@
     color: white;
   }
   body {
+    overflow-x: hidden;
     text-align: center;
     color: var(--mainBlack);
     background: var(--mainWhite);
