@@ -13,16 +13,8 @@ const { Title } = Typography;
 
 function LoginPage(props) {
     const dispatch = useDispatch();
-    const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
 
     const [formErrorMessage, setFormErrorMessage] = useState('')
-    const [rememberMe, setRememberMe] = useState(rememberMeChecked)
-
-    const handleRememberMe = () => {
-        setRememberMe(!rememberMe)
-    };
-
-    const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
 
     return (
         <div className='loginContainer'>
@@ -30,7 +22,7 @@ function LoginPage(props) {
             <div className='loginBottom'>
                 <Formik
                 initialValues={{
-                    email: initialEmail,
+                    email: '',
                     password: '',
                 }}
                 validationSchema={Yup.object().shape({
@@ -51,12 +43,6 @@ function LoginPage(props) {
                     dispatch(loginUser(dataToSubmit))
                         .then(response => {
                         if (response.payload.loginSuccess) {
-                            window.localStorage.setItem('userId', response.payload.userId);
-                            if (rememberMe === true) {
-                            window.localStorage.setItem('rememberMe', values.id);
-                            } else {
-                            localStorage.removeItem('rememberMe');
-                            }
                             props.history.push("/dashboard");
                         } else {
                             setFormErrorMessage('Check out your Account or Password again')
@@ -131,7 +117,6 @@ function LoginPage(props) {
                         )}
 
                         <Form.Item>
-                        <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Remember me</Checkbox>
                             <div>
                             <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
                                 Log in
