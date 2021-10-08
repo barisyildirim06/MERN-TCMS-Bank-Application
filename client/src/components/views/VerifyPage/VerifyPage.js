@@ -99,46 +99,38 @@ function VerifyPage(props) {
                     </p>
                 </div>
                 <div className='verifyBottomGrid1'>
-                    <div className='verifyInputGridContainer'>
-                        <div className='verifyInputContainer'>
-                            <label>Company Name</label>
-                            <Input value={values.companyName} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'companyName')}/>
-                        </div>
-                        <div className='verifyInputContainer'>
-                            <label>IRD Number</label>
-                            <Input type='number' value={values.irdNumber} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'irdNumber')}/>
-                        </div>
+                    <div className='verifyInputContainer'>
+                        <label>Company Name</label>
+                        <Input value={values.companyName} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'companyName')}/>
                     </div>
-                    <div className='verifyInputGridContainer'>
-                        <div className='verifyInputContainer'>
-                            <label>Company Office's Number</label>
-                            <Input type='number' value={values.companyOfficeNumber} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'companyOfficeNumber')}/>
-                        </div>
-                        <div className='verifyInputContainer'>
-                            <label>Agent First Name</label>
-                            <Input value={values.agentFirstName} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'agentFirstName')}/>
-                        </div>
+                    <div className='verifyInputContainer'>
+                        <label>IRD Number</label>
+                        <Input type='number' value={values.irdNumber} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'irdNumber')}/>
                     </div>
-                    <div className='verifyInputGridContainer'>
-                        <div className='registerInputContainer'>
-                            <label>Agent Last Name</label>
-                            <Input value={values.agentLastName} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'agentLastName')}/>
-                        </div>
-                        <div className='registerInputContainer'>
-                            <label>Agent Job Title</label>
-                            <Input value={values.agentJobTitle} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'agentJobTitle')}/>
-                        </div>
+                    <div className='verifyInputContainer'>
+                        <label>Company Office's Number</label>
+                        <Input type='number' value={values.companyOfficeNumber} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'companyOfficeNumber')}/>
                     </div>
-                    <div className='verifyInputGridContainer'>
-                            <div className='registerInputContainer'>
-                                <label>Upload Your ID</label>
-                                <Upload {...test} fileList={fileList} showUploadList={{ showRemoveIcon : false}}>
-                                    <div style={{ display: 'flex' }}>
-                                        <Input placeholder='PDF, JPEG, PNG' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} disabled={true}/>
-                                        <button className='nextButton' style={{ height: '7vh', marginTop: '1vh' }}>UPLOAD</button>
-                                    </div>
-                                </Upload>
-                        </div>
+                    <div className='verifyInputContainer'>
+                        <label>Agent First Name</label>
+                        <Input value={values.agentFirstName} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'agentFirstName')}/>
+                    </div>
+                    <div className='registerInputContainer'>
+                        <label>Agent Last Name</label>
+                        <Input value={values.agentLastName} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'agentLastName')}/>
+                    </div>
+                    <div className='registerInputContainer'>
+                        <label>Agent Job Title</label>
+                        <Input value={values.agentJobTitle} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'agentJobTitle')}/>
+                    </div>
+                    <div className='registerInputContainer'>
+                        <label>Upload Your ID</label>
+                        <Upload {...test} fileList={fileList} showUploadList={{ showRemoveIcon : false}}>
+                            <div style={{ display: 'flex' }}>
+                                <Input placeholder='PDF, JPEG, PNG' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} disabled={true}/>
+                                <button className='nextButton' style={{ height: '7vh', marginTop: '1vh' }}>UPLOAD</button>
+                            </div>
+                        </Upload>
                     </div>
                 </div>
                 <button className='nextButton' onClick={handleSave}>Submit</button>
