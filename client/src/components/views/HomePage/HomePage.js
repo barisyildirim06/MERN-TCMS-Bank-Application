@@ -11,28 +11,24 @@ function HomePage() {
             <div className='gradientColor1'/>
             <div className='backgroundimage1' />
             <div className='whatWeDo'>
-                <div className='background1'>
-                
-                </div>
+                <div className='mobileWhatWeDo'>WHAT WE DO</div>
+                <div className='background1' />
                 <div className='gridContainer2080'>
                     <div className='gridContainer2080text0'>WHAT WE DO</div>
                     <div className='gridContainerInnerText0'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </div>
                 </div>
+                <div className='background2SmallScreens' />
                 <div className='whiteFlexContainer'>
                     <div className='gridContainerInnerText0'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </div>
                 </div>
-                <div className='background2'>
-                    
-                </div>
-                <div className='background3'>
-                
-                </div>
+                <div className='background2' />
+                <div className='background3' />
                 <div className='whiteFlexContainer'>
                     <div className='gridContainerInnerText0'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </div>
                 </div>
             </div>
             <div className='getToKnowUs'>
-                <div style={{ height: '12vh' }}>
+                <div className='getToKnowUsTextContainer'>
                     <div className='getToKnowUsText'>
                         GET TO KNOW US
                     </div>
@@ -67,8 +63,32 @@ function HomePage() {
                             <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
                         </div>
                     </div>
+                    <div className='mobileCard'>
+                        <div className='cardImage0'>
+                            <div className='cardTextArea'>
+                                <p className='cardTextType0'>JOHNATHAN RDYGES</p>
+                                <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='mobileCard'>
+                        <div className='cardImage1'>                        
+                            <div className='cardTextArea'>
+                                <p className='cardTextType0'>MIRANDA HOBBES</p>
+                                <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='mobileCard'>
+                        <div className='cardImage2'>
+                            <div className='cardTextArea'>
+                                <p className='cardTextType0'>JAMES BUNNINGHAM</p>
+                                <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style={{ height: '12vh' }}>
+                <div className='executiveTeamText'>
                     <div style={{ height: '8vh' }} />
                     <div style={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'start', marginLeft: '5vw', fontFamily:'sans-serif', fontStyle: 'normal', fontWeight: '400', fontSize: '2vw', lineHeight: '2vh', letterSpacing: '0.5vw', color: '#000005' }}>
                         EXECUTIVE TEAM
@@ -101,10 +121,10 @@ function HomePage() {
                         </div>
                     </div>
                 </div>
-                <div style={{ height: '8vh' }} />
+                <div className='getToKnowUsFooter' />
             </div>
             <div style={{ position:'absolute', top:'413vh' , height: '33vh' }}>
-                <div style={{ display: 'grid', gridTemplateRows: '40% 60%', gridTemplateColumns: '50% 50%', height: '100%', width:'100%' }}>
+                <div className='gotQuestionsContainer'>
                     <div className='gotQuestions'>GOT QUESTIONS?</div>
                     <div />
                     <div/>
@@ -116,9 +136,9 @@ function HomePage() {
             <div className='homePageFooterImage' />
             <div className='homePageFooterContainer'>
                 <div >
-                    <img src="/static/img/logo_tcms.png" style={{ width: '20vh', height: '20vh', marginLeft: '20vw', zIndex: '1' }}/>
+                    <img src="/static/img/logo_tcms.png" className='footerIcon'/>
                 </div>
-                <div style={{ marginLeft: '20vw', marginRight: '20vw' }}>
+                <div className='footerMargin'>
                     <p><span className='homePageFooterText'>TREASURY CAPITAL</span ><span className='homePageFooterText'>MANAGEMENT SERVICES LTD</span></p>
                 </div>
             </div>
