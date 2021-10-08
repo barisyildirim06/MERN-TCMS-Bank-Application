@@ -10,7 +10,6 @@ import { USER_SERVER } from '../../Config';
 import { useSelector } from "react-redux";
 
 function Navbar(props) {
-
     const user = useSelector(state => state.user)
     const logoutHandler = () => {
         axios.get(`${USER_SERVER}/logout`).then(response => {
@@ -43,6 +42,9 @@ function Navbar(props) {
                     </ul>
                         :
                         <ul className="nav-sign ">
+                            <li>
+                                <Link to="/dashboard">Dashboard</Link>
+                            </li>
                             <li>
                                 <a onClick={logoutHandler}>Logout</a>
                             </li>

@@ -5,6 +5,18 @@
     .executiveTeamText, .cardStyle {
         display: none;
     }
+    .headerTextContainer {
+        flex-direction: column;
+    }
+    .watchThisSpaceContainer{
+        display: flex;
+        justify-content: center;
+    }
+    .flexColumn {
+        align-items: center;
+        width: 100vw;
+        justify-content: center;
+    }
     .mobileWhatWeDo {
         font-size: 24px;
         font-weight: bold;
@@ -93,11 +105,28 @@
         font-weight: bold;
         font-size: 14px;
     }
+    .gotQuestions {
+        flex-direction:column;  
+        font-size: 36px;
+        line-height: 36px;
+    }
+    .interestedText{
+        font-size: 35px;
+        display: flex;
+        justify-content: center;
+    }
 }
 
 @media (min-width: 1000px) {
     .mobileCard, .mobileWhatWeDo {
         display: none;
+    }
+    .headerTextContainer {
+        flex-direction: row;
+    }
+    .watchThisSpaceContainer{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr))
     }
     .executiveTeamText {
         height: 12vh;
@@ -201,6 +230,92 @@
         text-align: left;
         font-size: 36px;
     }
+    .gotQuestions {
+        flex-direction:column-reverse;  
+        text-align: right;
+        letter-spacing: 0.075em;
+        line-height: 58px;
+        font-size: 48px;
+    }
+    .signUpText{
+        text-align: right;
+        margin-right: 10vw;
+    }
+    .interestedText{
+        font-size: 50px;
+        margin-left: 10vw;
+        display: flex;
+        text-align: left;
+    }
+}
+
+.headerTextContainer {
+    justify-content: center;
+    position: absolute;
+    top: 20vh;
+    width: 100vw;
+    display: flex;
+}
+.headerLeftText{
+    color: white;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: 0.195em;
+}
+.headerRightText{
+    color: black;
+    font-family: Lato;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: 0.195em;
+}
+.watchThisSpaceContainer{
+    position: absolute;
+    top: 49vh;
+    width: 100vw;
+}
+.watchThisSpaceText{
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 15px;
+    letter-spacing: 0.075em;
+    text-align: left;
+    color: white;
+}
+.letUsKnowText{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 15px;
+    letter-spacing: 0.075em;
+    text-align: left;
+    color: #FFFFFF;
+}
+.subscribeInput {
+    background: #FFFFFF;
+    box-shadow: 6px 9px 40px 3px #00FFD1;
+    min-height: 5vh;
+    font-size: 20px;
+    font-weight: bold;
+}
+.subscribeInput:focus {
+    background: #FFFFFF;
+    box-shadow: 6px 9px 40px 3px #00FFD1;
+}
+.subscribeInputContainer{
+    width: 80%;
+}
+.flexColumn {
+    display: flex;
+    flex-direction: column;
 }
 
 .backgroundimage0{
@@ -385,16 +500,34 @@
     font-size: 24px;
     color: white;
 }
+.interestedContainer{
+    position: absolute;
+    top: 370vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+}
+.interestedText{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 61px;
+    letter-spacing: 0.185em;
+}
+.signUpText{
+    font-family: Lato;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 44px;
+    letter-spacing: 0.18em;
+}
 .gotQuestions {
     font-family: Lato;
-    font-size: 48px;
-    font-style: normal;
     font-weight: 500;
-    line-height: 58px;
-    letter-spacing: 0.075em;
-    text-align: right;
     display:flex;
-    flex-direction:column-reverse;
     width:50vw;
     height:100%;
 }

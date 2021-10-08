@@ -1,6 +1,7 @@
 import React from 'react'
 import './HomePage.css'
 import NavBar from '../NavBar/NavBar'
+import {Input} from 'antd'
 
 function HomePage() {
     return (
@@ -10,6 +11,21 @@ function HomePage() {
             <div className='gradientColor0'/>
             <div className='gradientColor1'/>
             <div className='backgroundimage1' />
+            <div className='headerTextContainer'>
+                <p className='headerLeftText'>YOUR GUIDE THROUGH &nbsp;</p><p className='headerRightText'>THE FINANCIAL WORLD</p>
+            </div>
+            <div className='watchThisSpaceContainer'>
+                <div />
+                <div className='flexColumn'>
+                    <p className='watchThisSpaceText'>
+                        WATCH THIS SPACE
+                    </p>
+                    <p className='letUsKnowText'>Let us know if you are interested</p>
+                    <div className='subscribeInputContainer'>
+                        <Input placeholder='Email Address' type="text" className='subscribeInput' />
+                    </div>
+                </div>
+            </div>
             <div className='whatWeDo'>
                 <div className='mobileWhatWeDo'>WHAT WE DO</div>
                 <div className='background1' />
@@ -122,6 +138,19 @@ function HomePage() {
                     </div>
                 </div>
                 <div className='getToKnowUsFooter' />
+            </div>
+            <div className='interestedContainer'>
+                <div className='interestedText'>
+                    INTERESTED?
+                </div>
+                <br /><br />
+                <div className='signUpText'>
+                    SIGN UP FOR NEWS AND UPDATE
+                </div>
+                <br />
+                <div className='subscribeInputContainer' style={{ marginLeft:'10vw' }}>
+                    <Input placeholder='Email Address' type="text" className='subscribeInput' />
+                </div>
             </div>
             <div style={{ position:'absolute', top:'413vh' , height: '33vh' }}>
                 <div className='gotQuestionsContainer'>

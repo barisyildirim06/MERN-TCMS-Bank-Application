@@ -1,6 +1,30 @@
 p span {
     display: block;
 }
+@media (max-width: 1000px) {
+    p span {
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 20px;
+    }
+    .nav-text {
+        text-align: center;
+        margin: 5px;
+    }
+}
+@media (min-width: 1000px) {
+    .nav-logo {
+        margin-left: 10px;
+    }
+    .nav-text {
+        text-align: left;
+        margin: 20px;
+    }
+    p span {
+        font-size: 20px;
+        line-height: 35px;
+    }
+}
 
 /* start of navbar */
 #navbar {
@@ -19,12 +43,10 @@ p span {
     font-weight: 400;
     font-size: 2vw;
     letter-spacing: 0.1vw;
-    text-align: left;
     line-height: 2vw;
-    margin: 20px;
+
 }
 .nav-logo {
-    margin-left: 10px;
     height: 18px;
     position: absolute;
     width: 100vh;
