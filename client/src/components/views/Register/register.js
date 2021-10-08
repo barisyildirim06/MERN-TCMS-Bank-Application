@@ -97,42 +97,35 @@ function Register(props) {
                             CREATE YOUR ACCOUNT INFORMATION
                         </span>
                         <span style={{ color: '#c9cad2', display: 'flex' }}>
-                            Already have an account? <span> </span><a style={{marginLeft:'6px', color: '#c9cad2', textDecoration: 'underline'}}>Sign In</a>
+                            Already have an account? <span> </span><a href='/login' style={{marginLeft:'6px', color: '#c9cad2', textDecoration: 'underline'}}>Sign In</a>
                         </span>
                     </p>
                 </div>
                 <div className='registerBottomGrid1'>
-                    <div className='registerInputGridContainer'>
-                        <div className='registerInputContainer'>
-                            <label>First Name</label>
-                            <Input value={values.name} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'name')}/>
-                        </div>
-                        <div className='registerInputContainer'>
-                            <label>Last Name</label>
-                            <Input value={values.lastname} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'lastname')}/>
-                        </div>
+                    <div className='registerInputContainer'>
+                        <label>First Name</label>
+                        <Input value={values.name} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'name')}/>
                     </div>
-                    <div className='registerInputGridContainer'>
-                        <div className='registerInputContainer'>
-                            <label>Contact Email</label>
-                            <Input value={values.email} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'email')}/>
-                        </div>
-                        <div className='registerInputContainer'>
-                            <label>Contact Number</label>
-                            <Input value={values.phone} type='number' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'phone')}/>
-                        </div>
+                    <div className='registerInputContainer'>
+                        <label>Last Name</label>
+                        <Input value={values.lastname} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'lastname')}/>
                     </div>
-                    <div className='registerInputGridContainer'>
-                        <div className='registerInputContainer'>
-                            <label>Password</label>
-                            <Input value={values.password} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'password')}/>
-                        </div>
-                        <div className='registerInputContainer'>
-                            <label>Confirm Password</label>
-                            <Input value={values.confirmPassword} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'confirmPassword')}/>
-                        </div>
+                    <div className='registerInputContainer'>
+                        <label>Contact Email</label>
+                        <Input value={values.email} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'email')}/>
                     </div>
-
+                    <div className='registerInputContainer'>
+                        <label>Contact Number</label>
+                        <Input value={values.phone} type='number' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'phone')}/>
+                    </div>
+                    <div className='registerInputContainer'>
+                        <label>Password</label>
+                        <Input value={values.password} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'password')}/>
+                    </div>
+                    <div className='registerInputContainer'>
+                        <label>Confirm Password</label>
+                        <Input value={values.confirmPassword} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'confirmPassword')}/>
+                    </div>
                 </div>
                 <button className='nextButton' onClick={handleSave}>NEXT</button>
             </div>
