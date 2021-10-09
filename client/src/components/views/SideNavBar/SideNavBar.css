@@ -1,0 +1,87 @@
+/* Side Navbar start */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    background-color: black;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 80px;
+    text-align: left;
+    transition-duration: 0.5s;
+  }
+  
+  .sidenav a{
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+  .sidenav li{
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav li:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+  .sidenav-header{
+    font-family: "Montserrat";
+    font-style: italic;
+    font-weight: 700;
+    font-size: 16px;
+    padding-top: 20px;
+  }
+  
+  .sidenav-main{
+    column-count: 2;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 19px;
+  }
+  
+  
+  .sidenav .closebtn {
+    position: absolute;
+    padding-left: 20px;
+    top: 0;
+    left: 0px;
+    font-size: 36px;
+    color: #ffffff;
+  
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  #mySidenav {
+    width: 0px;
+    
+  }
+  #marginLeft{
+    margin-left: 0px;
+    transition-duration: 0.5s;
+  }
+  
+  
+  /* Sidenavbar end */
+  

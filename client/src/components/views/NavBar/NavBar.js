@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { FaAlignJustify } from "react-icons/fa";
+import { useMediaQuery } from 'react-responsive'
 
 import './navbar.css'
 
@@ -11,6 +13,7 @@ import { useSelector } from "react-redux";
 
 function Navbar(props) {
     const user = useSelector(state => state.user)
+    const { hasSideNavIcon } = props;
     const logoutHandler = () => {
         axios.get(`${USER_SERVER}/logout`).then(response => {
             if (response.status === 200) {
@@ -21,13 +24,37 @@ function Navbar(props) {
         });
     };
 
+    const is400px = useMediaQuery({
+        query: '(min-width: 400px)'
+    })
+
+    const handleSideNavBarOpen = () => {
+        if(is400px){
+            document.getElementById("mySidenav").style.width = "400px"
+            document.getElementById("marginLeft").style.paddingLeft = "400px"
+        }else {
+            document.getElementById("mySidenav").style.width = "100%"
+        }
+    }
 
     return (
         <section>
             <nav id="navbar">
                 <div className='nav-logo'>
-                    <div ><img src="/static/img/logo_tcms.png" style={{ width: '100%', height: '100%' }}/></div>
-                    <div style={{ display:'flex', alignItems: 'center' }}>
+                    <div >
+                        {hasSideNavIcon ?
+                            <button
+                                style={{ width: '100%', height: '100%' }}
+                                type="button"
+                                className="nav-button"
+                                onClick={handleSideNavBarOpen}
+                            >
+                                <FaAlignJustify className="nav-icon"/>
+                            </button> :
+                            <img src="/static/img/logo_tcms.png" style={{ width: '100%', height: '100%' }}/> 
+                        }
+                    </div>
+                    <div className='nav-header-text'>
                         <p className='nav-text'><span >TREASURY CAPITAL</span><span>MANAGEMENT SERVICES LTD</span></p>
                     </div>
                 </div>

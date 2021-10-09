@@ -10,6 +10,8 @@ import 'antd/dist/antd.css';
 import './app.css'
 import general from '../hoc/general';
 import VerifyPage from './views/VerifyPage/VerifyPage';
+import SideNavBar from './views/SideNavBar/SideNavBar';
+
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
@@ -17,7 +19,8 @@ import VerifyPage from './views/VerifyPage/VerifyPage';
 function App() {
     return (
         <Suspense fallback={(<div>Loading...</div>)}>
-            <div>
+            <div id="marginLeft">
+                <SideNavBar />
                 <Switch>
                     <Route exact path="/" component={Auth(general(HomePage), null)} />
                     <Route exact path="/dashboard" component={Auth(general(DashboardPage),true)} />

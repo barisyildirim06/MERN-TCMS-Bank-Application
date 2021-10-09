@@ -3,41 +3,56 @@ import './dashboardPage.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { USER_SERVER } from '../../Config';
+import NavBar from '../NavBar/NavBar'
 import { Slider, Modal } from 'antd';
+import { useMediaQuery } from 'react-responsive'
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [currentCurrency, setCurrentCurrency] = useState('NZD')
     const [amount, setAmount] = useState('');
-    const [persentage, setPersentage] = useState(0)
+    const [persentage, setPersentage] = useState(0);
 
+    const handleNavClose = () => {
+        document.getElementById("mySidenav").style.width = "0px"
+        document.getElementById("marginLeft").style.paddingLeft = "0px"
+    }
+    
+    const isBigEnough = useMediaQuery({
+        query: '(min-width: 1000px)'
+    })
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     });
 
     const handleNzdClick = () => {
+        handleNavClose();
         setCurrentAccount(nzdAccount)
         setCurrentCurrency('NZD');
         setAmount('');
     }
     const handleUsdClick = () => {
+        handleNavClose();
         setCurrentAccount(usdAccount)
         setCurrentCurrency('USD');
         setAmount('');
     }
     const handleAudClick = () => {
+        handleNavClose();
         setCurrentAccount(audAccount)
         setCurrentCurrency('AUD');
         setAmount('');
     }
-
+    
     const logoutHandler = () => {
+        handleNavClose();
         axios.get(`${USER_SERVER}/logout`).then(response => {
-
+            
         });
     };
+    
 
     const handleSliderChange = (value) => {
         setPersentage(value[1]);
@@ -66,25 +81,53 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
         setCurrentAccount(nzdAccount)
     }, [nzdAccount]);
 
+    useEffect(() => {
+        if (isBigEnough) {
+            handleNavClose();
+        }
+    }, [handleNavClose, isBigEnough])
+
     return (
-        <div className='dashboardContainer'>
-            <div className='dashboardLeftNav'>
+        <div id='dashboardContainer'>
+            {!isBigEnough?
+                <NavBar hasSideNavIcon={true}/> : null
+            }
+            <div id="mySidenav" className="dashboardSideNav">
                 <div>
-                    <div style={{ height: '7vh' }}/>
+                    <div style={{ height: '7vh', display: 'flex', alignItems:'center', justifyContent:'end' }}>
+                        <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleNavClose}>X</button>
+                    </div>
                     <div style={{ height: '12vh' }}>
                         <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                     </div>
                     <div style={{ height: '2vh' }}/>
                     <div style={{ height: '15vh' }}>
                         <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
-                        {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
+                        {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
                     </div>
                     <div style={{ height: '2vh' }}/>
                     <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
                     <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
-                        <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                        <Link onClick={handleNavClose} to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
                         <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                     </div>
+                </div>
+            </div>
+            <div className='dashboardLeftNav'>
+                <div style={{ height: '7vh' }}/>
+                <div style={{ height: '12vh' }}>
+                    <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                </div>
+                <div style={{ height: '2vh' }}/>
+                <div style={{ height: '15vh' }}>
+                    <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
+                    {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
+                </div>
+                <div style={{ height: '2vh' }}/>
+                <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
+                <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
+                    <Link onClick={handleNavClose} to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                    <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                 </div>
             </div>
             <div className='dashboardRight'>

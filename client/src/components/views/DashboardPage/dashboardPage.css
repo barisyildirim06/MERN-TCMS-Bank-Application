@@ -1,5 +1,5 @@
 @media (max-width: 1000px) {
-    .dashboardContainer {
+    #dashboardContainer {
         height: 120vh;
         grid-template-columns: 0% 100%;
     }
@@ -23,9 +23,12 @@
     .dashboardNextButton {
         margin-top: 10vh;
     }
+    .dashboardLeftNav, .dashboardSideNav{
+        display: none;
+    }
 }
 @media (min-width: 1000px) {
-    .dashboardContainer {
+    #dashboardContainer {
         height: 100vh;
         grid-template-columns: 13% 87%;
     }
@@ -48,11 +51,25 @@
         margin-top: 3vh;
     }
 }
-.dashboardContainer {
+#dashboardContainer {
     display: grid;
     font-family: sans-serif;
 }
 .dashboardLeftNav{
+    background: linear-gradient(to top, #325062 30%, #fa7730);
+}
+.dashboardSideNav{
+    display: block;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    text-align: center;
+    transition-duration: 0.5s;
     background: linear-gradient(to top, #325062 30%, #fa7730);
 }
 .profileIcon{
