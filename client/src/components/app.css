@@ -972,6 +972,13 @@
     transition-duration: 0.5s;
   }
   
-  
-  /* Sidenavbar end */
-  
+  .ant-btn-primary {
+    background-color: #5b9ea4;
+    border-color: #5b9ea4;
+  }
+
+  .ant-btn-primary:hover, .ant-btn-primary:focus, .ant-btn-primary:active {
+    color: #fff;
+    background-color: #5b9ee9;
+    border-color: #5b9ee9;
+}

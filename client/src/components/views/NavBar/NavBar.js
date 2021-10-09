@@ -70,6 +70,9 @@ function Navbar(props) {
                         :
                         <ul className="nav-sign ">
                             <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
                                 <Link to="/dashboard">Dashboard</Link>
                             </li>
                             <li>

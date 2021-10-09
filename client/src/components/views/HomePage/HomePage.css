@@ -115,6 +115,12 @@
         display: flex;
         justify-content: center;
     }
+    .headerLeftText, .headerRightText{
+        margin: 0 5vw;
+        font-size: 30px;
+        line-height: 40px;
+        letter-spacing: 0.1em;
+    }
 }
 
 @media (min-width: 1000px) {
@@ -247,6 +253,11 @@
         display: flex;
         text-align: left;
     }
+    .headerLeftText, .headerRightText{
+        font-size: 40px;
+        line-height: 48px;
+        letter-spacing: 0.195em;
+    }
 }
 
 .headerTextContainer {
@@ -259,20 +270,14 @@
 .headerLeftText{
     color: white;
     font-family: Lato;
-    font-size: 40px;
     font-style: normal;
     font-weight: 600;
-    line-height: 48px;
-    letter-spacing: 0.195em;
 }
 .headerRightText{
     color: black;
     font-family: Lato;
-    font-size: 40px;
     font-style: normal;
     font-weight: 600;
-    line-height: 48px;
-    letter-spacing: 0.195em;
 }
 .watchThisSpaceContainer{
     position: absolute;

@@ -66,6 +66,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
     }
 
     const handleSupportClick = () => {
+        handleNavClose();
         Modal.info({
             title: 'Support',
             content: (
