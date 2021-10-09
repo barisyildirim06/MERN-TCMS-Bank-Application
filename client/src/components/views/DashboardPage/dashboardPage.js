@@ -157,7 +157,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                     <div style={{ height: '2vh' }}/>
                     <Slider range defaultValue={[0,0]} onChange={handleSliderChange}/>
                     <div style={{ display:'flex', flexDirection:'row-reverse' }}>{`${persentage}%`}</div>
-                    <button className='nextButton' onClick={handleSubmit}>Submit</button>
+                    <button className='dashboardNextButton' onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
         </div>

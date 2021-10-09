@@ -1,7 +1,55 @@
+@media (max-width: 1000px) {
+    .dashboardContainer {
+        height: 120vh;
+        grid-template-columns: 0% 100%;
+    }
+    .accountCardTop{
+        margin-top: 7vh;
+        padding: 10px;
+        width: 90vw;
+        height: 48vh;
+        background-color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .accountCardBottom{
+        margin-top: 7vh;
+        margin-bottom: 8vh;
+        height: 30vh;
+        width: 90vw;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .dashboardNextButton {
+        margin-top: 10vh;
+    }
+}
+@media (min-width: 1000px) {
+    .dashboardContainer {
+        height: 100vh;
+        grid-template-columns: 13% 87%;
+    }
+    .accountCardTop{
+        padding: 10px 50px;
+        margin-top: 7vh;
+        height: 48vh;
+        width: 56vw;
+        font-size: 20px;
+    }
+    .accountCardBottom{
+        margin-top: 7vh;
+        margin-bottom: 8vh;
+        height: 30vh;
+        width: 56vw;
+        padding: 10px 50px;
+        font-size: 20px;
+    }
+    .dashboardNextButton {
+        margin-top: 3vh;
+    }
+}
 .dashboardContainer {
-    height: 100vh;
     display: grid;
-    grid-template-columns: 13% 87%;
     font-family: sans-serif;
 }
 .dashboardLeftNav{
@@ -18,21 +66,10 @@
     justify-content: center;
 }
 .accountCardTop{
-    padding: 10px 50px;
-    margin-top: 7vh;
-    height: 48vh;
-    width: 56vw;
     background-color: white;
-    font-size: 20px;
 }
 .accountCardBottom{
-    margin-top: 7vh;
-    margin-bottom: 8vh;
-    height: 30vh;
-    width: 56vw;
     background-color: white;
-    padding: 10px 50px;
-    font-size: 20px;
 }
 .accountCardRows{
     display: flex;
@@ -72,4 +109,17 @@ p a {
     position: absolute;
     top: 0;
     left: 0px;
+}
+
+.dashboardNextButton{
+    height: 50px;
+    width: 130px;
+    font-size: 24px;
+    color: white;
+    background-color: #5b9ea4;
+    border: none;
+    cursor: pointer;
+}
+.dashboardNextButton:active {
+    background-color: #5b9ee9;
 }

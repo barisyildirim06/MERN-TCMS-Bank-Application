@@ -50,25 +50,7 @@
     text-align: left;
 }
 
-.accountCardTop{
-    padding: 10px 50px;
-    margin-top: 7vh;
-    height: 48vh;
-    width: 56vw;
-    background-color: white;
-    font-size: 20px;
-}
-.accountCardBottom{
-    margin-top: 7vh;
-    margin-bottom: 8vh;
-    height: 30vh;
-    width: 56vw;
-    background-color: white;
-}
-.accountCardRows{
-    display: flex;
-    justify-content: space-between;
-}
+
 .nextButton{
     margin-top: 3vh;
     height: 50px;
