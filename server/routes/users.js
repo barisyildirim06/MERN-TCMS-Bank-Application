@@ -55,6 +55,9 @@ router.get("/auth", auth, (req, res) => {
         agentFirstName: req.user.agentFirstName,
         agentLastName: req.user.agentLastName,
         agentJobTitle: req.user.agentJobTitle,
+        nzdWithdrawalAccount: req.user.nzdWithdrawalAccount,
+        usdWithdrawalAccount: req.user.usdWithdrawalAccount,
+        audWithdrawalAccount: req.user.audWithdrawalAccount,
     });
 });
 

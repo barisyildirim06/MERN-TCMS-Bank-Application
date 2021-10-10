@@ -56,7 +56,16 @@ const userSchema = mongoose.Schema({
     },
     agentJobTitle: {
         type: String
-    }
+    },
+    nzdWithdrawalAccount: {
+        type: String
+    },
+    usdWithdrawalAccount: {
+        type: String
+    },
+    audWithdrawalAccount: {
+        type: String
+    },
 })
 
 

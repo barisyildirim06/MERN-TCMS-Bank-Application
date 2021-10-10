@@ -15,7 +15,10 @@ module.exports = {
             user.agentFirstName = req.body.agentFirstName;
             user.agentLastName = req.body.agentLastName;
             user.agentJobTitle = req.body.agentJobTitle;
-    
+            user.nzdWithdrawalAccount = req.body.nzdWithdrawalAccount;
+            user.usdWithdrawalAccount = req.body.usdWithdrawalAccount;
+            user.audWithdrawalAccount = req.body.audWithdrawalAccount;
+
             user.save()
             .then(() => res.json('user updated!'))
             .catch(err => res.status(400).json('Error: ' + err));
