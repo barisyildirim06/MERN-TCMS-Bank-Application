@@ -1,0 +1,35 @@
+.dialog-close-button {
+    background: linear-gradient(to bottom, #fe1a00, #ce0100);
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: inset 0px 1px 0px 0px #f29c93;
+    color: white;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30px;
+    font-weight: 100;
+    height: 34px;
+    line-height: 28px;
+    margin-top: -2px;
+    outline: none;
+    position: absolute;
+    right: -15px;
+    text-shadow: 1px 1px 0px #b23e35;
+    top: -15px;
+    width: 34px;
+}
+
+.dialog-close-button:hover {
+    background: linear-gradient(to bottom, #ce0100, #fe1a00);
+}
+
+.dialog-close-button:active {
+    top: -14px;
+}
+
+.dialog .ant-modal {
+    margin: 50px 0;
+}
+
+.ant-modal-wrap {
+    overflow: unset !important;
+}
