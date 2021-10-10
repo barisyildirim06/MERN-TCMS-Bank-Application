@@ -12,6 +12,9 @@
         display: flex;
         justify-content: center;
     }
+    .homePageFooterContainer {
+        justify-content: center;
+    }
     .flexColumn {
         align-items: center;
         width: 100vw;
@@ -104,6 +107,10 @@
     .homePageFooterText {
         font-weight: bold;
         font-size: 14px;
+    }
+    .signUpText{
+        margin: 0 5vw;
+        font-size: 24px;
     }
     .gotQuestions {
         flex-direction:column;  
@@ -246,6 +253,7 @@
     .signUpText{
         text-align: right;
         margin-right: 10vw;
+        font-size: 36px;
     }
     .interestedText{
         font-size: 50px;
@@ -523,7 +531,6 @@
 }
 .signUpText{
     font-family: Lato;
-    font-size: 36px;
     font-style: normal;
     font-weight: 300;
     line-height: 44px;

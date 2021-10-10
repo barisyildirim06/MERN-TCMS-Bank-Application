@@ -140,3 +140,40 @@ p a {
 .dashboardNextButton:active {
     background-color: #5b9ee9;
 }
+.depositText{
+    display: flex;
+    justify-content: center;
+    margin-top: 1vh;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 22px;
+    color: #324D5D;
+}
+
+.depositInnerText {
+    display: flex;
+    justify-content: center;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 19px;
+    line-height: 17px;
+    font-weight: 500;
+    color: #000000;
+}
+.ant-select-selection__rendered {
+    background: linear-gradient(90deg, #5B9EA4 -11.44%, #CADEEA 68.31%);
+    margin: 0px !important;
+}
+
+th{
+    color: #6C6C6C;
+    font-weight: normal;
+    text-align: center;
+}
+td {
+    text-align: center;
+    color: #000000;
+}

@@ -4,15 +4,20 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { USER_SERVER } from '../../Config';
 import NavBar from '../NavBar/NavBar'
-import { Slider, Modal } from 'antd';
+import { Slider, Modal, Input, Select } from 'antd';
 import { useMediaQuery } from 'react-responsive'
+import Dialog from '../../dialog/index'
+const { Option } = Select;
 
-
-function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
+function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [currentCurrency, setCurrentCurrency] = useState('NZD')
     const [amount, setAmount] = useState('');
     const [persentage, setPersentage] = useState(0);
+    const [currentPage, setCurrentPage] = useState('Account');
+    const [dialogVisible, setDialogVisible] = useState(false);
+    const [dialogChildren, setDialogChildren] = useState(null);
+    const [generalDataCount, setGeneralDataCount] = useState(6);
 
     const handleNavClose = () => {
         document.getElementById("mySidenav").style.width = "0px"
@@ -32,18 +37,21 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
         setCurrentAccount(nzdAccount)
         setCurrentCurrency('NZD');
         setAmount('');
+        setCurrentPage('Account');
     }
     const handleUsdClick = () => {
         handleNavClose();
         setCurrentAccount(usdAccount)
         setCurrentCurrency('USD');
         setAmount('');
+        setCurrentPage('Account');
     }
     const handleAudClick = () => {
         handleNavClose();
         setCurrentAccount(audAccount)
         setCurrentCurrency('AUD');
         setAmount('');
+        setCurrentPage('Account');
     }
     
     const logoutHandler = () => {
@@ -65,6 +73,92 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
 
     }
 
+    const handleWithdrawalClick = () => {
+        setDialogChildren(
+            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh' }}>
+                <p className='depositText'>Withdrawal</p>
+                <div style={{ height:'50px' }}/>
+                <Select
+                    style={{ width: '100%', background: 'linear-gradient(90deg, #5B9EA4 -11.44%, #CADEEA 68.31%)' }}
+                    placeholder="&nbsp;Select Account"
+                    size={'large'}
+                >
+                    <Option value="nzd">&nbsp;NZD</Option>
+                    <Option value="usd">&nbsp;USD</Option>
+                    <Option value="aud">&nbsp;AUD</Option>
+                </Select>
+                <div style={{ height:'50px' }}/>
+                Available Funds
+                <div style={{ height:'50px' }}/>
+                {/* <div className='withdrawalInputContainer'> */}
+                    <input value={amount} placeholder={`Account Number`} className='withdrawlInput' width='100%'/>
+                {/* </div> */}
+                <br />
+                <br />
+                <div style={{  display:'flex', justifyContent:'center', flexDirection: 'column', alignItems:'center' }}>
+                    <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleDialogClose}>Submit</button>
+                    *24 hours stand down
+                </div>
+            </div>
+        )
+        handleNavClose();
+        setDialogVisible(true);
+    }
+
+    const handleDepositClick = () => {
+        setDialogChildren(
+            <div className='accountCardTop' style={{ height: '350px', width: '100%', margin: '1vh' }}>
+                <p className='depositText'>Deposit</p>
+                <br /><br />
+                <p className='depositInnerText'>Deposit your money into this account number provided using your TCMS account number as reference.</p>
+                <br /><br /><hr /><br /><br />
+                <div style={{  display:'flex', justifyContent:'center' }}>
+                    <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleDialogClose}>Close</button>
+                </div>
+            </div>
+        )
+        handleNavClose();
+        setDialogVisible(true);
+    }
+
+    const handleDialogClose = () => {
+        handleNavClose();
+        setDialogVisible(false);
+    }
+
+    const handleTransactionHistoryClick = () => {
+        setDialogChildren(
+            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh'}}>
+                <p className='depositText'>Recent Transactions</p>
+                <hr />
+                <table style={{ width: '100%', overflowY: 'scroll', height: '300px' }}>
+                    <tr>
+                        <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
+                        <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
+                        <th style={{ width: '20%', textAlign: 'center' }}>Amount</th>
+                        <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
+                    </tr>
+                    <br />
+                    {general && 
+                        general.slice(0,generalDataCount).map(el => {
+                            return (<tr>
+                                <td>{el.transactionDate}</td>
+                                <td>{el.transactionType}</td>
+                                <td>{el.amount}</td>
+                                <td>{el.currency}</td>
+                            </tr>)
+                        })
+                    }
+                </table>
+                <div style={{ display:'flex', justifyContent: 'center' }}>
+                    <button className='dashboardNextButton' onClick={handleLoadMore}>Load More</button>
+                </div>
+            </div>
+        )
+        handleNavClose();
+        setDialogVisible(true);
+    }
+
     const handleSupportClick = () => {
         handleNavClose();
         Modal.info({
@@ -75,6 +169,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
               </div>
             ),
             onOk() {},
+            width: '1000px'
           });
     }
 
@@ -107,10 +202,11 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                         {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
                     </div>
                     <div style={{ height: '2vh' }}/>
-                    <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
+                    <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                     <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
-                        <Link onClick={handleNavClose} to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                        <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
                         <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
+                        <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
                     </div>
                 </div>
             </div>
@@ -125,85 +221,93 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user }) {
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
                 </div>
                 <div style={{ height: '2vh' }}/>
-                <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a style={{ fontSize: '14px' }}>Withdrawal</a><a style={{ fontSize: '14px' }}>Deposit</a><a style={{ fontSize: '14px' }}>Transaction History</a></p>
+                <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                 <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
-                    <Link onClick={handleNavClose} to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                    <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
                     <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
+                        <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
                 </div>
             </div>
             <div className='dashboardRight'>
-                <div className='accountCardTop'>
-                    <div>{currentCurrency} Account</div>
-                    <br />
-                    <br />
-                    <div className='accountCardRows'>
-                        <div>
-                            Principal:
+                {currentPage === 'Account' &&
+                    <div>
+                        <div className='accountCardTop'>
+                            <div>{currentCurrency} Account</div>
+                            <br />
+                            <br />
+                            <div className='accountCardRows'>
+                                <div>
+                                    Principal:
+                                </div>
+                                <div>
+                                    {currentAccount?.principal !== undefined ? formatter.format(currentAccount?.principal): null}
+                                </div>
+                            </div>
+                            <div className='accountCardRows'>
+                                <div>
+                                    Interest Acrrued:
+                                </div>
+                                <div>
+                                    {currentAccount?.interestAcrrued  !== undefined ?  formatter.format(currentAccount?.interestAcrrued): null}
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <br />
+                            <div className='accountCardRows'>
+                                <div>
+                                    Fees:
+                                </div>
+                                <div>
+                                    {currentAccount?.fees  !== undefined ?  formatter.format(currentAccount?.fees): null}
+                                </div>
+                            </div>
+                            <div className='accountCardRows'>
+                                <div>
+                                    Withdrawls:
+                                </div>
+                                <div>
+                                    {currentAccount?.withdrawls  !== undefined ?  formatter.format(currentAccount?.withdrawls): null}
+                                </div>
+                            </div>
+                            <div className='accountCardRows'>
+                                <div>
+                                    Pending Withdrawls:
+                                </div>
+                                <div>
+                                    {currentAccount?.pendingWithdrawls !== undefined ?  formatter.format(currentAccount?.pendingWithdrawls): null}
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <br />
+                            <div className='accountCardRows'>
+                                <div>
+                                    Available Balance:
+                                </div>
+                                <div>
+                                    {currentAccount?.availableBalance !== undefined ?  formatter.format(currentAccount?.availableBalance): null}
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            {currentAccount?.principal !== undefined ? formatter.format(currentAccount?.principal): null}
+                        <div className='accountCardBottom'>
+                            <p>Withdrawal</p>
+                            <div style={{ height: '2vh' }}/>
+                            <div className='withdrawalInputContainer'>
+                                <input value={amount} placeholder={`Amount ${currentCurrency}`} className='withdrawlInput' width='100%'/>
+                                <span className="dolarSuffix">$</span>
+                            </div>
+                            <div style={{ height: '2vh' }}/>
+                            <Slider range defaultValue={[0,0]} onChange={handleSliderChange}/>
+                            <div style={{ display:'flex', flexDirection:'row-reverse' }}>{`${persentage}%`}</div>
+                            <button className='dashboardNextButton' onClick={handleSubmit}>Submit</button>
                         </div>
                     </div>
-                    <div className='accountCardRows'>
-                        <div>
-                            Interest Acrrued:
-                        </div>
-                        <div>
-                            {currentAccount?.interestAcrrued  !== undefined ?  formatter.format(currentAccount?.interestAcrrued): null}
-                        </div>
-                    </div>
-                    <br />
-                    <hr />
-                    <br />
-                    <div className='accountCardRows'>
-                        <div>
-                            Fees:
-                        </div>
-                        <div>
-                            {currentAccount?.fees  !== undefined ?  formatter.format(currentAccount?.fees): null}
-                        </div>
-                    </div>
-                    <div className='accountCardRows'>
-                        <div>
-                            Withdrawls:
-                        </div>
-                        <div>
-                            {currentAccount?.withdrawls  !== undefined ?  formatter.format(currentAccount?.withdrawls): null}
-                        </div>
-                    </div>
-                    <div className='accountCardRows'>
-                        <div>
-                            Pending Withdrawls:
-                        </div>
-                        <div>
-                            {currentAccount?.pendingWithdrawls !== undefined ?  formatter.format(currentAccount?.pendingWithdrawls): null}
-                        </div>
-                    </div>
-                    <br />
-                    <hr />
-                    <br />
-                    <div className='accountCardRows'>
-                        <div>
-                            Available Balance:
-                        </div>
-                        <div>
-                            {currentAccount?.availableBalance !== undefined ?  formatter.format(currentAccount?.availableBalance): null}
-                        </div>
-                    </div>
-                </div>
-                <div className='accountCardBottom'>
-                    <p>Withdrawal</p>
-                    <div style={{ height: '2vh' }}/>
-                    <div className='withdrawalInputContainer'>
-                        <input value={amount} placeholder={`Amount ${currentCurrency}`} className='withdrawlInput' width='100%'/>
-                        <span className="dolarSuffix">$</span>
-                    </div>
-                    <div style={{ height: '2vh' }}/>
-                    <Slider range defaultValue={[0,0]} onChange={handleSliderChange}/>
-                    <div style={{ display:'flex', flexDirection:'row-reverse' }}>{`${persentage}%`}</div>
-                    <button className='dashboardNextButton' onClick={handleSubmit}>Submit</button>
-                </div>
+                }
             </div>
+            <Dialog visible={dialogVisible} width={1000} onClose={handleDialogClose}>
+                {dialogChildren}
+            </Dialog>
         </div>
     )
 }
