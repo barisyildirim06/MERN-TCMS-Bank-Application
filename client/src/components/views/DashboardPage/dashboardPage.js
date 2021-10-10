@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import './dashboardPage.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { USER_SERVER } from '../../Config';
 import NavBar from '../NavBar/NavBar'
-import { Slider, Modal, Input, Select } from 'antd';
+import { Slider, Modal, Select } from 'antd';
 import { useMediaQuery } from 'react-responsive'
 import Dialog from '../../dialog/index'
 const { Option } = Select;
@@ -14,10 +14,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const [currentCurrency, setCurrentCurrency] = useState('NZD')
     const [amount, setAmount] = useState('');
     const [persentage, setPersentage] = useState(0);
-    const [currentPage, setCurrentPage] = useState('Account');
+    const [currentPage, setCurrentPage] = useState('Summary');
     const [dialogVisible, setDialogVisible] = useState(false);
     const [dialogChildren, setDialogChildren] = useState(null);
-    const [generalDataCount, setGeneralDataCount] = useState(6);
+    const [generalDataCount, setGeneralDataCount] = useState(20);
 
     const handleNavClose = () => {
         document.getElementById("mySidenav").style.width = "0px"
@@ -32,6 +32,11 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
         currency: 'USD',
     });
 
+    const handleSummaryClick = () => {
+        handleNavClose();
+        setCurrentPage('Summary');
+    }
+
     const handleNzdClick = () => {
         handleNavClose();
         setCurrentAccount(nzdAccount)
@@ -39,6 +44,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
         setAmount('');
         setCurrentPage('Account');
     }
+
     const handleUsdClick = () => {
         handleNavClose();
         setCurrentAccount(usdAccount)
@@ -53,7 +59,38 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
         setAmount('');
         setCurrentPage('Account');
     }
-    
+
+    // const handleLoadMore = useCallback(() => {
+    //     setDialogChildren(
+    //     <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll', overflowY:'scroll'}}>
+    //         <p className='depositText'>Recent Transactions</p>
+    //         <hr />
+    //         <table style={{ width: '100%', overflowY: 'scroll', height: '300px' }}>
+    //             <tr>
+    //                 <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
+    //                 <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
+    //                 <th style={{ width: '20%', textAlign: 'center' }}>Amount</th>
+    //                 <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
+    //             </tr>
+    //             <br />
+    //             {general?.slice(0,(generalDataCount+3)).map(el => {
+    //                     return (<tr>
+    //                         <td>{el.transactionDate}</td>
+    //                         <td>{el.transactionType}</td>
+    //                         <td>{el.amount}</td>
+    //                         <td>{el.currency}</td>
+    //                     </tr>)
+    //                 })
+    //             }
+    //         </table>
+    //         <div style={{ display:'flex', justifyContent: 'center' }}>
+    //             <button className='dashboardNextButton' onClick={handleLoadMore}>Load More</button>
+    //         </div>
+    //     </div>
+    //     )
+    //     setGeneralDataCount(prevState => prevState +3)
+    // }, [general, generalDataCount])
+
     const logoutHandler = () => {
         handleNavClose();
         axios.get(`${USER_SERVER}/logout`).then(response => {
@@ -75,7 +112,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
 
     const handleWithdrawalClick = () => {
         setDialogChildren(
-            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh' }}>
+            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll', overflowY: 'scroll' }}>
                 <p className='depositText'>Withdrawal</p>
                 <div style={{ height:'50px' }}/>
                 <Select
@@ -128,10 +165,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
 
     const handleTransactionHistoryClick = () => {
         setDialogChildren(
-            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh'}}>
+            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll'}}>
                 <p className='depositText'>Recent Transactions</p>
                 <hr />
-                <table style={{ width: '100%', overflowY: 'scroll', height: '300px' }}>
+                <table style={{ width: '100%', overflowY: 'scroll' }}>
                     <tr>
                         <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
                         <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
@@ -139,8 +176,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                         <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
                     </tr>
                     <br />
-                    {general && 
-                        general.slice(0,generalDataCount).map(el => {
+                    {general?.slice(0,generalDataCount).map(el => {
                             return (<tr>
                                 <td>{el.transactionDate}</td>
                                 <td>{el.transactionType}</td>
@@ -150,15 +186,47 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                         })
                     }
                 </table>
-                <div style={{ display:'flex', justifyContent: 'center' }}>
+                {/* <div style={{ display:'flex', justifyContent: 'center' }}>
                     <button className='dashboardNextButton' onClick={handleLoadMore}>Load More</button>
-                </div>
+                </div> */}
             </div>
         )
         handleNavClose();
         setDialogVisible(true);
     }
 
+    const handleAccountTransactionHistoryClick = () => {
+        setDialogChildren(
+            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll'}}>
+                <p className='depositText'>Recent Transactions</p>
+                <hr />
+                <table style={{ width: '100%', overflowY: 'scroll' }}>
+                    <tr>
+                        <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
+                        <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
+                        <th style={{ width: '20%', textAlign: 'center' }}>Amount</th>
+                        <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
+                    </tr>
+                    <br />
+                    {general?.filter(el => el.currency === currentCurrency)?.slice(0,generalDataCount).map(el => {
+                            return (<tr>
+                                <td>{el.transactionDate}</td>
+                                <td>{el.transactionType}</td>
+                                <td>{el.amount}</td>
+                                <td>{el.currency}</td>
+                            </tr>)
+                        })
+                    }
+                </table>
+                {/* <div style={{ display:'flex', justifyContent: 'center' }}>
+                    <button className='dashboardNextButton' onClick={handleLoadMore}>Load More</button>
+                </div> */}
+            </div>
+        )
+        handleNavClose();
+        setDialogVisible(true);
+    }
+console.log(general)
     const handleSupportClick = () => {
         handleNavClose();
         Modal.info({
@@ -202,7 +270,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                         {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
                     </div>
                     <div style={{ height: '2vh' }}/>
-                    <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
+                    <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                     <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                         <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
                         <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
@@ -221,7 +289,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
                 </div>
                 <div style={{ height: '2vh' }}/>
-                <p style={{ height: '25vh' }}><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
+                <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                 <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                     <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
                     <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
@@ -229,11 +297,51 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                 </div>
             </div>
             <div className='dashboardRight'>
+                {currentPage === 'Summary' &&
+                    <div className='accountCardTop' style={{ height: '450px' }}>
+                        <div style={{ height: '12vh', marginTop: '2vh' }}>
+                            <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                        </div>
+                        <div style={{color:'white', fontSize: '16px', color: 'black', marginTop: '2vh', fontWeight:'bold'}}>{user?.userData?.companyName}</div>
+                        <br />
+                        <div>
+                            <table style={{ width: '100%' }}>
+                                <tr>
+                                    <th style={{ width: '25%', textAlign: 'center' }}>Balance</th>
+                                    <th style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance ? nzdAccount?.availableBalance + usdAccount?.availableBalance + audAccount?.availableBalance : null}$</th>
+                                    <th style={{ width: '10%' }}>Yield</th>
+                                    <th style={{ width: '10%', textAlign: 'center' }}>0.00%</th>
+                                </tr>
+                            </table>
+                            <hr />
+                            <br />
+                            <table style={{ width: '100%' }}>
+                                <tr>
+                                    <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
+                                    <td style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance}$</td>
+                                    <td style={{ width: '10%' }}></td>
+                                    <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
+                                    <td style={{ width: '45%', textAlign: 'left' }}>{usdAccount?.availableBalance}$</td>
+                                    <td style={{ width: '10%' }}></td>
+                                    <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
+                                    <td style={{ width: '45%', textAlign: 'left' }}>{audAccount?.availableBalance}$</td>
+                                    <td style={{ width: '10%' }}></td>
+                                    <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                </tr>
+                            </table>
+                            </div>
+                    </div>
+                }
                 {currentPage === 'Account' &&
                     <div>
                         <div className='accountCardTop'>
                             <div>{currentCurrency} Account</div>
-                            <br />
                             <br />
                             <div className='accountCardRows'>
                                 <div>
@@ -288,6 +396,9 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                                 <div>
                                     {currentAccount?.availableBalance !== undefined ?  formatter.format(currentAccount?.availableBalance): null}
                                 </div>
+                            </div>
+                            <div style={{ display:'flex', justifyContent: 'center' }}>
+                                <button className='dashboardNextButton' style={{ width: '240px' }} onClick={handleAccountTransactionHistoryClick}>Transaction History</button>
                             </div>
                         </div>
                         <div className='accountCardBottom'>
