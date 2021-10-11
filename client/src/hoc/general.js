@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { getGeneral } from '../_actions/general_actions';
 import { getWithdrawal } from '../_actions/withdrawal_actions';
 import { useSelector, useDispatch } from "react-redux";

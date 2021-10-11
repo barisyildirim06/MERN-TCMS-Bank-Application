@@ -22,7 +22,7 @@ function WithdrawalDialog({ onClose, visible }) {
 
     return (
         <Dialog visible={visible} width={1000} onClose={handleClose}>
-            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll', overflowY: 'scroll' }}>
+            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll' }}>
                 <p className='depositText'>Withdrawal</p>
                 <div style={{ height:'50px' }}/>
                 <Select

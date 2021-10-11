@@ -51,7 +51,7 @@ function Navbar(props) {
                             >
                                 <FaAlignJustify className="nav-icon"/>
                             </button> :
-                            <img src="/static/img/logo_tcms.png" style={{ width: '100%', height: '100%' }}/> 
+                            <img src="/static/img/logo_tcms.png" alt='' style={{ width: '100%', height: '100%' }}/> 
                         }
                     </div>
                     <div className='nav-header-text'>
@@ -76,7 +76,7 @@ function Navbar(props) {
                                 <Link to="/dashboard">Dashboard</Link>
                             </li>
                             <li>
-                                <a onClick={logoutHandler}>Logout</a>
+                                <a href = {() => false} onClick={logoutHandler}>Logout</a>
                             </li>
                         </ul>}
                 </div>

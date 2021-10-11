@@ -87,8 +87,8 @@ function VerifyPage(props) {
         if (props?.user?.userData) {
             setValues(props?.user?.userData)
         }
-    }, [props?.user?.userData])
-    console.log(props?.user?.userData?.image)
+    }, [props])
+
     return (
         <div className='verifyContainer'>
             <NavBar />

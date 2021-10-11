@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { USER_SERVER } from '../../Config';
 import NavBar from '../NavBar/NavBar'
-import { Slider, Modal, Select } from 'antd';
+import { Slider, Modal } from 'antd';
 import { useMediaQuery } from 'react-responsive'
 import WithdrawalDialog from '../../../dialogs/withdrawal-dialog/withdrawal-dialog';
 import DepositDialog from '../../../dialogs/deposit-dialog/deposit-dialog';
 import TransactionDialog from '../../../dialogs/transaction-dialog/transaction-dialog';
-const { Option } = Select;
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
@@ -23,10 +22,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const [transactionDialogVisible, setTransactionDialogVisible] = useState(false);
     const [transactionData, setTransactionData] = useState(general);
 
-    const handleNavClose = () => {
+    const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
         document.getElementById("marginLeft").style.paddingLeft = "0px"
-    }
+    }, []);
     
     const isBigEnough = useMediaQuery({
         query: '(min-width: 1000px)'
@@ -162,10 +161,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                         {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
                     </div>
                     <div style={{ height: '2vh' }}/>
-                    <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
+                    <p style={{ height: '25vh' }}><a href={() => false} onClick={handleSummaryClick}>Summary</a><a href={() => false} onClick={handleNzdClick}>NZD</a><a href={() => false} onClick={handleUsdClick}>USD</a><a href={() => false} onClick={handleAudClick}>AUD</a><a href={() => false} onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a href={() => false} onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a href={() => false} onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                     <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                         <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
-                        <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
+                        <a href = {() => false} onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                         <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
                     </div>
                 </div>
@@ -181,10 +180,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
                 </div>
                 <div style={{ height: '2vh' }}/>
-                <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
+                <p style={{ height: '25vh' }}><a href={() => false} onClick={handleSummaryClick}>Summary</a><a href={() => false} onClick={handleNzdClick}>NZD</a><a href={() => false} onClick={handleUsdClick}>USD</a><a href={() => false} onClick={handleAudClick}>AUD</a><a href={() => false} onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a href={() => false} onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a href={() => false} onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                 <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                     <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
-                    <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
+                    <a href = {() => false} onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                         <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
                 </div>
             </div>
@@ -194,38 +193,42 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                         <div style={{ height: '12vh', marginTop: '2vh' }}>
                             <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                         </div>
-                        <div style={{color:'white', fontSize: '16px', color: 'black', marginTop: '2vh', fontWeight:'bold'}}>{user?.userData?.companyName}</div>
+                        <div style={{fontSize: '16px', color: 'black', marginTop: '2vh', fontWeight:'bold'}}>{user?.userData?.companyName}</div>
                         <br />
                         <div>
                             <table style={{ width: '100%' }}>
-                                <tr>
-                                    <th style={{ width: '25%', textAlign: 'center' }}>Balance</th>
-                                    <th style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance ? nzdAccount?.availableBalance + usdAccount?.availableBalance + audAccount?.availableBalance : null}$</th>
-                                    <th style={{ width: '10%' }}>Yield</th>
-                                    <th style={{ width: '10%', textAlign: 'center' }}>0.00%</th>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th style={{ width: '25%', textAlign: 'center' }}>Balance</th>
+                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance ? nzdAccount?.availableBalance + usdAccount?.availableBalance + audAccount?.availableBalance : null}$</th>
+                                        <th style={{ width: '10%' }}>Yield</th>
+                                        <th style={{ width: '10%', textAlign: 'center' }}>0.00%</th>
+                                    </tr>
+                                </thead>
                             </table>
                             <hr />
                             <br />
                             <table style={{ width: '100%' }}>
-                                <tr>
-                                    <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
-                                    <td style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance}$</td>
-                                    <td style={{ width: '10%' }}></td>
-                                    <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
-                                    <td style={{ width: '45%', textAlign: 'left' }}>{usdAccount?.availableBalance}$</td>
-                                    <td style={{ width: '10%' }}></td>
-                                    <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
-                                    <td style={{ width: '45%', textAlign: 'left' }}>{audAccount?.availableBalance}$</td>
-                                    <td style={{ width: '10%' }}></td>
-                                    <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance}$</td>
+                                        <td style={{ width: '10%' }}></td>
+                                        <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{usdAccount?.availableBalance}$</td>
+                                        <td style={{ width: '10%' }}></td>
+                                        <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{audAccount?.availableBalance}$</td>
+                                        <td style={{ width: '10%' }}></td>
+                                        <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                    </tr>
+                                </tbody>
                             </table>
                             </div>
                     </div>

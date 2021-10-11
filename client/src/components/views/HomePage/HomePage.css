@@ -434,7 +434,6 @@
 .advisoryBoardText {
     display: flex;
     flex-direction: column-reverse;
-    align-items: start;
     margin-left: 5vw;
     font-family: sans-serif;
     font-style: normal;

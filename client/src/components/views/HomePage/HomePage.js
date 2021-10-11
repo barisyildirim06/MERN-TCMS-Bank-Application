@@ -165,7 +165,7 @@ function HomePage() {
             <div className='homePageFooterImage' />
             <div className='homePageFooterContainer'>
                 <div >
-                    <img src="/static/img/logo_tcms.png" className='footerIcon'/>
+                    <img src="/static/img/logo_tcms.png" alt='' className='footerIcon'/>
                 </div>
                 <div className='footerMargin'>
                     <p><span className='homePageFooterText'>TREASURY CAPITAL</span ><span className='homePageFooterText'>MANAGEMENT SERVICES LTD</span></p>
