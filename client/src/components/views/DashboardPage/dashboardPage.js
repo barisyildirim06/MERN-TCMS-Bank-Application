@@ -6,8 +6,11 @@ import { USER_SERVER } from '../../Config';
 import NavBar from '../NavBar/NavBar'
 import { Slider, Modal, Select } from 'antd';
 import { useMediaQuery } from 'react-responsive'
-import Dialog from '../../dialog/index'
+import WithdrawalDialog from '../../../dialogs/withdrawal-dialog/withdrawal-dialog';
+import DepositDialog from '../../../dialogs/deposit-dialog/deposit-dialog';
+import TransactionDialog from '../../../dialogs/transaction-dialog/transaction-dialog';
 const { Option } = Select;
+
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const [currentAccount, setCurrentAccount] = useState(null);
@@ -15,9 +18,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const [amount, setAmount] = useState('');
     const [persentage, setPersentage] = useState(0);
     const [currentPage, setCurrentPage] = useState('Summary');
-    const [dialogVisible, setDialogVisible] = useState(false);
-    const [dialogChildren, setDialogChildren] = useState(null);
-    const [generalDataCount, setGeneralDataCount] = useState(20);
+    const [withdrawalDialogVisible, setWithdrawalDialogVisible] = useState(false);
+    const [depositDialogVisible, setDepositDialogVisible] = useState(false);
+    const [transactionDialogVisible, setTransactionDialogVisible] = useState(false);
+    const [transactionData, setTransactionData] = useState(general);
 
     const handleNavClose = () => {
         document.getElementById("mySidenav").style.width = "0px"
@@ -60,36 +64,13 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
         setCurrentPage('Account');
     }
 
-    // const handleLoadMore = useCallback(() => {
-    //     setDialogChildren(
-    //     <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll', overflowY:'scroll'}}>
-    //         <p className='depositText'>Recent Transactions</p>
-    //         <hr />
-    //         <table style={{ width: '100%', overflowY: 'scroll', height: '300px' }}>
-    //             <tr>
-    //                 <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
-    //                 <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
-    //                 <th style={{ width: '20%', textAlign: 'center' }}>Amount</th>
-    //                 <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
-    //             </tr>
-    //             <br />
-    //             {general?.slice(0,(generalDataCount+3)).map(el => {
-    //                     return (<tr>
-    //                         <td>{el.transactionDate}</td>
-    //                         <td>{el.transactionType}</td>
-    //                         <td>{el.amount}</td>
-    //                         <td>{el.currency}</td>
-    //                     </tr>)
-    //                 })
-    //             }
-    //         </table>
-    //         <div style={{ display:'flex', justifyContent: 'center' }}>
-    //             <button className='dashboardNextButton' onClick={handleLoadMore}>Load More</button>
-    //         </div>
-    //     </div>
-    //     )
-    //     setGeneralDataCount(prevState => prevState +3)
-    // }, [general, generalDataCount])
+    const handleWithdrawalDialogClick = () => {
+        setWithdrawalDialogVisible(true);
+        handleNavClose();
+    }
+    const handleWithdrawalDialogClose = () => {
+        setWithdrawalDialogVisible(false);
+    }
 
     const logoutHandler = () => {
         handleNavClose();
@@ -110,123 +91,34 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
 
     }
 
-    const handleWithdrawalClick = () => {
-        setDialogChildren(
-            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll', overflowY: 'scroll' }}>
-                <p className='depositText'>Withdrawal</p>
-                <div style={{ height:'50px' }}/>
-                <Select
-                    style={{ width: '100%', background: 'linear-gradient(90deg, #5B9EA4 -11.44%, #CADEEA 68.31%)' }}
-                    placeholder="&nbsp;Select Account"
-                    size={'large'}
-                >
-                    <Option value="nzd">&nbsp;NZD</Option>
-                    <Option value="usd">&nbsp;USD</Option>
-                    <Option value="aud">&nbsp;AUD</Option>
-                </Select>
-                <div style={{ height:'50px' }}/>
-                Available Funds
-                <div style={{ height:'50px' }}/>
-                {/* <div className='withdrawalInputContainer'> */}
-                    <input value={amount} placeholder={`Account Number`} className='withdrawlInput' width='100%'/>
-                {/* </div> */}
-                <br />
-                <br />
-                <div style={{  display:'flex', justifyContent:'center', flexDirection: 'column', alignItems:'center' }}>
-                    <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleDialogClose}>Submit</button>
-                    *24 hours stand down
-                </div>
-            </div>
-        )
+
+    const handleDepositDialogClick = () => {
         handleNavClose();
-        setDialogVisible(true);
+        setDepositDialogVisible(true);
     }
 
-    const handleDepositClick = () => {
-        setDialogChildren(
-            <div className='accountCardTop' style={{ height: '350px', width: '100%', margin: '1vh' }}>
-                <p className='depositText'>Deposit</p>
-                <br /><br />
-                <p className='depositInnerText'>Deposit your money into this account number provided using your TCMS account number as reference.</p>
-                <br /><br /><hr /><br /><br />
-                <div style={{  display:'flex', justifyContent:'center' }}>
-                    <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleDialogClose}>Close</button>
-                </div>
-            </div>
-        )
+    const handleDepositDialogClose = () => {
         handleNavClose();
-        setDialogVisible(true);
+        setDepositDialogVisible(false);
     }
 
-    const handleDialogClose = () => {
+    const handleTransactionDialogClick = () => {
         handleNavClose();
-        setDialogVisible(false);
+        setTransactionDialogVisible(true);
     }
 
-    const handleTransactionHistoryClick = () => {
-        setDialogChildren(
-            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll'}}>
-                <p className='depositText'>Recent Transactions</p>
-                <hr />
-                <table style={{ width: '100%', overflowY: 'scroll' }}>
-                    <tr>
-                        <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
-                        <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
-                        <th style={{ width: '20%', textAlign: 'center' }}>Amount</th>
-                        <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
-                    </tr>
-                    <br />
-                    {general?.slice(0,generalDataCount).map(el => {
-                            return (<tr>
-                                <td>{el.transactionDate}</td>
-                                <td>{el.transactionType}</td>
-                                <td>{el.amount}</td>
-                                <td>{el.currency}</td>
-                            </tr>)
-                        })
-                    }
-                </table>
-                {/* <div style={{ display:'flex', justifyContent: 'center' }}>
-                    <button className='dashboardNextButton' onClick={handleLoadMore}>Load More</button>
-                </div> */}
-            </div>
-        )
+    const handleTransactionDialogClose = () => {
+        setTransactionData(general);
         handleNavClose();
-        setDialogVisible(true);
+        setTransactionDialogVisible(false);
     }
 
     const handleAccountTransactionHistoryClick = () => {
-        setDialogChildren(
-            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll'}}>
-                <p className='depositText'>Recent Transactions</p>
-                <hr />
-                <table style={{ width: '100%', overflowY: 'scroll' }}>
-                    <tr>
-                        <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
-                        <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
-                        <th style={{ width: '20%', textAlign: 'center' }}>Amount</th>
-                        <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
-                    </tr>
-                    <br />
-                    {general?.filter(el => el.currency === currentCurrency)?.slice(0,generalDataCount).map(el => {
-                            return (<tr>
-                                <td>{el.transactionDate}</td>
-                                <td>{el.transactionType}</td>
-                                <td>{el.amount}</td>
-                                <td>{el.currency}</td>
-                            </tr>)
-                        })
-                    }
-                </table>
-                {/* <div style={{ display:'flex', justifyContent: 'center' }}>
-                    <button className='dashboardNextButton' onClick={handleLoadMore}>Load More</button>
-                </div> */}
-            </div>
-        )
+        setTransactionData(general?.filter(el => el.currency === currentCurrency));
         handleNavClose();
-        setDialogVisible(true);
+        setTransactionDialogVisible(true);
     }
-console.log(general)
+
     const handleSupportClick = () => {
         handleNavClose();
         Modal.info({
@@ -270,7 +162,7 @@ console.log(general)
                         {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
                     </div>
                     <div style={{ height: '2vh' }}/>
-                    <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
+                    <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                     <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                         <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
                         <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
@@ -289,7 +181,7 @@ console.log(general)
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
                 </div>
                 <div style={{ height: '2vh' }}/>
-                <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionHistoryClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
+                <p style={{ height: '25vh' }}><a onClick={handleSummaryClick}>Summary</a><a onClick={handleNzdClick}>NZD</a><a onClick={handleUsdClick}>USD</a><a onClick={handleAudClick}>AUD</a><a onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                 <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                     <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
                     <a href="#" onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
@@ -416,9 +308,20 @@ console.log(general)
                     </div>
                 }
             </div>
-            <Dialog visible={dialogVisible} width={1000} onClose={handleDialogClose}>
-                {dialogChildren}
-            </Dialog>
+            <WithdrawalDialog 
+                visible={withdrawalDialogVisible}
+                onClose={handleWithdrawalDialogClose}
+            />
+            <DepositDialog 
+                visible={depositDialogVisible}
+                onClose={handleDepositDialogClose}
+            />
+            <TransactionDialog 
+                visible={transactionDialogVisible}
+                currentCurrency={currentCurrency}
+                onClose={handleTransactionDialogClose}
+                transactionData={transactionData}
+            />
         </div>
     )
 }
