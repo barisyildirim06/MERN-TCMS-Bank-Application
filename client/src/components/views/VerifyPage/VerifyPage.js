@@ -5,7 +5,6 @@ import './VerifyPage.css'
 import Axios from 'axios';
 
 function VerifyPage(props) {
-    console.log(props.user.userData)
     const [fileList, setFileList] = useState([]);
     const [values, setValues] = useState({
         companyName: '',
