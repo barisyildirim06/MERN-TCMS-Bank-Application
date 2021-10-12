@@ -212,19 +212,19 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                                 <tbody>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance}$</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>${nzdAccount?.availableBalance}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>{usdAccount?.availableBalance}$</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>${usdAccount?.availableBalance}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>{audAccount?.availableBalance}$</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>${audAccount?.availableBalance}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
