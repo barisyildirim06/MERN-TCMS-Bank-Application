@@ -1,23 +1,65 @@
 import React, { useState } from 'react'
 import Dialog from '../../components/dialog/dialog/dialog'
+import Axios from 'axios';
 import { Select } from 'antd';
 const { Option } = Select;
 
-function WithdrawalDialog({ onClose, visible }) {
+function WithdrawalDialog({ onClose, visible, user }) {
     const [withdrawalAccountNumber, setWithdrawalAccountNumber] = useState("");
+    const [accountType, setAccountType] = useState('');
     const handleWithdrawalAccountNumberChange = (e) => {
         setWithdrawalAccountNumber(e.target.value)
     }
 
+    const handleAccountChange = (value) => {
+        setAccountType(value);
+        if (value === "nzdWithdrawalAccount") {
+            if (user?.userData?.nzdWithdrawalAccount && user?.userData?.nzdWithdrawalAccount !== "") {
+                setWithdrawalAccountNumber(user?.userData?.nzdWithdrawalAccount)
+            } else {
+                setWithdrawalAccountNumber("");
+            }
+        }
+        else if (value === "usdWithdrawalAccount") {
+            if (user?.userData?.usdWithdrawalAccount && user?.userData?.usdWithdrawalAccount !== "") {
+                setWithdrawalAccountNumber(user?.userData?.usdWithdrawalAccount)
+            } else {
+                setWithdrawalAccountNumber("");
+            }
+        }
+        else if (value === "audWithdrawalAccount") {
+            if (user?.userData?.audWithdrawalAccount && user?.userData?.audWithdrawalAccount !== "") {
+                setWithdrawalAccountNumber(user?.userData?.audWithdrawalAccount)
+            } else {
+                setWithdrawalAccountNumber("");
+            }
+        }
+    }
+
     const handleSubmit = () => {
+        if (accountType === "" || !accountType.trim()) {
+            alert('Please select an account type');
+            return
+        }
+        if (withdrawalAccountNumber === "" || !withdrawalAccountNumber.trim()) {
+            alert('You should provide an account number');
+            return
+        }
+        let userData = user?.userData;
+        userData[accountType] = withdrawalAccountNumber
+        Axios.post(`/api/users/update/${user.userData._id}`, userData)
         if (onClose) {
             onClose()
         }
+        setAccountType('');
+        setWithdrawalAccountNumber('');
     }
     const handleClose = () => {
         if (onClose) {
             onClose()
         }
+        setAccountType('');
+        setWithdrawalAccountNumber('');
     }
 
     return (
@@ -29,10 +71,11 @@ function WithdrawalDialog({ onClose, visible }) {
                     style={{ width: '100%', background: 'linear-gradient(90deg, #5B9EA4 -11.44%, #CADEEA 68.31%)' }}
                     placeholder="&nbsp;Select Account"
                     size={'large'}
+                    onChange={handleAccountChange}
                 >
-                    <Option value="NZD">&nbsp;NZD</Option>
-                    <Option value="USD">&nbsp;USD</Option>
-                    <Option value="AUD">&nbsp;AUD</Option>
+                    <Option value="nzdWithdrawalAccount">&nbsp;NZD</Option>
+                    <Option value="usdWithdrawalAccount">&nbsp;USD</Option>
+                    <Option value="audWithdrawalAccount">&nbsp;AUD</Option>
                 </Select>
                 <div style={{ height:'50px' }}/>
                 Available Funds

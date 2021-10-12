@@ -314,6 +314,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
             <WithdrawalDialog 
                 visible={withdrawalDialogVisible}
                 onClose={handleWithdrawalDialogClose}
+                user={user}
             />
             <DepositDialog 
                 visible={depositDialogVisible}
