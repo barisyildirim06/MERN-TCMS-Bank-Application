@@ -228,7 +228,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                                 <thead>
                                     <tr>
                                         <th style={{ width: '25%', textAlign: 'center' }}>Balance</th>
-                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance ? nzdAcc?.availableBalance + usdAcc?.availableBalance + audAcc?.availableBalance : null}$</th>
+                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? formatter.format(nzdAcc?.availableBalance + usdAcc?.availableBalance + audAcc?.availableBalance)  : null}</th>
                                         <th style={{ width: '10%' }}>Yield</th>
                                         <th style={{ width: '10%', textAlign: 'center' }}>0.00%</th>
                                     </tr>
@@ -240,19 +240,19 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                                 <tbody>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>${nzdAcc?.availableBalance}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? formatter.format(nzdAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>${usdAcc?.availableBalance}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{usdAcc?.availableBalance !==undefined ? formatter.format(usdAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>${audAcc?.availableBalance}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{audAcc?.availableBalance !==undefined ? formatter.format(audAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
@@ -262,7 +262,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                     </div>
                 }
                 {currentPage === 'Account' &&
-                    <div>
+                    <div className='accountContainer'>
                         <div className='accountCardTop'>
                             <div>{currentCurrency} Account</div>
                             <br />
@@ -321,7 +321,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                                 </div>
                             </div>
                             <div style={{ display:'flex', justifyContent: 'center' }}>
-                                <button className='dashboardNextButton' style={{ width: '240px' }} onClick={handleAccountTransactionHistoryClick}>Transaction History</button>
+                                <button className='dashboardNextButton' style={{ marginTop: '2vh', width: '240px' }} onClick={handleAccountTransactionHistoryClick}>Transaction History</button>
                             </div>
                         </div>
                         <div className='accountCardBottom'>
@@ -334,7 +334,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                             <div style={{ height: '2vh' }}/>
                             <Slider range defaultValue={[0,0]} onChange={handleSliderChange}/>
                             <div style={{ display:'flex', flexDirection:'row-reverse' }}>{`${persentage}%`}</div>
-                            <button className='dashboardNextButton' onClick={handleSubmit}>Submit</button>
+                            <button className='dashboardNextButton' style={{ marginTop: '2vh' }} onClick={handleSubmit}>Submit</button>
                         </div>
                     </div>
                 }
