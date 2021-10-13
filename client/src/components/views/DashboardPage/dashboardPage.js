@@ -13,13 +13,16 @@ import TransactionDialog from '../../../dialogs/transaction-dialog/transaction-d
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const [currentAccount, setCurrentAccount] = useState(null);
-    const [currentCurrency, setCurrentCurrency] = useState('NZD')
+    const [currentCurrency, setCurrentCurrency] = useState('NZD');
     const [amount, setAmount] = useState('');
     const [persentage, setPersentage] = useState(0);
     const [currentPage, setCurrentPage] = useState('Summary');
     const [withdrawalDialogVisible, setWithdrawalDialogVisible] = useState(false);
     const [depositDialogVisible, setDepositDialogVisible] = useState(false);
     const [transactionDialogVisible, setTransactionDialogVisible] = useState(false);
+    const [nzdAcc, setNzdAcc] = useState(null);
+    const [usdAcc, setUsdAcc] = useState(null);
+    const [audAcc, setAudAcc] = useState(null);
     const [transactionData, setTransactionData] = useState(general);
 
     const handleNavClose = useCallback(() => {
@@ -42,7 +45,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
 
     const handleNzdClick = () => {
         handleNavClose();
-        setCurrentAccount(nzdAccount)
+        setCurrentAccount(nzdAcc)
         setCurrentCurrency('NZD');
         setAmount('');
         setCurrentPage('Account');
@@ -50,14 +53,14 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
 
     const handleUsdClick = () => {
         handleNavClose();
-        setCurrentAccount(usdAccount)
+        setCurrentAccount(usdAcc)
         setCurrentCurrency('USD');
         setAmount('');
         setCurrentPage('Account');
     }
     const handleAudClick = () => {
         handleNavClose();
-        setCurrentAccount(audAccount)
+        setCurrentAccount(audAcc)
         setCurrentCurrency('AUD');
         setAmount('');
         setCurrentPage('Account');
@@ -82,12 +85,30 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const handleSliderChange = (value) => {
         setPersentage(value[1]);
         if(currentAccount?.availableBalance) {
-            setAmount(currentAccount.availableBalance * value[1] / 100)
+            setAmount((currentAccount.availableBalance * value[1] / 100)?.toFixed(2))
         }
     }
 
     const handleSubmit = () => {
-
+        let today = new Date().toISOString().split('T')[0]
+        const data = {
+            account: user?.userData?._id,
+            amount: amount * -1,
+            dateSubmitted: today,
+            status: 'Pending',
+            dateConfirmed: '',
+            currency: currentCurrency
+        }
+        axios.post(`/api/withdrawals/create`, data).then(res => {
+            if (res.data.success) {
+                const newPendingWithdrawal = currentAccount.pendingWithdrawls - amount;
+                const newAvailableBalance = currentAccount.availableBalance - amount;
+                setCurrentAccount({...currentAccount, pendingWithdrawls: newPendingWithdrawal, availableBalance: newAvailableBalance});
+                if (currentCurrency === 'NZD') setNzdAcc({...currentAccount, pendingWithdrawls: newPendingWithdrawal, availableBalance: newAvailableBalance});
+                if (currentCurrency === 'USD') setUsdAcc({...currentAccount, pendingWithdrawls: newPendingWithdrawal, availableBalance: newAvailableBalance});
+                if (currentCurrency === 'AUD') setAudAcc({...currentAccount, pendingWithdrawls: newPendingWithdrawal, availableBalance: newAvailableBalance});
+            }
+        })
     }
 
 
@@ -133,8 +154,11 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     }
 
     useEffect(() => {
-        setCurrentAccount(nzdAccount)
-    }, [nzdAccount]);
+        setCurrentAccount(nzdAccount);
+        setNzdAcc(nzdAccount);
+        setUsdAcc(usdAccount);
+        setAudAcc(audAccount);
+    }, [nzdAccount, usdAccount, audAccount]);
 
     useEffect(() => {
         if (isBigEnough) {
@@ -200,7 +224,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                                 <thead>
                                     <tr>
                                         <th style={{ width: '25%', textAlign: 'center' }}>Balance</th>
-                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAccount?.availableBalance ? nzdAccount?.availableBalance + usdAccount?.availableBalance + audAccount?.availableBalance : null}$</th>
+                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance ? nzdAcc?.availableBalance + usdAcc?.availableBalance + audAcc?.availableBalance : null}$</th>
                                         <th style={{ width: '10%' }}>Yield</th>
                                         <th style={{ width: '10%', textAlign: 'center' }}>0.00%</th>
                                     </tr>
@@ -212,19 +236,19 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
                                 <tbody>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>${nzdAccount?.availableBalance}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>${nzdAcc?.availableBalance}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>${usdAccount?.availableBalance}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>${usdAcc?.availableBalance}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>${audAccount?.availableBalance}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>${audAcc?.availableBalance}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
