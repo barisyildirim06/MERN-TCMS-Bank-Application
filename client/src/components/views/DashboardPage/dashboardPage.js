@@ -90,6 +90,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     }
 
     const handleSubmit = () => {
+        if (amount === 0 || amount === '') {
+            alert('Please provide any amount');
+            return;
+        }
         let today = new Date().toISOString().split('T')[0]
         const data = {
             account: user?.userData?._id,
