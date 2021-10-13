@@ -68,7 +68,7 @@ export default function (SpecificComponent) {
         }, [props.user])
 
         return (
-            <SpecificComponent {...props} transactData={transactData} general={general} withdrawal={withdrawal} nzdAccount={nzdAccount} usdAccount={usdAccount} audAccount={audAccount}/>
+            <SpecificComponent {...props} history={props.history} transactData={transactData} general={general} withdrawal={withdrawal} nzdAccount={nzdAccount} usdAccount={usdAccount} audAccount={audAccount}/>
         )
     }
     return GeneralProvider

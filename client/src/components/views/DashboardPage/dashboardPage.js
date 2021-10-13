@@ -11,7 +11,7 @@ import DepositDialog from '../../../dialogs/deposit-dialog/deposit-dialog';
 import TransactionDialog from '../../../dialogs/transaction-dialog/transaction-dialog';
 
 
-function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general, transactData}) {
+function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, transactData}) {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [currentCurrency, setCurrentCurrency] = useState('NZD');
     const [amount, setAmount] = useState('');
@@ -74,10 +74,14 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general, tran
         setWithdrawalDialogVisible(false);
     }
 
-    const logoutHandler = () => {
+    const logoutHandler = async () => {
         handleNavClose();
-        axios.get(`${USER_SERVER}/logout`).then(response => {
-            
+        await axios.get(`${USER_SERVER}/logout`).then(response => {
+            if (response.status === 200) {
+                history.push("/login");
+            } else {
+                alert('Log Out Failed')
+            }
         });
     };
     
@@ -192,7 +196,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general, tran
                     <div style={{ height: '2vh' }}/>
                     <p style={{ height: '25vh' }}><a href={() => false} onClick={handleSummaryClick}>Summary</a><a href={() => false} onClick={handleNzdClick}>NZD</a><a href={() => false} onClick={handleUsdClick}>USD</a><a href={() => false} onClick={handleAudClick}>AUD</a><a href={() => false} onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a href={() => false} onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a href={() => false} onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                     <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
-                        <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                        <a href = {() => false} style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</a>
                         <a href = {() => false} onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                         <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
                     </div>
@@ -211,7 +215,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general, tran
                 <div style={{ height: '2vh' }}/>
                 <p style={{ height: '25vh' }}><a href={() => false} onClick={handleSummaryClick}>Summary</a><a href={() => false} onClick={handleNzdClick}>NZD</a><a href={() => false} onClick={handleUsdClick}>USD</a><a href={() => false} onClick={handleAudClick}>AUD</a><a href={() => false} onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a href={() => false} onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a href={() => false} onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
                 <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
-                    <Link to='/login' style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</Link>
+                    <a href = {() => false} style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</a>
                     <a href = {() => false} onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                         <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
                 </div>
