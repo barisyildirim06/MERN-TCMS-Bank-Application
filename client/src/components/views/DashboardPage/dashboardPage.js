@@ -11,7 +11,7 @@ import DepositDialog from '../../../dialogs/deposit-dialog/deposit-dialog';
 import TransactionDialog from '../../../dialogs/transaction-dialog/transaction-dialog';
 
 
-function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
+function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general, transactData}) {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [currentCurrency, setCurrentCurrency] = useState('NZD');
     const [amount, setAmount] = useState('');
@@ -23,7 +23,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     const [nzdAcc, setNzdAcc] = useState(null);
     const [usdAcc, setUsdAcc] = useState(null);
     const [audAcc, setAudAcc] = useState(null);
-    const [transactionData, setTransactionData] = useState(general);
+    const [transactionData, setTransactionData] = useState(transactData);
 
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
@@ -132,13 +132,13 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
     }
 
     const handleTransactionDialogClose = () => {
-        setTransactionData(general);
+        setTransactionData(transactData);
         handleNavClose();
         setTransactionDialogVisible(false);
     }
 
     const handleAccountTransactionHistoryClick = () => {
-        setTransactionData(general?.filter(el => el.currency === currentCurrency));
+        setTransactionData(transactData?.filter(el => el.currency === currentCurrency));
         handleNavClose();
         setTransactionDialogVisible(true);
     }
@@ -162,7 +162,8 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, general }) {
         setNzdAcc(nzdAccount);
         setUsdAcc(usdAccount);
         setAudAcc(audAccount);
-    }, [nzdAccount, usdAccount, audAccount]);
+        setTransactionData(transactData);
+    }, [nzdAccount, usdAccount, audAccount, transactData]);
 
     useEffect(() => {
         if (isBigEnough) {

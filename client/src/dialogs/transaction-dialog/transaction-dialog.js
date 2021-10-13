@@ -23,10 +23,10 @@ function TransactionDialog({ onClose, visible, transactionData, currentCurrency 
                     <br />
                     {transactionData?.map(el => {
                             return (<tr>
-                                <td>{el.transactionDate}</td>
-                                <td>{el.transactionType}</td>
-                                <td>{el.amount}</td>
-                                <td>{el.currency}</td>
+                                <td>{el?.transactionDate}</td>
+                                <td>{el?.transactionType}</td>
+                                <td>{el?.amount}</td>
+                                <td>{el?.currency}</td>
                             </tr>)
                         })
                     }

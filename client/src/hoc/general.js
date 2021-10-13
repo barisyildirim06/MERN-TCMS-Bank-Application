@@ -52,6 +52,15 @@ export default function (SpecificComponent) {
             }
         }
 
+        const newWithdrawals = withdrawal?.map(el => {
+            return {
+                ...el,
+                transactionDate: el.dateSubmitted,
+                transactionType: el.status === 'Confirmed' ? 'WITHDRAWAL' : 'PENDING WITHDRAWAL'
+            }
+        }) 
+        let transactData = general?.concat(newWithdrawals)
+
         useEffect(() => {
             //To know my current status, send Auth request 
             dispatch(getGeneral(props?.user?.userData?._id))
@@ -59,7 +68,7 @@ export default function (SpecificComponent) {
         }, [props.user])
 
         return (
-            <SpecificComponent {...props} general={general} nzdAccount={nzdAccount} usdAccount={usdAccount} audAccount={audAccount}/>
+            <SpecificComponent {...props} transactData={transactData} general={general} withdrawal={withdrawal} nzdAccount={nzdAccount} usdAccount={usdAccount} audAccount={audAccount}/>
         )
     }
     return GeneralProvider
