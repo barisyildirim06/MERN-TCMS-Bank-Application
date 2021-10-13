@@ -6,7 +6,7 @@ const {generalLedgerIndex, generalLedgerCreate, } = require('../controllers/gene
 //             Product
 //=================================
 
-router.get("/",generalLedgerIndex);
+router.post("/",generalLedgerIndex);
 
 router.post("/create", generalLedgerCreate);
 

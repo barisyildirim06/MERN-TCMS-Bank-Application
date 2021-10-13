@@ -15,8 +15,9 @@ export function createWithdrawal(dataToSubmit){
     }
 }
 
-export function getWithdrawal(dataToSubmit){
-    const request = axios.get(`${WITHDRAWAL_SERVER}/`,dataToSubmit)
+export function getWithdrawal(userID){
+    const data = { userID }
+    const request = axios.post(`${WITHDRAWAL_SERVER}/`,data)
     .then(response => response.data);
     
     return {

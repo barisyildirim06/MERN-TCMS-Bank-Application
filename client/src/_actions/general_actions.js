@@ -15,8 +15,9 @@ export function createGeneral(dataToSubmit){
     }
 }
 
-export function getGeneral(dataToSubmit){
-    const request = axios.get(`${GENERAL_SERVER}/`,dataToSubmit)
+export function getGeneral(userID){
+    const data = { userID }
+    const request = axios.post(`${GENERAL_SERVER}/`,data)
     .then(response => response.data);
     
     return {

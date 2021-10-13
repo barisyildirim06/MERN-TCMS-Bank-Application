@@ -6,7 +6,7 @@ const {pendingWithdrawalIndex, pendingWithdrawalCreate, } = require('../controll
 //             Product
 //=================================
 
-router.get("/",pendingWithdrawalIndex);
+router.post("/",pendingWithdrawalIndex);
 
 router.post("/create", pendingWithdrawalCreate);
 

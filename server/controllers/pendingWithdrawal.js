@@ -12,7 +12,7 @@ module.exports = {
 
     },
     pendingWithdrawalIndex(req,res,next) {
-        PendingWithdrawal.find()
+        PendingWithdrawal.find({ account: req.body.userID })
         .then(withdrawals => res.json(withdrawals))
         .catch(err => res.status(400).json('Error: ' + err));
     },

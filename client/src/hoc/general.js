@@ -54,9 +54,9 @@ export default function (SpecificComponent) {
 
         useEffect(() => {
             //To know my current status, send Auth request 
-            dispatch(getGeneral())
-            dispatch(getWithdrawal())
-        }, [])
+            dispatch(getGeneral(props?.user?.userData?._id))
+            dispatch(getWithdrawal(props?.user?.userData?._id))
+        }, [props.user])
 
         return (
             <SpecificComponent {...props} general={general} nzdAccount={nzdAccount} usdAccount={usdAccount} audAccount={audAccount}/>
