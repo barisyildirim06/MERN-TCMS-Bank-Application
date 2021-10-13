@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { USER_SERVER } from '../../Config';
 import NavBar from '../NavBar/NavBar'
-import { Slider, Modal } from 'antd';
+import { Upload, Slider, Modal } from 'antd';
 import { useMediaQuery } from 'react-responsive'
 import WithdrawalDialog from '../../../dialogs/withdrawal-dialog/withdrawal-dialog';
 import DepositDialog from '../../../dialogs/deposit-dialog/deposit-dialog';
@@ -24,7 +24,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const [usdAcc, setUsdAcc] = useState(null);
     const [audAcc, setAudAcc] = useState(null);
     const [transactionData, setTransactionData] = useState(transactData);
-
+    const [image, setImage] = useState('');
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
         document.getElementById("marginLeft").style.paddingLeft = "0px"
@@ -161,13 +161,27 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
           });
     }
 
+    const test = {
+        name: 'file',
+        action: '/api/users/uploadImage',
+        headers: {
+          authorization: 'authorization-text',
+        },
+        onChange(info) {
+            console.log(info?.fileList[0]?.response?.fileName)
+            setImage(info?.fileList[0]?.response? info.fileList[0].response.fileName : '')
+            axios.post(`/api/users/update/${user.userData._id}`, {...user?.userData, image: info?.fileList[0]?.response?.fileName})
+        },
+    };
+
     useEffect(() => {
         setCurrentAccount(nzdAccount);
         setNzdAcc(nzdAccount);
         setUsdAcc(usdAccount);
         setAudAcc(audAccount);
         setTransactionData(transactData);
-    }, [nzdAccount, usdAccount, audAccount, transactData]);
+        setImage(user?.userData?.image)
+    }, [nzdAccount, usdAccount, audAccount, transactData, user]);
 
     useEffect(() => {
         if (isBigEnough) {
@@ -185,9 +199,11 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                     <div style={{ height: '7vh', display: 'flex', alignItems:'center', justifyContent:'end' }}>
                         <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleNavClose}>X</button>
                     </div>
-                    <div style={{ height: '12vh' }}>
-                        <img src={`/client/public/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
-                    </div>
+                    <Upload {...test} showUploadList={{ showRemoveIcon : false}}>
+                        <div style={{ height: '12vh' }}>
+                                <img src={`/client/public/static/img/${image ? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                        </div>
+                    </Upload>
                     <div style={{ height: '2vh' }}/>
                     <div style={{ height: '15vh' }}>
                         <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
@@ -204,9 +220,11 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
             </div>
             <div className='dashboardLeftNav'>
                 <div style={{ height: '7vh' }}/>
-                <div style={{ height: '12vh' }}>
-                    <img src={`/client/public/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
-                </div>
+                <Upload {...test} showUploadList={false}>
+                    <div style={{ height: '12vh' }}>
+                        <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                    </div>
+                </Upload>
                 <div style={{ height: '2vh' }}/>
                 <div style={{ height: '15vh' }}>
                     <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
@@ -223,9 +241,11 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
             <div className='dashboardRight'>
                 {currentPage === 'Summary' &&
                     <div className='accountCardTop' style={{ height: '450px' }}>
-                        <div style={{ height: '12vh', marginTop: '2vh' }}>
-                            <img src={`/client/public/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
-                        </div>
+                        <Upload {...test} showUploadList={false}>
+                            <div style={{ height: '12vh', marginTop: '2vh' }}>
+                                <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                            </div>
+                        </Upload>
                         <div style={{fontSize: '16px', color: 'black', marginTop: '2vh', fontWeight:'bold'}}>{user?.userData?.companyName}</div>
                         <br />
                         <div>
