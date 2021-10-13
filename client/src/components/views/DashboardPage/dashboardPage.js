@@ -186,7 +186,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                         <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleNavClose}>X</button>
                     </div>
                     <div style={{ height: '12vh' }}>
-                        <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                        <img src={`/client/public/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                     </div>
                     <div style={{ height: '2vh' }}/>
                     <div style={{ height: '15vh' }}>
@@ -205,7 +205,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
             <div className='dashboardLeftNav'>
                 <div style={{ height: '7vh' }}/>
                 <div style={{ height: '12vh' }}>
-                    <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                    <img src={`/client/public/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                 </div>
                 <div style={{ height: '2vh' }}/>
                 <div style={{ height: '15vh' }}>
@@ -224,7 +224,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 {currentPage === 'Summary' &&
                     <div className='accountCardTop' style={{ height: '450px' }}>
                         <div style={{ height: '12vh', marginTop: '2vh' }}>
-                            <img src={`/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                            <img src={`/client/public/static/img/${user?.userData?.image? user?.userData?.image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                         </div>
                         <div style={{fontSize: '16px', color: 'black', marginTop: '2vh', fontWeight:'bold'}}>{user?.userData?.companyName}</div>
                         <br />
