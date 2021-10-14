@@ -9,6 +9,7 @@ import { useMediaQuery } from 'react-responsive'
 import WithdrawalDialog from '../../../dialogs/withdrawal-dialog/withdrawal-dialog';
 import DepositDialog from '../../../dialogs/deposit-dialog/deposit-dialog';
 import TransactionDialog from '../../../dialogs/transaction-dialog/transaction-dialog';
+import ProgressView from '../../progress-view'
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, transactData}) {
@@ -25,6 +26,8 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const [audAcc, setAudAcc] = useState(null);
     const [transactionData, setTransactionData] = useState(transactData);
     const [image, setImage] = useState('');
+    const [progressViewVisible, setProgressViewVisible] = useState(false);
+
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
         document.getElementById("marginLeft").style.paddingLeft = "0px"
@@ -39,31 +42,39 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     });
 
     const handleSummaryClick = () => {
+        setProgressViewVisible(true);
         handleNavClose();
         setCurrentPage('Summary');
+        setTimeout(() => setProgressViewVisible(false), 500);
     }
-
+    
     const handleNzdClick = () => {
+        setProgressViewVisible(true);
         handleNavClose();
         setCurrentAccount(nzdAcc)
         setCurrentCurrency('NZD');
         setAmount('');
         setCurrentPage('Account');
+        setTimeout(() => setProgressViewVisible(false), 500);
     }
-
+    
     const handleUsdClick = () => {
+        setProgressViewVisible(true);
         handleNavClose();
         setCurrentAccount(usdAcc)
         setCurrentCurrency('USD');
         setAmount('');
         setCurrentPage('Account');
+        setTimeout(() => setProgressViewVisible(false), 500);
     }
     const handleAudClick = () => {
+        setProgressViewVisible(true);
         handleNavClose();
         setCurrentAccount(audAcc)
         setCurrentCurrency('AUD');
         setAmount('');
         setCurrentPage('Account');
+        setTimeout(() => setProgressViewVisible(false), 500);
     }
 
     const handleWithdrawalDialogClick = () => {
@@ -378,6 +389,9 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 currentCurrency={currentCurrency}
                 onClose={handleTransactionDialogClose}
                 transactionData={transactionData}
+            />
+            <ProgressView 
+                visible={progressViewVisible}
             />
         </div>
     )

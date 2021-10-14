@@ -1,0 +1,55 @@
+.progress-view {
+    align-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    transition: all 0.4s ease-out;
+    z-index: 99;
+}
+
+@keyframes progress-view-spin {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
+}
+
+.circle-1 {
+    animation: progress-view-spin 1s linear infinite;
+    border: 3px solid transparent;
+    border-radius: 130px;
+    border-top-color: #3498db;
+    border-right-color: #3498db;
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+}
+
+.circle-2 {
+    animation: progress-view-spin 1.5s linear infinite;
+    border: 3px solid transparent;
+    border-radius: 115px;
+    border-top-color: #e74c3c;
+    border-right-color: #e74c3c;
+    display: block;
+    width: 115px;
+    height: 115px;
+    position: absolute;
+}
+
+.circle-3 {
+    animation: progress-view-spin 0.5s linear infinite;
+    border: 3px solid transparent;
+    border-radius: 100px;
+    border-top-color: #f9c922;
+    border-right-color: #f9c922;
+    display: block;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+}

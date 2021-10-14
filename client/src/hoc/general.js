@@ -55,8 +55,8 @@ export default function (SpecificComponent) {
         const newWithdrawals = withdrawal?.map(el => {
             return {
                 ...el,
-                transactionDate: el.dateSubmitted,
-                transactionType: el.status === 'Confirmed' ? 'WITHDRAWAL' : 'PENDING WITHDRAWAL'
+                transactionDate: el?.dateSubmitted,
+                transactionType: el?.status === 'Confirmed' ? 'WITHDRAWAL' : 'PENDING WITHDRAWAL'
             }
         }) 
         let transactData = general?.concat(newWithdrawals)
