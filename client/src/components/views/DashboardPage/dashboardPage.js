@@ -10,6 +10,7 @@ import WithdrawalDialog from '../../../dialogs/withdrawal-dialog/withdrawal-dial
 import DepositDialog from '../../../dialogs/deposit-dialog/deposit-dialog';
 import TransactionDialog from '../../../dialogs/transaction-dialog/transaction-dialog';
 import ProgressView from '../../progress-view'
+import { EditOutlined } from '@ant-design/icons'
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, transactData}) {
@@ -179,18 +180,26 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
           authorization: 'authorization-text',
         },
         onChange(info) {
-            console.log(info?.fileList[0]?.response?.fileName)
+            setProgressViewVisible(true);
             setImage(info?.fileList[0]?.response? info.fileList[0].response.fileName : '')
-            axios.post(`/api/users/update/${user.userData._id}`, {...user?.userData, image: info?.fileList[0]?.response?.fileName})
+            axios.post(`/api/users/update/${user.userData._id}`, {...user?.userData, image: info?.fileList[0]?.response?.fileName}).then(res => {
+                if(res.status === 200) {
+                    setProgressViewVisible(false);
+                }
+            })
         },
     };
 
     useEffect(() => {
+        setProgressViewVisible(true);
         setCurrentAccount(nzdAccount);
         setNzdAcc(nzdAccount);
         setUsdAcc(usdAccount);
         setAudAcc(audAccount);
         setTransactionData(transactData);
+        if (nzdAccount?.availableBalance !== undefined && usdAccount?.availableBalance !== undefined && audAccount?.availableBalance !== undefined) {
+            setTimeout(() => setProgressViewVisible(false), 500);
+        }
         setImage(user?.userData?.image)
     }, [nzdAccount, usdAccount, audAccount, transactData, user]);
 
@@ -210,12 +219,12 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                     <div style={{ height: '7vh', display: 'flex', alignItems:'center', justifyContent:'end' }}>
                         <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleNavClose}>X</button>
                     </div>
-                    <Upload {...test} showUploadList={{ showRemoveIcon : false}}>
-                        <div style={{ height: '12vh' }}>
-                                <img src={`/client/public/static/img/${image ? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
-                        </div>
-                    </Upload>
-                    <div style={{ height: '2vh' }}/>
+                    <div style={{ height: '14vh' }}>
+                        <img src={`/client/public/static/img/${image ? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                        <Upload {...test} showUploadList={{ showRemoveIcon : false}}>
+                            <div><EditOutlined style={{ fontSize: '2vh', cursor: 'pointer' }}/></div>
+                        </Upload>
+                    </div>
                     <div style={{ height: '15vh' }}>
                         <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
                         {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
@@ -231,12 +240,12 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
             </div>
             <div className='dashboardLeftNav'>
                 <div style={{ height: '7vh' }}/>
-                <Upload {...test} showUploadList={false}>
-                    <div style={{ height: '12vh' }}>
-                        <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
-                    </div>
-                </Upload>
-                <div style={{ height: '2vh' }}/>
+                <div style={{ height: '14vh' }}>
+                    <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                    <Upload {...test} showUploadList={false}>
+                        <div><EditOutlined style={{ fontSize: '2vh', cursor: 'pointer' }}/></div>
+                    </Upload>
+                </div>
                 <div style={{ height: '15vh' }}>
                     <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
@@ -252,11 +261,12 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
             <div className='dashboardRight'>
                 {currentPage === 'Summary' &&
                     <div className='accountCardTop' style={{ height: '450px' }}>
-                        <Upload {...test} showUploadList={false}>
-                            <div style={{ height: '12vh', marginTop: '2vh' }}>
-                                <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
-                            </div>
-                        </Upload>
+                        <div style={{ height: '12vh', marginTop: '2vh' }}>
+                            <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                            <Upload {...test} showUploadList={false}>
+                                <div><EditOutlined style={{ fontSize: '2vh', cursor: 'pointer' }}/></div>
+                            </Upload>
+                        </div>
                         <div style={{fontSize: '16px', color: 'black', marginTop: '2vh', fontWeight:'bold'}}>{user?.userData?.companyName}</div>
                         <br />
                         <div>
