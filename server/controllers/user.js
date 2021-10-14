@@ -18,6 +18,7 @@ module.exports = {
             user.nzdWithdrawalAccount = req.body.nzdWithdrawalAccount;
             user.usdWithdrawalAccount = req.body.usdWithdrawalAccount;
             user.audWithdrawalAccount = req.body.audWithdrawalAccount;
+            user.idimage = req.body.idimage;
 
             user.save()
             .then(() => res.json('user updated!'))

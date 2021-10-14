@@ -58,6 +58,7 @@ router.get("/auth", auth, (req, res) => {
         nzdWithdrawalAccount: req.user.nzdWithdrawalAccount,
         usdWithdrawalAccount: req.user.usdWithdrawalAccount,
         audWithdrawalAccount: req.user.audWithdrawalAccount,
+        idimage: req.user.idimage,
     });
 });
 

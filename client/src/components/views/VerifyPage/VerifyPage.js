@@ -13,7 +13,7 @@ function VerifyPage(props) {
         agentFirstName: '',
         agentLastName: '',
         agentJobTitle: '',
-        image: ''
+        idimage: ''
     });
 
     const handleChange = (e, param) => {
@@ -79,7 +79,7 @@ function VerifyPage(props) {
         },
         onChange(info) {
             setFileList(info.fileList.slice(-1))
-            setValues(prevState => prevState = {...prevState, image: info?.fileList[0]?.response? info.fileList[0].response.fileName : ''})
+            setValues(prevState => prevState = {...prevState, idimage: info?.fileList[0]?.response? info.fileList[0].response.fileName : ''})
         },
     };
     useEffect(() => {

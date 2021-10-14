@@ -32,6 +32,9 @@ const userSchema = mongoose.Schema({
     image: {
         type: String
     },
+    idimage: {
+        type: String
+    },
     token : {
         type: String,
     },
