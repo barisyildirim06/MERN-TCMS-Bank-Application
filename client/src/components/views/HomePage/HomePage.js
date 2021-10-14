@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './HomePage.css'
 import NavBar from '../NavBar/NavBar'
-import {Input} from 'antd'
+import { Input } from 'antd'
+import { ArrowRightOutlined } from '@ant-design/icons';
+import Axios from 'axios';
 
 function HomePage() {
+    const [subscriberEmail, setSubscriberEmail] = useState("");
+
+    const handleSubscribeEmailChange = (e) => {
+        setSubscriberEmail(e.target.value)
+    }
+
+    const handleSubscribeClick = () => {
+        const data = {
+            email: subscriberEmail
+        }
+        Axios.post('/api/subscribers/create', data).then(res => {
+            if (res.data.success) {
+                alert('Your email successfully added to our subscriber list')
+            }
+        })
+    }
+
     return (
         <div>
             <NavBar />
@@ -22,7 +41,7 @@ function HomePage() {
                     </p>
                     <p className='letUsKnowText'>Let us know if you are interested</p>
                     <div className='subscribeInputContainer'>
-                        <Input placeholder='Email Address' type="text" className='subscribeInput' />
+                        <Input value={subscriberEmail} onChange={handleSubscribeEmailChange} placeholder='Email Address' type="text" suffix={<ArrowRightOutlined onClick={handleSubscribeClick} />} className='subscribeInput' />
                     </div>
                 </div>
             </div>
@@ -149,7 +168,7 @@ function HomePage() {
                 </div>
                 <br />
                 <div className='subscribeInputContainer' style={{ marginLeft:'10vw' }}>
-                    <Input placeholder='Email Address' type="text" className='subscribeInput' />
+                    <Input value={subscriberEmail} onChange={handleSubscribeEmailChange} placeholder='Email Address' type="text" suffix={<ArrowRightOutlined onClick={handleSubscribeClick} />} className='subscribeInput' />
                 </div>
             </div>
             <div style={{ position:'absolute', top:'413vh' , height: '33vh' }}>

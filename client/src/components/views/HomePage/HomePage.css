@@ -316,6 +316,7 @@
     background: #FFFFFF;
     box-shadow: 6px 9px 40px 3px #00FFD1;
     min-height: 5vh;
+    height: 5vh;
     font-size: 20px;
     font-weight: bold;
 }
