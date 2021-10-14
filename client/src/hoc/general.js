@@ -58,8 +58,9 @@ export default function (SpecificComponent) {
                 transactionDate: el?.dateSubmitted,
                 transactionType: el?.status === 'Confirmed' ? 'WITHDRAWAL' : 'PENDING WITHDRAWAL'
             }
-        }) 
-        let transactData = general?.concat(newWithdrawals)
+        })
+        let transactData = general;
+        if (general && newWithdrawals) transactData = general?.concat(newWithdrawals)
 
         useEffect(() => {
             //To know my current status, send Auth request 
