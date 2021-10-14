@@ -67,7 +67,7 @@ function HomePage() {
                     <div className='getToKnowUsText'>
                         GET TO KNOW US
                     </div>
-                    <div className='advisoryBoardText'>
+                    <div className='advisoryBoardText' style={{flexDirection: 'row'}}>
                         ADVISORY BOARD
                     </div>
                 </div>
