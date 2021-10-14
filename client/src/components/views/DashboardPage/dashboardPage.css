@@ -116,6 +116,7 @@ p a {
 .withdrawlInput {
     outline: 0;
     display: flex;
+    padding-right: 25px;
     flex-direction: row-reverse;
     text-align: right;
     border-width: 0 0 2px;

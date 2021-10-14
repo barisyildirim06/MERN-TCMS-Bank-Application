@@ -7,12 +7,21 @@ const { Option } = Select;
 function WithdrawalDialog({ onClose, visible, user }) {
     const [withdrawalAccountNumber, setWithdrawalAccountNumber] = useState("");
     const [accountType, setAccountType] = useState('');
+    const [disabled, setDisabled] = useState(true);
+    const [isEditMode, setIsEditMode] = useState(true);
     const handleWithdrawalAccountNumberChange = (e) => {
         setWithdrawalAccountNumber(e.target.value)
     }
 
+    const handleEditClick = () => {
+        setDisabled(false);
+        setIsEditMode(false);
+    }
+
     const handleAccountChange = (value) => {
         setAccountType(value);
+        setDisabled(true);
+        setIsEditMode(true);
         if (value === "nzdWithdrawalAccount") {
             if (user?.userData?.nzdWithdrawalAccount && user?.userData?.nzdWithdrawalAccount !== "") {
                 setWithdrawalAccountNumber(user?.userData?.nzdWithdrawalAccount)
@@ -37,6 +46,8 @@ function WithdrawalDialog({ onClose, visible, user }) {
     }
 
     const handleSubmit = () => {
+        setDisabled(true);
+        setIsEditMode(true);
         if (accountType === "" || !accountType.trim()) {
             alert('Please select an account type');
             return
@@ -55,6 +66,8 @@ function WithdrawalDialog({ onClose, visible, user }) {
         setWithdrawalAccountNumber('');
     }
     const handleClose = () => {
+        setDisabled(true);
+        setIsEditMode(true);
         if (onClose) {
             onClose()
         }
@@ -80,13 +93,14 @@ function WithdrawalDialog({ onClose, visible, user }) {
                 <div style={{ height:'50px' }}/>
                 Available Funds
                 <div style={{ height:'50px' }}/>
-                {/* <div className='withdrawalInputContainer'> */}
-                    <input value={withdrawalAccountNumber} onChange={handleWithdrawalAccountNumberChange} placeholder={`Account Number`} className='withdrawlInput' width='100%'/>
-                {/* </div> */}
+                <input value={withdrawalAccountNumber} disabled={user?.userData && user?.userData[`${accountType}`] !== '' && user?.userData[`${accountType}`] !== undefined ? disabled : false} onChange={handleWithdrawalAccountNumberChange} placeholder={`Account Number`} className='withdrawlInput' width='100%'/>
                 <br />
                 <br />
                 <div style={{  display:'flex', justifyContent:'center', flexDirection: 'column', alignItems:'center' }}>
-                    <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleSubmit}>Submit</button>
+                    {!(user?.userData && user?.userData[`${accountType}`] !== '' && user?.userData[`${accountType}`] !== undefined && isEditMode) ?
+                        <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleSubmit}>Submit</button>
+                        :<button className='dashboardNextButton' style={{ margin: '0', backgroundColor: '#f0ad4e' }} onClick={handleEditClick}>Edit</button>
+                    }
                     *24 hours stand down
                 </div>
             </div>
