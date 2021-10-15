@@ -1,7 +1,6 @@
 @media (max-width: 1000px) {
     .accountContainer {
         padding-top: 15vh;
-        height: 125vh;
     }
     #dashboardContainer {
         height: 120vh;
@@ -31,9 +30,9 @@
         height: 100vh;
         grid-template-columns: 13% 87%;
     }
-    .accountContainer {
+    /* .accountContainer {
         height: 100vh;
-    }
+    } */
     .accountCardTop{
         padding: 10px 50px;
         height: 29rem;
@@ -87,9 +86,12 @@
     justify-content: space-evenly;
 }
 .accountCardTop{
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     background-color: white;
 }
 .accountCardBottom{
+    margin-bottom: 5vh;
     background-color: white;
 }
 .accountCardRows{
