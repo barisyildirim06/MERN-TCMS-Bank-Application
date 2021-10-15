@@ -128,11 +128,18 @@
         line-height: 40px;
         letter-spacing: 0.1em;
     }
+    .cardsListGrid {
+        grid-gap: 1.5vw;
+        margin: 0 2vw 0 2vw
+    }
 }
-
 @media (min-width: 1000px) {
     .mobileCard, .mobileWhatWeDo {
         display: none;
+    }
+    .cardsListGrid {
+        grid-gap: 1.5vw;
+        margin: 0 2vw 0 2vw
     }
     .headerTextContainer {
         flex-direction: row;
@@ -190,11 +197,11 @@
         font-size: 36px;
     }
     .getToKnowUsTextContainer{
-        height: 12vh;
+        height: 120px;
     }
     .getToKnowUsText {
-        line-height: 80px;
-        font-size: 72px;
+        line-height: 50px;
+        font-size: 40px;
     }
     .background2SmallScreens{
         display: none;
@@ -265,6 +272,48 @@
         font-size: 40px;
         line-height: 48px;
         letter-spacing: 0.195em;
+    }
+    .gridContainer2080text0{
+        font-size: 40px;
+    }
+    .thirdItem {
+        display: none;
+    }
+    .cardsListGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media only screen and (min-width: 1300px) {
+    .gridContainer2080text0{
+        font-size: 50px;
+    }
+    .getToKnowUsText {
+        line-height: 60px;
+        font-size: 50px;
+    }
+}
+@media only screen and (min-width: 1500px) {
+    .gridContainer2080text0{
+        font-size: 60px;
+    }
+    .getToKnowUsText {
+        line-height: 70px;
+        font-size: 60px;
+    }
+    .cardsListGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .thirdItem {
+        display: grid;
+    }
+}
+@media only screen and (min-width: 1750px) {
+    .gridContainer2080text0{
+        font-size: 72px;
+    }
+    .cardsListGrid {
+        grid-gap: 3.5vw;
+        margin: 0 5vw 0 5vw
     }
 }
 
@@ -374,7 +423,6 @@
     background: linear-gradient(206.91deg, rgba(255, 93, 0, 0.76) 4.12%, rgba(3, 33, 51, 0.76) 44.59%);
     transform: rotate(-180deg);
 }
-
 .whatWeDo {
     position: absolute;
     top: 73vh;
@@ -404,7 +452,7 @@
     text-align: right;
     margin-right: 2vw;
     font-weight: 400;
-    font-size: 72px;
+    /* font-size: 72px; */
     letter-spacing: 1vw;
 }
 .whiteFlexContainer{
@@ -414,7 +462,7 @@
 
 .getToKnowUs {
     position: absolute;
-    top: 240vh;
+    top: 230vh;
     width: 80vw;
     margin: 0px 10vw;
     display: grid;
@@ -443,13 +491,11 @@
 
 .cardsListGrid {
     display: grid;
-    grid-gap: 3.5vw;
-    margin: 0 5vw 0 5vw
 }
 
 .cardStyle{
     background-color: #c5cfd5;
-    height: 38vh;
+    height: 100%;
     grid-template-columns: repeat(2, minmax(0, 1fr))
 }
 

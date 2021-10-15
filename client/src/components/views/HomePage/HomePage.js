@@ -67,7 +67,7 @@ function HomePage() {
                     <div className='getToKnowUsText'>
                         GET TO KNOW US
                     </div>
-                    <div className='advisoryBoardText' style={{flexDirection: 'row'}}>
+                    <div style={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'start', marginLeft: '5vw', fontFamily:'sans-serif', fontStyle: 'normal', fontWeight: '400', fontSize: '2vw', lineHeight: '2vh', letterSpacing: '0.5vw', color: '#000005' }}>
                         ADVISORY BOARD
                     </div>
                 </div>
@@ -90,7 +90,7 @@ function HomePage() {
                             <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
                         </div>
                     </div>
-                    <div className='cardStyle'>
+                    <div className='thirdItem cardStyle'>
                         <div className='cardImage2'>JAMES
                         </div>
                         <div className='cardTextArea'>
@@ -147,7 +147,7 @@ function HomePage() {
                             <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
                         </div>
                     </div>
-                    <div className='cardStyle'>
+                    <div className='thirdItem cardStyle'>
                         <div className='cardImage5'>NATHAN
                         </div>
                         <div className='cardTextArea'>
