@@ -220,7 +220,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                         <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleNavClose}>X</button>
                     </div>
                     <div style={{ height: '14vh' }}>
-                        <img src={`/client/public/static/img/${image ? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                        <img src={`/client/public/static/img/${image ? image : 'user.png'}`} alt="" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                         <Upload {...test} showUploadList={{ showRemoveIcon : false}}>
                             <div><EditOutlined style={{ fontSize: '2vh', cursor: 'pointer' }}/></div>
                         </Upload>
@@ -241,7 +241,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
             <div className='dashboardLeftNav'>
                 <div style={{ height: '7vh' }}/>
                 <div style={{ height: '14vh' }}>
-                    <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                    <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                     <Upload {...test} showUploadList={false}>
                         <div><EditOutlined style={{ fontSize: '2vh', cursor: 'pointer' }}/></div>
                     </Upload>
@@ -262,7 +262,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 {currentPage === 'Summary' &&
                     <div className='accountCardTop' style={{ height: '450px' }}>
                         <div style={{ height: '12vh', marginTop: '2vh' }}>
-                            <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="12344" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
+                            <img src={`/client/public/static/img/${image? image : 'user.png'}`} alt="" style={{ color: '#e7eced', backgroundColor: 'grey', height:'12vh', width: '12vh', padding:'1vh 1vh 1vh 1vh', borderRadius: '50%' }}/>
                             <Upload {...test} showUploadList={false}>
                                 <div><EditOutlined style={{ fontSize: '2vh', cursor: 'pointer' }}/></div>
                             </Upload>
