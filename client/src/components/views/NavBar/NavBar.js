@@ -51,7 +51,7 @@ function Navbar(props) {
                             >
                                 <FaAlignJustify className="nav-icon"/>
                             </button> :
-                            <img src="/static/img/logo_tcms.png" alt='' style={{ width: '100%', height: '100%' }}/> 
+                            <Link to="/" ><img src="/static/img/logo_tcms.png" alt='' style={{ width: '100%', height: '100%' }}/> </Link>
                         }
                     </div>
                     <div className='nav-header-text'>
@@ -60,6 +60,9 @@ function Navbar(props) {
                 </div>
                 <div className="nav-login">
                     {user.userData && !user.userData.isAuth ? <ul className="nav-sign">
+                        <li>
+                            <Link to="/" >Home</Link>
+                        </li>
                         <li>
                             <Link to="/login" >Signin</Link>
                         </li>

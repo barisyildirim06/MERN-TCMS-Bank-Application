@@ -30,9 +30,6 @@
         height: 100vh;
         grid-template-columns: 13% 87%;
     }
-    /* .accountContainer {
-        height: 100vh;
-    } */
     .accountCardTop{
         padding: 10px 50px;
         height: 29rem;
