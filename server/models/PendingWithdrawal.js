@@ -15,9 +15,6 @@ const pendingWithdrawal = mongoose.Schema({
     status: {
         type: String
     },
-    account:{
-        type: String
-    },
     currency:{
         type: String
     },
