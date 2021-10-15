@@ -63,7 +63,7 @@
     }
     .getToKnowUsTextContainer{
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         height: 8vh;
         justify-content: space-around;
     }
@@ -197,7 +197,7 @@
         font-size: 36px;
     }
     .getToKnowUsTextContainer{
-        height: 120px;
+        height: 12vh;
     }
     .getToKnowUsText {
         line-height: 50px;
@@ -470,6 +470,7 @@
 }
 
 .getToKnowUsText{
+    height: 8vh;
     margin-right: 7vw;
     font-family:sans-serif;
     font-style: normal;
