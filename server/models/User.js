@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema({
     phone: {
         type: Number
     },
+    isAdmin: {
+        type: Number,
+        default: 0
+    },
     email: {
         type:String,
         trim:true,
@@ -76,7 +80,6 @@ userSchema.pre('save', function( next ) {
     var user = this;
     
     if(user.isModified('password')){    
-        // console.log('password changed')
         bcrypt.genSalt(saltRounds, function(err, salt){
             if(err) return next(err);
     
@@ -100,8 +103,6 @@ userSchema.methods.comparePassword = function(plainPassword,cb){
 
 userSchema.methods.generateToken = function(cb) {
     var user = this;
-    console.log('user',user)
-    console.log('userSchema', userSchema)
     var token =  jwt.sign(user._id.toHexString(),'secret')
     var oneHour = moment().add(1, 'hour').valueOf();
 

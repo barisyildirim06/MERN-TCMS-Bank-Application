@@ -33,7 +33,6 @@ router.post("/uploadImage", auth, (req, res) => {
         if (err) {
             return res.json({ success: false, err })
         }
-        console.log(res.req.file)
         return res.json({ success: true, image: res.req.file.path, fileName: res.req.file.filename })
     })
 
@@ -43,6 +42,7 @@ router.get("/auth", auth, (req, res) => {
     res.status(200).json({
         _id: req.user._id,
         isAuth: true,
+        isAdmin: req.user.isAdmin? true : false,
         email: req.user.email,
         phone: req.user.phone,
         companyName: req.user.companyName,
