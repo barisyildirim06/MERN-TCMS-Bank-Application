@@ -28,12 +28,8 @@ module.exports = {
     },
     listUsers(req, res) {
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" });
-        var numberOfDates = 7;
-        if (req.body.requiredDate) numberOfDates =req.body.requiredDate
-        var customDate = new Date();
-        customDate.setDate(customDate.getDate() - numberOfDates);
-        User.find({ createdAt: {$gt: customDate} })
-        .then(users => res.json({ users, userCount: users.length }))
+        User.find()
+        .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
     }
 }

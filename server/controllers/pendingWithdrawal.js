@@ -16,4 +16,10 @@ module.exports = {
         .then(withdrawals => res.json(withdrawals))
         .catch(err => res.status(400).json('Error: ' + err));
     },
+    pendingWithdrawalList(req,res) {
+        if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
+        PendingWithdrawal.find()
+        .then(pendingWithdrawals => res.json(pendingWithdrawals))
+        .catch(err => res.status(400).json('Error: ' + err));
+    },
 }

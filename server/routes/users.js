@@ -109,6 +109,6 @@ router.get("/logout", auth, (req, res) => {
 });
 
 router.post('/update/:id',userUpdate)
-router.post('/list', auth, listUsers)
+router.get('/list', auth, listUsers)
 
 module.exports = router;

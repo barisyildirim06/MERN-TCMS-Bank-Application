@@ -19,7 +19,7 @@ module.exports = {
         var customDate = new Date();
         customDate.setDate(customDate.getDate() - numberOfDates);
 
-        Subscriber.find({ createdAt: {$gt: customDate} })
+        Subscriber.find()
         .then(subscribers => res.json(subscribers))
         .catch(err => res.status(400).json('Error: ' + err));
     } 
