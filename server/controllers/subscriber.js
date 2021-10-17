@@ -14,7 +14,12 @@ module.exports = {
     },
     subscriberList(req, res){
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
-        Subscriber.find()
+        var numberOfDates = 7;
+        if (req.body.requiredDate) numberOfDates =req.body.requiredDate
+        var customDate = new Date();
+        customDate.setDate(customDate.getDate() - numberOfDates);
+
+        Subscriber.find({ createdAt: {$gt: customDate} })
         .then(subscribers => res.json(subscribers))
         .catch(err => res.status(400).json('Error: ' + err));
     } 

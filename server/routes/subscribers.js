@@ -8,6 +8,6 @@ const { subscriberCreate, subscriberList } = require('../controllers/subscriber.
 //=================================
 
 router.post("/create", subscriberCreate);
-router.get("/", auth, subscriberList);
+router.post("/list", auth, subscriberList);
 
 module.exports = router;
