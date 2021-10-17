@@ -12,4 +12,10 @@ module.exports = {
         })
 
     },
+    subscriberList(req, res){
+        if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
+        Subscriber.find()
+        .then(subscribers => res.json(subscribers))
+        .catch(err => res.status(400).json('Error: ' + err));
+    } 
 }
