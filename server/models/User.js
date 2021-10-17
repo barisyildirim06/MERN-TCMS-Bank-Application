@@ -73,7 +73,7 @@ const userSchema = mongoose.Schema({
     audWithdrawalAccount: {
         type: String
     },
-})
+}, { timestamps: true })
 
 
 userSchema.pre('save', function( next ) {

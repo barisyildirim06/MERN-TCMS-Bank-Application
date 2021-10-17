@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
-const { userUpdate } = require('../controllers/user.js')
+const { userUpdate, listUsers } = require('../controllers/user.js')
 const { auth } = require("../middleware/auth");
 const multer = require('multer');
 
@@ -109,5 +109,6 @@ router.get("/logout", auth, (req, res) => {
 });
 
 router.post('/update/:id',userUpdate)
+router.post('/list', auth, listUsers)
 
 module.exports = router;
