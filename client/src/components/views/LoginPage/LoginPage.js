@@ -42,7 +42,10 @@ function LoginPage(props) {
 
                     dispatch(loginUser(dataToSubmit))
                         .then(response => {
-                        if (response.payload.loginSuccess) {
+                        if (response.payload.isAdmin) {
+                            props.history.push("/admin/dashboard")
+                        }
+                        else if (response.payload.loginSuccess) {
                             props.history.push("/dashboard");
                         } else {
                             setFormErrorMessage('Check out your Account or Password again')
