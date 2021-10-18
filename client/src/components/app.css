@@ -78,7 +78,11 @@
   /* ::placeholder {
     color: white;
   } */
-  
+  .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
   .btn-primary {
     display: inline-block;
     text-decoration: none;
