@@ -21,10 +21,15 @@ module.exports = {
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
         GeneralLedger.find()
         .then(generalLedgers => {
-            const sevenDays = customDate.setDate(customDate.getDate() - 3);
-            const allTimeCount = generalLedgers.length;
-            const sevenDaysCount = generalLedgers.filter(g => g.createdAt < sevenDays).length
-            return res.json({generalLedgers, allTimeCount, sevenDaysCount })
+            var totalNzdAmount = 0;
+            var totalAudAmount = 0;
+            var totalUsdAmount = 0;
+            generalLedgers.forEach(g => {
+                if (g.currency === 'NZD') totalNzdAmount = totalNzdAmount + g.amount;
+                if (g.currency === 'USD') totalUsdAmount = totalUsdAmount + g.amount;
+                if (g.currency === 'AUD') totalAudAmount = totalAudAmount + g.amount;
+            })
+            return res.json({ totalNzdAmount, totalUsdAmount, totalAudAmount })
         })
         .catch(err => res.status(400).json('Error: ' + err));
     },
