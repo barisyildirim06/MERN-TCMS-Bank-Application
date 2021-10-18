@@ -36,7 +36,7 @@ const userRoute = require('./routes/users');
 const generalLedgerRoute = require('./routes/generalLedgers');
 const pendingWithdrawalRoute = require('./routes/pendingWithdrawals');
 const subscriberRoute = require('./routes/subscribers');
-const interestRate = require('./routes/interestsRates');
+const interestRate = require('./routes/interestRates');
 
 app.use('/api/users', userRoute);
 app.use('/api/generals', generalLedgerRoute);

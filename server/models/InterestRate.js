@@ -1,16 +1,14 @@
 const mongoose = require('mongoose');
 
-const interestrate = mongoose.Schema({
+const interestRate = mongoose.Schema({
     currency: {
-        type: String,
-        required: true
+        type: String
     },
     rate: {
-        type: String,
-        required: true
+        type: String
     }
 }, { timestamps: true })
 
-const InterestRate = mongoose.model('InterestRate', interestrate);
+const InterestRate = mongoose.model('InterestRate', interestRate);
 
 module.exports = { InterestRate }
