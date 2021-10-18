@@ -3,12 +3,9 @@ import Axios from 'axios'
 
 function AdminDashboardPage({ user }) {
     useEffect(() => {
-        const body = {
-            requiredDate : 15
-        }
-        Axios.post('/api/subscribers/list', body)
-        Axios.post('/api/users/list', body)
-        Axios.post('/api/withdrawals/list', body)
+        Axios.get('/api/subscribers/list')
+        Axios.get('/api/users/list')
+        Axios.get('/api/withdrawals/list')
     }, [])
     return (
         <div>

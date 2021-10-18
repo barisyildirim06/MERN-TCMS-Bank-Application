@@ -20,7 +20,12 @@ module.exports = {
     generalLedgerList(req,res) {
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
         GeneralLedger.find()
-        .then(generalLedgers => res.json(generalLedgers))
+        .then(generalLedgers => {
+            const sevenDays = customDate.setDate(customDate.getDate() - 3);
+            const allTimeCount = generalLedgers.length;
+            const sevenDaysCount = generalLedgers.filter(g => g.createdAt < sevenDays).length
+            return res.json({generalLedgers, allTimeCount, sevenDaysCount })
+        })
         .catch(err => res.status(400).json('Error: ' + err));
     },
 }

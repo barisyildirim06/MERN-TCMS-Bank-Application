@@ -29,7 +29,14 @@ module.exports = {
     listUsers(req, res) {
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" });
         User.find()
-        .then(users => res.json(users))
+        .then(users => {
+            const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
+            const oneDayUnix = new Date().setDate((new Date()).getDate() - 1);
+            const allTimeCount = users.length;
+            const sevenDaysCount = users.filter(g => new Date(g.createdAt).valueOf() > sevenDaysUnix).length
+            const oneDayCount = users.filter(g => new Date(g.createdAt).valueOf() > oneDayUnix).length
+            return res.json({ users, allTimeCount, sevenDaysCount, oneDayCount });
+        })
         .catch(err => res.status(400).json('Error: ' + err));
     }
 }
