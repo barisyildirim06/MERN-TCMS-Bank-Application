@@ -28,7 +28,16 @@ module.exports = {
             const confirmedAllTimeCount = withdrawals.filter(w => w.status === 'Confirmed').length;
             const confirmedSevenDaysCount = withdrawals.filter(w => w.status === 'Confirmed').filter(g => new Date(g.createdAt).valueOf() > sevenDaysUnix).length
             const confirmedOneDayCount = withdrawals.filter(w => w.status === 'Confirmed').filter(g => new Date(g.createdAt).valueOf() > oneDayUnix).length
-            return res.json({ withdrawals, pendingAllTimeCount, pendingSevenDaysCount, pendingOneDayCount, confirmedAllTimeCount, confirmedSevenDaysCount, confirmedOneDayCount });
+
+            var totalNzdAmount = 0;
+            var totalAudAmount = 0;
+            var totalUsdAmount = 0;
+            withdrawals.filter(w => w.status === 'Pending').forEach(w => {
+                if (w.currency === 'NZD') totalNzdAmount = totalNzdAmount + w.amount;
+                if (w.currency === 'USD') totalUsdAmount = totalUsdAmount + w.amount;
+                if (w.currency === 'AUD') totalAudAmount = totalAudAmount + w.amount;
+            })
+            return res.json({ withdrawals, pendingAllTimeCount, pendingSevenDaysCount, pendingOneDayCount, confirmedAllTimeCount, confirmedSevenDaysCount, confirmedOneDayCount, totalNzdAmount, totalAudAmount, totalUsdAmount });
         })
         .catch(err => res.status(400).json('Error: ' + err));
     },
