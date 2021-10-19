@@ -24,7 +24,7 @@ function App() {
             <div id="marginLeft">
                 <SideNavBar />
                 <Switch>
-                    <Route exact path="/" component={Auth(general(HomePage), null)} />
+                    <Route exact path="/" component={Auth(HomePage, null)} />
                     <Route exact path="/dashboard" component={Auth(general(DashboardPage),true)} />
                     <Route exact path="/admin/dashboard" component={Auth(general(AdminDashboardPage),true,true)} />
                     <Route exact path="/login" component={Auth(LoginPage, false)} />

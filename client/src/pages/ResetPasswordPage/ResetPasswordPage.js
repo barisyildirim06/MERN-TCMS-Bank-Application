@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { loginUser } from "_actions/user_actions";
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { Form, Icon, Input, Button, Typography } from 'antd';
+import { resetPassword } from "_actions/user_actions";
+import { Input } from 'antd';
 import { useDispatch } from "react-redux";
 import NavBar from "components/views/NavBar/NavBar";
 import './ResetPasswordPage.css'
-
-
-const { Title } = Typography;
 
 function ResetPasswordPage(props) {
     const dispatch = useDispatch();
@@ -18,8 +13,8 @@ function ResetPasswordPage(props) {
         if (param === 'email') {
             _values = {...values, email: e.target.value}
         }
-        else if (param === 'previousPassword') {
-            _values = {...values, previousPassword: e.target.value}
+        else if (param === 'currentPassword') {
+            _values = {...values, currentPassword: e.target.value}
         }
         else if (param === 'newPassword') {
             _values = {...values, newPassword: e.target.value}
@@ -34,7 +29,7 @@ function ResetPasswordPage(props) {
             alert("Please enter a contact email.");
             return false;
         }
-        if (values.previousPassword === "" || !values.previousPassword.trim()) {
+        if (values.currentPassword === "" || !values.currentPassword.trim()) {
             alert("Please enter your previous password.");
             return false;
         }
@@ -46,7 +41,7 @@ function ResetPasswordPage(props) {
             alert("Please enter a confirm password.");
             return false;
         }
-        if (values.previousPassword.length <6) {
+        if (values.currentPassword.length <6) {
             alert("Your previous password should be at least 6 digits.");
             return false;
         }
@@ -66,19 +61,19 @@ function ResetPasswordPage(props) {
     }
     const [values, setValues] = useState({
         email: '',
-        previousPassword: '',
+        currentPassword: '',
         newPassword: '',
         confirmPassword: ''
     });
     const handleSave = () => {
         if(!validate()) return;
-        // dispatch(registerUser(values)).then(response => {
-        //     if (response.payload.success) {
-        //       props.history.push("/login");
-        //     } else {
-        //       alert(response.payload.err.errmsg)
-        //     }
-        // })
+        dispatch(resetPassword(values)).then(response => {
+            if (response.payload.success) {
+                props.history.push("/login");
+            } else {
+                alert(response.payload.message)
+            }
+        })
     }
     return (
         <div className='resetContainer'>
@@ -94,7 +89,7 @@ function ResetPasswordPage(props) {
                 </div>
                 <div className='resetInputContainer'>
                     <label>Previous Password</label>
-                    <Input value={values.previousPassword} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'previousPassword')}/>
+                    <Input value={values.currentPassword} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'currentPassword')}/>
                 </div>
                 <div className='resetInputContainer'>
                     <label>New Password</label>
