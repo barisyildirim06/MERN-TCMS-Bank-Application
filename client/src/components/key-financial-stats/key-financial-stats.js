@@ -52,7 +52,7 @@ function KeyFinancialStats({ generals, rates, withdrawals }) {
         <div >
             <label htmlFor="KeyFinancialStats">Key Financial Stats</label>
             <div  className='flex-center' style={{ flexDirection: 'column' }}>
-                <Table columns={columns} pagination={false} dataSource={data} />
+                <Table style={{ width: '80%' }} columns={columns} pagination={false} dataSource={data} />
             </div>
         </div>
     )

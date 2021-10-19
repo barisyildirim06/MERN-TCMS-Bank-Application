@@ -1,0 +1,73 @@
+@media (max-width: 1000px) {
+    .registerBottomGrid1{
+        grid-template-rows: repeat(6, minmax(0, 1fr));
+    }
+    .registerContainer{
+        height: 130vh;
+        grid-template-rows: 13% 87%;
+
+    }
+    .registerBottom{
+        margin: 0 5vw
+    }
+}
+@media (min-width: 1000px) {
+    .registerBottomGrid1{
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-column-gap: 6vw;
+    }
+    .registerContainer{
+        height: 100vh;
+        grid-template-rows: 15% 85%;
+    }
+    .registerBottom{
+        display: grid;
+        grid-template-rows: 17.6% 60% auto;
+        padding: 0px 6vw;
+    }
+}
+.registerContainer {
+    display: grid;
+    font-size: 20px;
+    background:linear-gradient(to right top, rgba(162,211,215,255) 0%, #e1e5e9 60%);
+}
+
+.registerBottomGrid0{
+    display: flex;
+    text-align: left;
+    align-items: flex-end;
+}
+.registerBottomGrid1{
+    display: grid;
+}
+.registerInputContainer{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.registerInputGridContainer{
+    display: grid;
+    grid-gap: 6vw;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.nextButton{
+    margin-top: 3vh;
+    height: 50px;
+    width: 130px;
+    font-size: 24px;
+    color: white;
+    background-color: #5b9ea4;
+    border: none;
+    cursor: pointer;
+}
+.nextButton:active {
+    background-color: #5b9ee9;
+}
+p a {
+    display: block;
+    font-size: 20px;
+    line-height: 35px;
+}
+

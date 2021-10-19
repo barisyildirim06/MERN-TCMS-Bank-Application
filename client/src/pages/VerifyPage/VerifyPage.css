@@ -1,0 +1,74 @@
+@media (max-width: 1000px) {
+    .verifyBottomGrid1{
+        grid-template-rows: repeat(7, minmax(0, 1fr));
+    }
+    .verifyContainer{
+        height: 140vh;
+        grid-template-rows: 13% 87%;
+
+    }
+    .verifyBottom{
+        margin: 0 5vw
+    }
+}
+@media (min-width: 1000px) {
+    .verifyBottomGrid1{
+        grid-template-rows: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-column-gap: 6vw;
+    }
+    .verifyContainer{
+        height: 100vh;
+        grid-template-rows: 15% 85%;
+    }
+    .verifyBottom{
+        display: grid;
+        grid-template-rows: 17.6% 60% auto;
+        padding: 0px 6vw;
+    }
+}
+.verifyContainer {
+    display: grid;
+    font-size: 20px;
+    background:linear-gradient(to right top, rgba(162,211,215,255) 0%, #e1e5e9 60%);
+
+}
+.verifyBottom{
+    background:linear-gradient(to right top, rgba(162,211,215,255) 0%, #e1e5e9 60%);
+}
+.verifyBottomGrid0{
+    display: flex;
+    text-align: left;
+    align-items: flex-end;
+}
+.verifyBottomGrid1{
+    display: grid;
+}
+.verifyInputContainer{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+
+.nextButton{
+    margin-top: 3vh;
+    height: 50px;
+    width: 130px;
+    font-size: 24px;
+    color: white;
+    background-color: #5b9ea4;
+    border: none;
+    cursor: pointer;
+}
+.nextButton:active {
+    background-color: #5b9ee9;
+}
+p a {
+    display: block;
+    font-size: 20px;
+    line-height: 35px;
+}
+.ant-upload {
+    width: 100%;
+}
