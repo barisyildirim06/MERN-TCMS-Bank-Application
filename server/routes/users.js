@@ -59,6 +59,7 @@ router.get("/auth", auth, (req, res) => {
         usdWithdrawalAccount: req.user.usdWithdrawalAccount,
         audWithdrawalAccount: req.user.audWithdrawalAccount,
         idimage: req.user.idimage,
+        userID: req.user.userID,
     });
 });
 

@@ -5,6 +5,11 @@ const jwt = require('jsonwebtoken');
 const moment = require("moment");
 
 const userSchema = mongoose.Schema({
+    userID: {
+        type:Number,
+        unique: 1,
+        default: Math.floor(100000000 + Math.random() * 900000000)
+    },
     name: {
         type:String,
         maxlength:50

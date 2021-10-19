@@ -227,6 +227,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                     </div>
                     <div style={{ height: '15vh' }}>
                         <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
+                        <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.userID}</div>
                         {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
                     </div>
                     <div style={{ height: '2vh' }}/>
@@ -248,6 +249,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 </div>
                 <div style={{ height: '15vh' }}>
                     <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
+                    <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.userID}</div>
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
                 </div>
                 <div style={{ height: '2vh' }}/>
