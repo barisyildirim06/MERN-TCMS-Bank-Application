@@ -123,7 +123,7 @@ function LoginPage(props) {
                                 Log in
                             </Button>
                             </div>
-                            Or <a style={{ color: 'black' }} href="/register">register now!</a>
+                            <a style={{ color: 'black' }} href="/reset-password">Reset Password</a> Or <a style={{ color: 'black' }} href="/register">register now!</a>
                         </Form.Item>
                         </form>
                     </div>
