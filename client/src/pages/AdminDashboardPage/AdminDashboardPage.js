@@ -3,6 +3,7 @@ import Axios from 'axios'
 import KeyStats from 'components/key-stats/key-stats';
 import KeyFinancialStats from 'components/key-financial-stats/key-financial-stats';
 import InterestRates from 'components/interest-rates/interest-rates';
+import LeadManagement from 'components/lead-management/lead-management';
 
 function AdminDashboardPage({ user }) {
     const [subscribers, setSubscribers] = useState([]);
@@ -40,6 +41,8 @@ function AdminDashboardPage({ user }) {
                     <KeyFinancialStats generals={generals} rates={rates} withdrawals={withdrawals} />
                     <br />
                     <InterestRates interests={interests} generals={generals} rates={rates}/>
+                    <br />
+                    <LeadManagement subscribers={subscribers} />
                 </div>
             }
         </div>
