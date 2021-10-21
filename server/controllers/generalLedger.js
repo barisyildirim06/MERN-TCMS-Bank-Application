@@ -10,7 +10,6 @@ module.exports = {
         //save all the data we got from the client into the DB 
         const generalLedger = new GeneralLedger(req.body)
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
-        GeneralLedger.find()
         generalLedger.save((err) => {
             if (err) return res.status(400).json({ success: false, err })
             return res.status(200).json({ success: true })

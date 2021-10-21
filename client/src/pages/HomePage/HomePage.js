@@ -17,8 +17,8 @@ function HomePage() {
             email: subscriberEmail
         }
         Axios.post('/api/subscribers/create', data).then(res => {
-            if (res.data.success) {
-                alert('Your email successfully added to our subscriber list')
+            if (res.data.message) {
+                alert(res.data.message)
             }
         })
     }

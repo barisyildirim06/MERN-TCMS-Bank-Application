@@ -1,14 +1,15 @@
 const { Subscriber } = require("../models/Subscriber");
 
 module.exports = {
-    subscriberCreate(req, res) {
+    async subscriberCreate(req, res) {
+        const previousSubscriber = await Subscriber.find({ email: req.body.email })
+        if (previousSubscriber.length) return res.status(200).json({ success: false, message: 'The email is already saved' })
 
-        //save all the data we got from the client into the DB 
         const subscriber = new Subscriber(req.body)
 
         subscriber.save((err) => {
-            if (err) return res.status(400).json({ success: false, err })
-            return res.status(200).json({ success: true })
+            if (err) return res.status(200).json({ success: false, message: 'A problem occurred during your sending process' })
+            return res.status(200).json({ success: true, message: 'Your email is successfully saved' })
         })
 
     },
