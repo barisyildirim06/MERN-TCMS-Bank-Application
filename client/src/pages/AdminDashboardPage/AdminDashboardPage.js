@@ -29,7 +29,7 @@ function AdminDashboardPage({ user }) {
             setInterests(interests.data);
         })
     }, []);
-    console.log(subscribers)
+
     return (
         <div>
             {!user?.userData?.isAdmin ? null:

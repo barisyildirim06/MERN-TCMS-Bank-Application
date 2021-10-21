@@ -1,7 +1,25 @@
-import React from 'react'
-import { Table } from 'antd'
+import React, { useState } from 'react'
+import { Table, Select } from 'antd'
 
+const { Option } = Select;
 function LeadManagement({ subscribers }) {
+    const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
+    const oneDayUnix = new Date().setDate((new Date()).getDate() - 1);
+
+    const [filterType, setFilterType] = useState('day');
+
+    const handleChange = (value) => {
+        if (value === 'day') setFilterType('day')
+        if (value === 'week') setFilterType('week')
+    }
+
+    const filteredDropdown = (<>
+      <Select defaultValue={'day'} style={{ width: '200px' }} onChange={handleChange}>
+          <Option key='day'>Last 24 Hours</Option>
+          <Option key='week'>Last Week</Option>
+      </Select>
+    </>)
+
     const columns = [
         {
             title: '#',
@@ -17,9 +35,23 @@ function LeadManagement({ subscribers }) {
             title: 'Date of Submission',
             dataIndex: 'createdAt',
             key: 'createdAt',
+            filterMultiple: false,
+            filterMode: 'tree',
+            filterDropdown: filteredDropdown,
+            filters: [
+                {
+                  text: 'Last Day',
+                  value: 'day',
+                },
+                {
+                  text: 'Last Week',
+                  value: 'week',
+                },
+            ],
         }
     ]
-    const data = subscribers.subscribers.map((s,i) => ({
+
+    const data = subscribers.subscribers.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map((s,i) => ({
         key: i+1,
         number: i+1,
         email: s.email,
