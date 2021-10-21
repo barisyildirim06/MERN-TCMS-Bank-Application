@@ -1,21 +1,28 @@
 const { InterestRate } = require("../models/InterestRate");
 
 module.exports = {
-    interestrateCreate(req, res) {
+    interestRateCreate(req, res) {
 
         //save all the data we got from the client into the DB 
-        const interestrate = new InterestRate(req.body)
+        const interestRate = new InterestRate(req.body)
 
-        interestrate.save((err) => {
+        interestRate.save((err) => {
             if (err) return res.status(400).json({ success: false, err })
             return res.status(200).json({ success: true })
         })
 
     },
-    interestrateList(req, res){
+    interestRateList(req, res){
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
         InterestRate.find()
-        .then(interestrates => res.json(interestrates))
+        .then(interestRates => res.json(interestRates))
         .catch(err => res.status(400).json('Error: ' + err));
-    } 
+    } ,
+    interestRateUpdate(req,res) {
+        if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
+        console.log(req.body)
+        InterestRate.findOneAndUpdate({ currency: req.body.currency }, { rate: req.body.rate }, () => {
+            return res.status(200).json({ success: true, message: "Interest Rate is updated" })
+        })
+    }
 }

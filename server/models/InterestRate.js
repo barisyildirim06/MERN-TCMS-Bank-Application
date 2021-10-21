@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const interestRate = mongoose.Schema({
     currency: {
         type: String,
-        required: true
+        required: true,
+        unique: 1
     },
     rate: {
         type: String,

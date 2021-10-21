@@ -184,3 +184,7 @@ td {
 .ant-upload-list {
     display: none;
 }
+
+.ant-table-thead > tr > th {
+    text-align: center !important;
+}

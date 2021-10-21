@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const { auth } = require("../middleware/auth");
-const { interestrateCreate, interestrateList } = require('../controllers/interestRate.js')
+const { interestRateCreate, interestRateList, interestRateUpdate } = require('../controllers/interestRate.js')
 
 //=================================
 //            Subscriber
 //=================================
 
-router.post("/create", auth, interestrateCreate);
-router.get("/list", auth, interestrateList);
+router.post("/create", auth, interestRateCreate);
+router.post("/update", auth, interestRateUpdate);
+router.get("/list", auth, interestRateList);
 
 module.exports = router;
