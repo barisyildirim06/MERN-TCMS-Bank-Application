@@ -99,7 +99,7 @@ function InterestRates({ interests, generals, rates }) {
             item: 'AUD Account',
             rate: 'AUD',
             edit: 'AUD',
-            calculated: ((generals?.totalNzdAmount / rates?.AUD) * (interestsState?.find(i=> i.currency === 'AUD').rate / 100)).toFixed(2)
+            calculated: ((generals?.totalAudAmount / rates?.AUD) * (interestsState?.find(i=> i.currency === 'AUD').rate / 100)).toFixed(2)
         },
     ];
     return (
