@@ -14,7 +14,7 @@ function KeyStats({ subscribers, users, withdrawals }) {
           key: 'day',
         },
         {
-          title: 'USD Accounts (USD)',
+          title: 'Last Week',
           dataIndex: 'week',
           key: 'week',
         },
@@ -43,16 +43,16 @@ function KeyStats({ subscribers, users, withdrawals }) {
         {
             key: '3',
             item: 'Pending Verification',
-            day: withdrawals?.pendingOneDayCount,
-            week: withdrawals?.pendingSevenDaysCount,
-            all: withdrawals?.pendingAllTimeCount,
+            day: users?.oneDayCountUnapproved,
+            week: users?.sevenDaysCountUnApproved,
+            all: users?.allTimeCountUnapproved,
         },
         {
             key: '4',
             item: 'Verified',
-            day: withdrawals?.confirmedOneDayCount,
-            week: withdrawals?.confirmedSevenDaysCount,
-            all: withdrawals?.confirmedAllTimeCount,
+            day: users?.oneDayCountVerified,
+            week: users?.sevenDaysCountVerified,
+            all: users?.allTimeCountVerified,
         },
     ];
     return (

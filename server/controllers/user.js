@@ -35,7 +35,13 @@ module.exports = {
             const allTimeCount = users.length;
             const sevenDaysCount = users.filter(g => new Date(g.createdAt).valueOf() > sevenDaysUnix).length
             const oneDayCount = users.filter(g => new Date(g.createdAt).valueOf() > oneDayUnix).length
-            return res.json({ users, allTimeCount, sevenDaysCount, oneDayCount });
+            const allTimeCountVerified = users.filter(u => u.verified === 1).length;
+            const sevenDaysCountVerified = users.filter(u => u.verified === 1).filter(g => new Date(g.createdAt).valueOf() > sevenDaysUnix).length
+            const oneDayCountVerified = users.filter(u => u.verified === 1).filter(g => new Date(g.createdAt).valueOf() > oneDayUnix).length
+            const allTimeCountUnapproved = users.filter(u => u.verified === 0).length;
+            const sevenDaysCountUnApproved = users.filter(u => u.verified === 0).filter(g => new Date(g.createdAt).valueOf() > sevenDaysUnix).length
+            const oneDayCountUnapproved = users.filter(u => u.verified === 0).filter(g => new Date(g.createdAt).valueOf() > oneDayUnix).length
+            return res.json({ users, allTimeCount, sevenDaysCount, oneDayCount, allTimeCountVerified, sevenDaysCountVerified, oneDayCountVerified, allTimeCountUnapproved, sevenDaysCountUnApproved, oneDayCountUnapproved });
         })
         .catch(err => res.status(400).json('Error: ' + err));
     },
