@@ -7,11 +7,34 @@ function SignupManagement({ users, onUserVerify }) {
     const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
     const oneDayUnix = new Date().setDate((new Date()).getDate() - 1);
 
-    const [filterType, setFilterType] = useState('week');
+    const [filterType, setFilterType] = useState({ createdAt: 'week', verify: 'all' });
 
-    const handleChange = (value) => {
-        if (value === 'day') setFilterType('day')
-        if (value === 'week') setFilterType('week')
+    const handleChange = (value, type) => {
+        switch (type) {
+            case 'createdAt':
+                switch(value) {
+                    case 'day':
+                        setFilterType(prevState => { return {...prevState, createdAt: 'day' }});
+                        break;
+                    case 'week':
+                        setFilterType(prevState => { return {...prevState, createdAt: 'week' }});
+                        break;
+                }
+                break;
+            case 'verify':
+                switch(value) {
+                    case 'verified':
+                        setFilterType(prevState => { return {...prevState, verify: 'verified' }});
+                        break;
+                    case 'unapproved':
+                        setFilterType(prevState => { return {...prevState, verify: 'unapproved' }});
+                        break;
+                    case 'all':
+                        setFilterType(prevState => { return {...prevState, verify: 'all' }});
+                        break;
+                }
+                break;
+        }
     }
 
     const handleVerifyClick = (_id) => {
@@ -21,12 +44,20 @@ function SignupManagement({ users, onUserVerify }) {
         })
     }
 
-    const filteredDropdown = (<>
-      <Select defaultValue={'week'} style={{ width: '200px' }} onChange={handleChange}>
+    const createdAtFilterDropdown = <>
+      <Select defaultValue={'week'} style={{ width: '200px' }} onChange={(value) => handleChange(value,'createdAt')}>
           <Option key='day'>Last 24 Hours</Option>
           <Option key='week'>Last Week</Option>
       </Select>
-    </>)
+    </>
+
+    const filterVerifyDropdown = <>
+      <Select defaultValue={'all'} style={{ width: '200px' }} onChange={(value) => handleChange(value,'verify')}>
+          <Option key='verified'>Verified</Option>
+          <Option key='unapproved'>Unapproved</Option>
+          <Option key='all'>All Statuses</Option>
+      </Select>
+    </>
 
     const columns = [
         {
@@ -63,29 +94,29 @@ function SignupManagement({ users, onUserVerify }) {
             title: 'Verify',
             dataIndex: 'verify',
             key: 'verify',
-            render: (verified, data) => verified ? 'Verified' : <button className='dashboardNextButton' style={{ margin: '0', backgroundColor: '#f0ad4e' }} onClick={() => handleVerifyClick(data._id)}>Verify</button>
+            render: (verified, data) => verified ? 'Verified' : <button className='dashboardNextButton' style={{ margin: '0', backgroundColor: '#f0ad4e' }} onClick={() => handleVerifyClick(data._id)}>Verify</button>,
+            filterMultiple: false,
+            filterDropdown: filterVerifyDropdown
         },
         {
             title: 'Date of Submission',
             dataIndex: 'createdAt',
             key: 'createdAt',
             filterMultiple: false,
-            filterMode: 'tree',
-            filterDropdown: filteredDropdown,
-            filters: [
-                {
-                  text: 'Last Day',
-                  value: 'day',
-                },
-                {
-                  text: 'Last Week',
-                  value: 'week',
-                },
-            ],
+            filterDropdown: createdAtFilterDropdown,
         }
     ]
     //
-    const data = users.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map((s,i) => ({
+    const data = users
+    .filter(u => new Date(u.createdAt).valueOf() > (filterType.createdAt === 'day' ? oneDayUnix : sevenDaysUnix))
+    .filter(u => {
+        const { verify } = filterType 
+        if (verify === 'all') return true;
+        if (verify === 'verified' && u.verified) return true;
+        if (verify === 'unapproved' && !u.verified) return true;
+        return false;
+    })
+    .map((s,i) => ({
         key: i+1,
         number: i+1,
         name: s.name,
