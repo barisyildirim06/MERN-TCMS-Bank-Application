@@ -10,30 +10,14 @@ function SignupManagement({ users, onUserVerify }) {
     const [filterType, setFilterType] = useState({ createdAt: 'week', verify: 'all' });
 
     const handleChange = (value, type) => {
-        switch (type) {
-            case 'createdAt':
-                switch(value) {
-                    case 'day':
-                        setFilterType(prevState => { return {...prevState, createdAt: 'day' }});
-                        break;
-                    case 'week':
-                        setFilterType(prevState => { return {...prevState, createdAt: 'week' }});
-                        break;
-                }
-                break;
-            case 'verify':
-                switch(value) {
-                    case 'verified':
-                        setFilterType(prevState => { return {...prevState, verify: 'verified' }});
-                        break;
-                    case 'unapproved':
-                        setFilterType(prevState => { return {...prevState, verify: 'unapproved' }});
-                        break;
-                    case 'all':
-                        setFilterType(prevState => { return {...prevState, verify: 'all' }});
-                        break;
-                }
-                break;
+        if (type === 'createdAt') {
+            if (value === 'day') setFilterType(prevState => { return {...prevState, createdAt: 'day' }});
+            if (value === 'week') setFilterType(prevState => { return {...prevState, createdAt: 'week' }});
+        }
+        if (type === 'verify') {
+            if (value === 'verified') setFilterType(prevState => { return {...prevState, verify: 'verified' }});
+            if (value === 'unapproved') setFilterType(prevState => { return {...prevState, verify: 'unapproved' }});
+            if (value === 'all') setFilterType(prevState => { return {...prevState, verify: 'all' }});
         }
     }
 

@@ -37,7 +37,7 @@ module.exports = {
                 if (w.currency === 'USD') totalUsdAmount = totalUsdAmount + w.amount;
                 if (w.currency === 'AUD') totalAudAmount = totalAudAmount + w.amount;
             })
-            return res.json({ withdrawals, pendingAllTimeCount, pendingSevenDaysCount, pendingOneDayCount, confirmedAllTimeCount, confirmedSevenDaysCount, confirmedOneDayCount, totalNzdAmount, totalAudAmount, totalUsdAmount });
+            return res.json({ withdrawals, pendingWithdrawals: withdrawals.filter(w => w.status === 'Pending'), pendingAllTimeCount, pendingSevenDaysCount, pendingOneDayCount, confirmedAllTimeCount, confirmedSevenDaysCount, confirmedOneDayCount, totalNzdAmount, totalAudAmount, totalUsdAmount });
         })
         .catch(err => res.status(400).json('Error: ' + err));
     },

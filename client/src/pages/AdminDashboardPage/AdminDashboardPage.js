@@ -5,11 +5,14 @@ import KeyFinancialStats from 'components/key-financial-stats/key-financial-stat
 import InterestRates from 'components/interest-rates/interest-rates';
 import LeadManagement from 'components/lead-management/lead-management';
 import SignupManagement from 'components/signup-management/signup-management';
+import WithdrawalManagement from 'components/withdrawal-management/withdrawal-management';
+import './AdminDashboardPage.css'
 
 function AdminDashboardPage({ user }) {
     const [subscribers, setSubscribers] = useState([]);
     const [users, setUsers] = useState([]);
     const [withdrawals, setWithdrawals] = useState([]);
+    const [pendingWithdrawals, setPendingWithdrawals] = useState([]);
     const [generals, setGenerals] = useState([]);
     const [rates, setRates] = useState({});
     const [interests, setInterests] = useState({});
@@ -22,9 +25,14 @@ function AdminDashboardPage({ user }) {
             Axios.get('https://api.exchangerate.host/latest?base=USD&symbols=NZD,AUD'),
             Axios.get('/api/interests/list'),
         ]).then(([subscribers, users, withdrawals, generals, rates, interests]) => {
+            const _pendingWithdrawals = withdrawals.data.pendingWithdrawals.map(w => {
+                return {...w, user: users.data.users.find(u => u._id === w.account)}
+            })
+
+            setPendingWithdrawals(_pendingWithdrawals);
             setSubscribers(subscribers.data);
             setUsers(users.data.users);
-            setWithdrawals(withdrawals.data);
+            setWithdrawals(withdrawals);
             setGenerals(generals.data);
             setRates(rates.data.rates)
             setInterests(interests.data);
@@ -45,12 +53,12 @@ function AdminDashboardPage({ user }) {
     }
 
     return (
-        <div>
+        <div className='adminContainer'>
             {!user?.userData?.isAdmin ? null:
                 <div >
                     AdminDashboard
                     <br />
-                    <KeyStats users={users} withdrawals={withdrawals} subscribers={subscribers} />
+                    <KeyStats users={users} subscribers={subscribers} />
                     <br />
                     <KeyFinancialStats generals={generals} rates={rates} withdrawals={withdrawals} />
                     <br />
@@ -59,6 +67,8 @@ function AdminDashboardPage({ user }) {
                     <LeadManagement subscribers={subscribers} />
                     <br />
                     <SignupManagement users={users} onUserVerify={handleUserVerify}/>
+                    <br />
+                    <WithdrawalManagement withdrawals={pendingWithdrawals}/>
                 </div>
             }
         </div>
