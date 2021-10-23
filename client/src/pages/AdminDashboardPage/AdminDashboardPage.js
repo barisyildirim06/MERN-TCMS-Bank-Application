@@ -31,7 +31,7 @@ function AdminDashboardPage({ user }) {
 
             setPendingWithdrawals(_pendingWithdrawals);
             setSubscribers(subscribers.data);
-            setUsers(users.data.users);
+            setUsers(users.data);
             setWithdrawals(withdrawals);
             setGenerals(generals.data);
             setRates(rates.data.rates)
