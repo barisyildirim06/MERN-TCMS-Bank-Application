@@ -22,7 +22,7 @@ function SignupManagement({ users, onUserVerify }) {
     }
 
     const filteredDropdown = (<>
-      <Select defaultValue={'day'} style={{ width: '200px' }} onChange={handleChange}>
+      <Select defaultValue={'week'} style={{ width: '200px' }} onChange={handleChange}>
           <Option key='day'>Last 24 Hours</Option>
           <Option key='week'>Last Week</Option>
       </Select>
