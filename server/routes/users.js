@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
-const { userUpdate, listUsers, resetPassword } = require('../controllers/user.js')
+const { userUpdate, listUsers, resetPassword, verifyUser } = require('../controllers/user.js')
 const { auth } = require("../middleware/auth");
 const multer = require('multer');
 
@@ -112,5 +112,6 @@ router.get("/logout", auth, (req, res) => {
 router.post('/update/:id',userUpdate);
 router.post('/reset-password', resetPassword);
 router.get('/list', auth, listUsers);
+router.post('/verify-user', auth, verifyUser);
 
 module.exports = router;

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Table, Select } from 'antd'
+import Axios from 'axios';
 
 const { Option } = Select;
-function LeadManagement({ subscribers }) {
+function SignupManagement({ users, onUserVerify }) {
     const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
     const oneDayUnix = new Date().setDate((new Date()).getDate() - 1);
 
@@ -11,6 +12,13 @@ function LeadManagement({ subscribers }) {
     const handleChange = (value) => {
         if (value === 'day') setFilterType('day')
         if (value === 'week') setFilterType('week')
+    }
+
+    const handleVerifyClick = (_id) => {
+        Axios.post('/api/users/verify-user', { _id }).then(res => {
+            if (res.data.success && onUserVerify) onUserVerify({ target: { value: _id } })
+            alert(res.data.message)
+        })
     }
 
     const filteredDropdown = (<>
@@ -27,9 +35,35 @@ function LeadManagement({ subscribers }) {
             key: 'number',
         },
         {
+            title: 'First Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Last Name',
+            dataIndex: 'lastname',
+            key: 'lastname',
+        },
+        {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
+        },
+        {
+            title: 'Phone',
+            dataIndex: 'phone',
+            key: 'phone',
+        },
+        {
+            title: 'Organization Name',
+            dataIndex: 'companyName',
+            key: 'companyName',
+        },
+        {
+            title: 'Verify',
+            dataIndex: 'verify',
+            key: 'verify',
+            render: (verified, data) => verified ? 'Verified' : <button className='dashboardNextButton' style={{ margin: '0', backgroundColor: '#f0ad4e' }} onClick={() => handleVerifyClick(data._id)}>Verify</button>
         },
         {
             title: 'Date of Submission',
@@ -50,12 +84,18 @@ function LeadManagement({ subscribers }) {
             ],
         }
     ]
-
-    const data = subscribers.subscribers.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map((s,i) => ({
+    //
+    const data = users.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map((s,i) => ({
         key: i+1,
         number: i+1,
+        name: s.name,
+        lastname: s.lastname,
         email: s.email,
-        createdAt: s.createdAt
+        verify: s.verified,
+        phone: s.phone,
+        companyName: s.companyName,
+        createdAt: s.createdAt,
+        _id: s._id
     }))
     return (
         <div >
@@ -67,4 +107,4 @@ function LeadManagement({ subscribers }) {
     )
 }
 
-export default LeadManagement
+export default SignupManagement
