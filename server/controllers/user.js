@@ -86,5 +86,11 @@ module.exports = {
                 });
             });
         }
+    },
+    verifyUser(req,res) {
+        if (!req.user.isAdmin) return res.status(200).json({ success: false, message: "You don't have access" })
+        User.findOneAndUpdate({ _id: req.body._id }, { verified: 1 }, () => {
+            return res.status(200).json({ success: true, message: "User successfully verified" })
+        })
     }
 }
