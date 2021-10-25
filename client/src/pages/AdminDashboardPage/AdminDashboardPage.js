@@ -32,12 +32,17 @@ function AdminDashboardPage({ user }) {
             setPendingWithdrawals(_pendingWithdrawals);
             setSubscribers(subscribers.data);
             setUsers(users.data);
-            setWithdrawals(withdrawals);
+            setWithdrawals(withdrawals.data);
             setGenerals(generals.data);
             setRates(rates.data.rates)
             setInterests(interests.data);
         })
     }, []);
+
+    const handleWithdrawalConfirm = (e) => {
+        const _pendingWithdrawals = pendingWithdrawals.filter(p => p._id !== e.target.value);
+        setPendingWithdrawals(_pendingWithdrawals);
+    }
 
     const handleUserVerify = (e) => {
         const _users = users.map(u => {
@@ -68,7 +73,7 @@ function AdminDashboardPage({ user }) {
                     <br />
                     <SignupManagement users={users} onUserVerify={handleUserVerify}/>
                     <br />
-                    <WithdrawalManagement withdrawals={pendingWithdrawals}/>
+                    <WithdrawalManagement withdrawals={pendingWithdrawals} onWithdrawalConfirm={handleWithdrawalConfirm}/>
                 </div>
             }
         </div>

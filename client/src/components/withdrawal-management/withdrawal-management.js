@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Table, Select } from 'antd'
+import Axios from 'axios';
 
 const { Option } = Select;
-function WithdrawalManagement({ withdrawals }) {
-    console.log(withdrawals)
+function WithdrawalManagement({ withdrawals, onWithdrawalConfirm }) {
     const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
     const oneDayUnix = new Date().setDate((new Date()).getDate() - 1);
 
@@ -20,6 +20,13 @@ function WithdrawalManagement({ withdrawals }) {
           <Option key='week'>Last Week</Option>
       </Select>
     </>)
+
+    const handleConfirmWithdrawal = (_id) => {
+        Axios.post('/api/withdrawals/approve-withdrawal', { _id }).then(res => {
+            alert(res.data.message)
+            if (onWithdrawalConfirm) onWithdrawalConfirm({ target: { value: _id } });
+        })
+    }
 
     const columns = [
         {
@@ -41,6 +48,12 @@ function WithdrawalManagement({ withdrawals }) {
             title: 'Amount',
             dataIndex: 'amount',
             key: 'amount',
+        },
+        {
+            title: 'Confirm',
+            dataIndex: 'confirm',
+            key: 'confirm',
+            render: (confirm, data) => <button className='dashboardNextButton' style={{ margin: '0', backgroundColor: '#f0ad4e' }} onClick={() => handleConfirmWithdrawal(data._id)}>Confirm</button>,
         },
         {
             title: 'Date of Submission',
@@ -69,6 +82,8 @@ function WithdrawalManagement({ withdrawals }) {
         companyName: s.user.companyName,
         amount: s.amount,
         createdAt: s.createdAt,
+        confirm: s.status,
+        _id: s._id
     }))
     return (
         <div >

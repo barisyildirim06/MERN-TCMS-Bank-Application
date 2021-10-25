@@ -114,7 +114,7 @@ function SignupManagement({ users, onUserVerify }) {
     }))
     return (
         <div >
-            <label>Lead Management</label>
+            <label>Signup Management</label>
             <div  className='flex-center' style={{ flexDirection: 'column' }}>
                 <Table style={{ width: '80%' }} columns={columns} dataSource={data}/>
             </div>

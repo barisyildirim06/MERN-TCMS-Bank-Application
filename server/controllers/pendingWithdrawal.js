@@ -1,4 +1,5 @@
 const { PendingWithdrawal } = require("../models/PendingWithdrawal");
+const { GeneralLedger } = require("../models/GeneralLedger");
 
 module.exports = {
     pendingWithdrawalCreate(req, res) {
@@ -41,4 +42,25 @@ module.exports = {
         })
         .catch(err => res.status(400).json('Error: ' + err));
     },
+    async approveWithdrawal(req,res) {
+        if (!req.user.isAdmin) return res.status(200).json({ success: false, message: "You don't have access" })
+        const withdrawal = await PendingWithdrawal.findOne({ _id : req.body._id })
+        if (withdrawal.status === 'Pending') {
+            const update = await PendingWithdrawal.findOneAndUpdate({ _id: req.body._id }, { status: 'Confirmed' }, { new: true })
+            if (update.status === 'Confirmed') {
+                const ledger = {
+                    transactionNotes: withdrawal.account,
+                    transactionType: 'DEBIT',
+                    transactionDate: new Date().toISOString().split('T')[0],
+                    amount: withdrawal.amount * -1,
+                    currency: withdrawal.currency
+                }
+                const generalLedger = new GeneralLedger(ledger)
+                generalLedger.save((err) => {
+                    if (err) return res.status(400).json({ success: false, message: 'An error occured when saving debit' ,err })
+                    return res.status(200).json({ success: true, message: 'The withdrawal is approved successfully' })
+                })
+            }
+        }
+    }
 }

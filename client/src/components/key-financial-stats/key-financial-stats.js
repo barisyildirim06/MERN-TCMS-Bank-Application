@@ -34,17 +34,17 @@ function KeyFinancialStats({ generals, rates, withdrawals }) {
         {
             key: '1',
             item: 'Total Fudning Under Management',
-            nzd: generals?.totalNzdAmount,
-            usd: generals?.totalUsdAmount,
-            aud: generals?.totalAudAmount,
+            nzd: generals?.totalNzdAmount?.toFixed(2),
+            usd: generals?.totalUsdAmount?.toFixed(2),
+            aud: generals?.totalAudAmount?.toFixed(2),
             sum: (generals?.totalUsdAmount + (generals?.totalAudAmount / rates?.AUD) + (generals?.totalNzdAmount / rates?.NZD))?.toFixed(2),
         },
         {
             key: '2',
             item: 'Total Pending Withdrawals',
-            nzd: withdrawals?.totalNzdAmount,
-            usd: withdrawals?.totalUsdAmount,
-            aud: withdrawals?.totalAudAmount,
+            nzd: withdrawals?.totalNzdAmount?.toFixed(2),
+            usd: withdrawals?.totalUsdAmount?.toFixed(2),
+            aud: withdrawals?.totalAudAmount?.toFixed(2),
             sum: (withdrawals?.totalUsdAmount + (withdrawals?.totalAudAmount / rates?.AUD) + (withdrawals?.totalNzdAmount / rates?.NZD))?.toFixed(2),
         },
     ];
