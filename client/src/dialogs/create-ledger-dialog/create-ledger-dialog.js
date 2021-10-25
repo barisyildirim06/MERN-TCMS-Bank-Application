@@ -40,7 +40,8 @@ function CreateLedgerDialog({ onClose, visible }) {
 
     const handleSubmit = async () => {
         const request = await Axios.post('/api/generals/create', values);
-        console.log(request)
+        alert(request.data.message);
+        handleClose();
     }
 
     return (
