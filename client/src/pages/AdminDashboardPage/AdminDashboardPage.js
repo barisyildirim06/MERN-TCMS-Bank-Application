@@ -7,6 +7,7 @@ import LeadManagement from 'components/lead-management/lead-management';
 import SignupManagement from 'components/signup-management/signup-management';
 import WithdrawalManagement from 'components/withdrawal-management/withdrawal-management';
 import './AdminDashboardPage.css'
+import CreateLedgerDialog from 'dialogs/create-ledger-dialog/create-ledger-dialog';
 
 function AdminDashboardPage({ user }) {
     const [subscribers, setSubscribers] = useState([]);
@@ -16,6 +17,8 @@ function AdminDashboardPage({ user }) {
     const [generals, setGenerals] = useState([]);
     const [rates, setRates] = useState({});
     const [interests, setInterests] = useState({});
+    const [createLedgerDialogVisible, setCreateLedgerDialogVisible] = useState(false);
+
     useEffect(() => {
         Promise.all([
             Axios.get('/api/subscribers/list'),
@@ -57,6 +60,13 @@ function AdminDashboardPage({ user }) {
         setUsers(_users);
     }
 
+    const handleAddNewLedgerClick = () => {
+        setCreateLedgerDialogVisible(true);
+    }
+    const handleCreateLedgerDialogClose = () => {
+        setCreateLedgerDialogVisible(false);
+    }
+
     return (
         <div className='adminContainer'>
             {!user?.userData?.isAdmin ? null:
@@ -74,6 +84,11 @@ function AdminDashboardPage({ user }) {
                     <SignupManagement users={users} onUserVerify={handleUserVerify}/>
                     <br />
                     <WithdrawalManagement withdrawals={pendingWithdrawals} onWithdrawalConfirm={handleWithdrawalConfirm}/>
+                    <br />
+                    Add New Deposit / Fee / Refund
+                    <button onClick={handleAddNewLedgerClick}>Add New</button>
+                    <button>Bulk Upload</button>
+                    <CreateLedgerDialog visible={createLedgerDialogVisible} onClose={handleCreateLedgerDialogClose} />
                 </div>
             }
         </div>
