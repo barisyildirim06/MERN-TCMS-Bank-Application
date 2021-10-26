@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Table, Select } from 'antd'
 import Axios from 'axios';
+import { Utils } from 'utils';
 
 const { Option } = Select;
 function WithdrawalManagement({ withdrawals, onWithdrawalConfirm }) {
@@ -80,7 +81,7 @@ function WithdrawalManagement({ withdrawals, onWithdrawalConfirm }) {
         number: i+1,
         userID: s.user.userID,
         companyName: s.user.companyName,
-        amount: s.amount,
+        amount: Utils.formatter.format(s.amount),
         createdAt: s.createdAt,
         confirm: s.status,
         _id: s._id

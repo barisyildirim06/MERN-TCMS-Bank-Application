@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'antd'
+import { Utils } from 'utils';
 
 function KeyFinancialStats({ generals, rates, withdrawals }) {
     const columns = [
@@ -34,18 +35,18 @@ function KeyFinancialStats({ generals, rates, withdrawals }) {
         {
             key: '1',
             item: 'Total Fudning Under Management',
-            nzd: generals?.totalNzdAmount?.toFixed(2),
-            usd: generals?.totalUsdAmount?.toFixed(2),
-            aud: generals?.totalAudAmount?.toFixed(2),
-            sum: (generals?.totalUsdAmount + (generals?.totalAudAmount / rates?.AUD) + (generals?.totalNzdAmount / rates?.NZD))?.toFixed(2),
+            nzd: Utils.formatter.format(generals?.totalNzdAmount?.toFixed(2)),
+            usd: Utils.formatter.format(generals?.totalUsdAmount?.toFixed(2)),
+            aud: Utils.formatter.format(generals?.totalAudAmount?.toFixed(2)),
+            sum: Utils.formatter.format((generals?.totalUsdAmount + (generals?.totalAudAmount / rates?.AUD) + (generals?.totalNzdAmount / rates?.NZD))?.toFixed(2)),
         },
         {
             key: '2',
             item: 'Total Pending Withdrawals',
-            nzd: withdrawals?.totalNzdAmount?.toFixed(2),
-            usd: withdrawals?.totalUsdAmount?.toFixed(2),
-            aud: withdrawals?.totalAudAmount?.toFixed(2),
-            sum: (withdrawals?.totalUsdAmount + (withdrawals?.totalAudAmount / rates?.AUD) + (withdrawals?.totalNzdAmount / rates?.NZD))?.toFixed(2),
+            nzd: Utils.formatter.format(withdrawals?.totalNzdAmount?.toFixed(2)),
+            usd: Utils.formatter.format(withdrawals?.totalUsdAmount?.toFixed(2)),
+            aud: Utils.formatter.format(withdrawals?.totalAudAmount?.toFixed(2)),
+            sum: Utils.formatter.format((withdrawals?.totalUsdAmount + (withdrawals?.totalAudAmount / rates?.AUD) + (withdrawals?.totalNzdAmount / rates?.NZD))?.toFixed(2)),
         },
     ];
     return (

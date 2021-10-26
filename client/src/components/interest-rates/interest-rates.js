@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Input } from 'antd'
 import Axios from 'axios';
+import { Utils } from 'utils';
 
 function InterestRates({ interests, generals, rates }) {
     const [disabled, setDisabled] = useState({
@@ -71,21 +72,21 @@ function InterestRates({ interests, generals, rates }) {
             item: 'NZD Account',
             rate: 'NZD',
             edit: 'NZD',
-            calculated: (generals && interestsState?.length)? ((generals?.totalNzdAmount / rates?.NZD)* (interestsState?.find(i=> i.currency === 'NZD').rate / 100))?.toFixed(2) : null
+            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalNzdAmount / rates?.NZD)* (interestsState?.find(i=> i.currency === 'NZD').rate / 100))?.toFixed(2)) : null
         },
         {
             key: '2',
             item: 'USD Account',
             rate: 'USD',
             edit: 'USD',
-            calculated: (generals && interestsState?.length)? ((generals?.totalUsdAmount) * (interestsState?.find(i=> i.currency === 'AUD').rate / 100))?.toFixed(2) : null
+            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalUsdAmount) * (interestsState?.find(i=> i.currency === 'AUD').rate / 100))?.toFixed(2)) : null
         },
         {
             key: '3',
             item: 'AUD Account',
             rate: 'AUD',
             edit: 'AUD',
-            calculated:(generals && interestsState?.length)? ((generals?.totalAudAmount / rates?.AUD) * (interestsState?.find(i=> i.currency === 'AUD').rate / 100)).toFixed(2) : null
+            calculated:(generals && interestsState?.length)? Utils.formatter.format(((generals?.totalAudAmount / rates?.AUD) * (interestsState?.find(i=> i.currency === 'AUD').rate / 100)).toFixed(2)) : null
         },
     ];
     useEffect(() => {
