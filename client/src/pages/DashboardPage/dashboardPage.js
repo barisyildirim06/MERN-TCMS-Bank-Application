@@ -12,6 +12,7 @@ import TransactionDialog from 'dialogs/transaction-dialog/transaction-dialog';
 import ProgressView from 'components/progress-view'
 import { EditOutlined } from '@ant-design/icons'
 import { Utils } from 'utils';
+import MoneyTransferDialog from 'dialogs/money-transfer-dialog/money-transfer-dialog';
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, transactData}) {
@@ -29,6 +30,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const [transactionData, setTransactionData] = useState(transactData);
     const [image, setImage] = useState('');
     const [progressViewVisible, setProgressViewVisible] = useState(false);
+    const [moneyTransferDialogVisible, setMoneyTransferDialogVisible] = useState(false);
 
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
@@ -154,6 +156,13 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
         setTransactionData(transactData?.filter(el => el.currency === currentCurrency));
         handleNavClose();
         setTransactionDialogVisible(true);
+    }
+
+    const handleMoneyTransferDialogClick = () => {
+        setMoneyTransferDialogVisible(true);
+    }
+    const handleMoneyTransferDialogClose = () => {
+        setMoneyTransferDialogVisible(false);
     }
 
     const handleSupportClick = () => {
@@ -365,8 +374,9 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                     {currentAccount?.availableBalance !== undefined ?  Utils.formatter.format(currentAccount?.availableBalance): null}
                                 </div>
                             </div>
-                            <div style={{ display:'flex', justifyContent: 'center' }}>
+                            <div style={{ display:'flex', justifyContent: 'space-evenly' }}>
                                 <button className='dashboardNextButton' style={{ marginTop: '2vh', width: '240px' }} onClick={handleAccountTransactionHistoryClick}>Transaction History</button>
+                                <button className='dashboardNextButton' style={{ marginTop: '2vh', width: '200px' }} onClick={handleMoneyTransferDialogClick}>Transfer {currentCurrency}</button>
                             </div>
                         </div>
                         <div className='accountCardBottom'>
@@ -398,6 +408,12 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 currentCurrency={currentCurrency}
                 onClose={handleTransactionDialogClose}
                 transactionData={transactionData}
+            />
+            <MoneyTransferDialog 
+                visible={moneyTransferDialogVisible}
+                currentCurrency={currentCurrency}
+                onClose={handleMoneyTransferDialogClose}
+                availableBalance={currentAccount?.availableBalance}
             />
             <ProgressView 
                 visible={progressViewVisible}
