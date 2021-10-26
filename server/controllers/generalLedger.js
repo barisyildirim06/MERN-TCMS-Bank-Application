@@ -40,7 +40,7 @@ module.exports = {
             if (ledger.accountID) {
                 const account = await User.findOne({ userID: Number(ledger.accountID) })
                 if (account) {
-                    const general = {...ledger, transactionNotes: account._id }
+                    const general = {...ledger, transactionNotes: account._id, transactionDate: new Date().toISOString().split('T')[0] }
                     const generalLedger = await new GeneralLedger(general)
                     await generalLedger.save()
                 }
