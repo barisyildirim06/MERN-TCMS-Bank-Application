@@ -52,9 +52,9 @@ function CreateLedgerDialog({ onClose, visible }) {
                 <Input type='number' value={values.accountID} style={{  marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'accountID')}/>
                 <label>Currency</label>
                 <Select defaultValue={'nzd'} style={{ width: '100%', backgroundColor: 'white', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e,'currency')}>
-                    <Option key='nzd'>NZD</Option>
-                    <Option key='usd'>USD</Option>
-                    <Option key='aud'>AUD</Option>
+                    <Option key='NZD'>NZD</Option>
+                    <Option key='USD'>USD</Option>
+                    <Option key='AUD'>AUD</Option>
                 </Select>
                 <label>Transaction Type</label>
                 <Select defaultValue={'CREDIT'} style={{ width: '100%', backgroundColor: 'white', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e,'transactionType')}>
