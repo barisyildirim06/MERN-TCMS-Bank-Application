@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import Axios from 'axios'
 import KeyStats from 'components/key-stats/key-stats';
 import KeyFinancialStats from 'components/key-financial-stats/key-financial-stats';
@@ -8,8 +8,11 @@ import SignupManagement from 'components/signup-management/signup-management';
 import WithdrawalManagement from 'components/withdrawal-management/withdrawal-management';
 import './AdminDashboardPage.css'
 import CreateLedgerDialog from 'dialogs/create-ledger-dialog/create-ledger-dialog';
+import { Utils } from 'utils';
 
 function AdminDashboardPage({ user }) {
+    const taskInput = useRef(null);
+
     const [subscribers, setSubscribers] = useState([]);
     const [users, setUsers] = useState([]);
     const [withdrawals, setWithdrawals] = useState([]);
@@ -67,11 +70,47 @@ function AdminDashboardPage({ user }) {
         setCreateLedgerDialogVisible(false);
     }
 
+    const handleLedgerImportClick = useCallback((e) => {
+        taskInput.current.click();
+    }, []);
+
+    const handleLedgerUploadChange = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if (e.target.files.length === 0) {
+            return;
+        }
+
+        let file = e.target.files[0];
+
+        if (!Utils.isCSV(file)) {
+            return alert('Only CSV format file is allowed.');
+        }
+
+        let reader = new FileReader();
+        reader.onload = async (e) => {
+            let data = {
+                data: btoa(e.target.result)
+            };
+            const res = await Axios.post('/api/generals/import', data)
+            alert(res.data.message)
+        };
+
+        reader.readAsBinaryString(file);
+    }
+
     return (
         <div className='adminContainer'>
             {!user?.userData?.isAdmin ? null:
                 <div >
                     AdminDashboard
+                    <br />
+                    <label>Add New Deposit / Fee / Refund</label>
+                    <div>
+                        <button className='dashboardNextButton' style={{ margin: '0 20px' }}  onClick={handleAddNewLedgerClick}>Add New</button>
+                        <button className='dashboardNextButton' style={{ margin: '0 20px', width: '200px' }} onClick={handleLedgerImportClick}>Bulk Upload</button>
+                    </div>
                     <br />
                     <KeyStats users={users} subscribers={subscribers} />
                     <br />
@@ -85,10 +124,8 @@ function AdminDashboardPage({ user }) {
                     <br />
                     <WithdrawalManagement withdrawals={pendingWithdrawals} onWithdrawalConfirm={handleWithdrawalConfirm}/>
                     <br />
-                    Add New Deposit / Fee / Refund
-                    <button onClick={handleAddNewLedgerClick}>Add New</button>
-                    <button>Bulk Upload</button>
                     <CreateLedgerDialog visible={createLedgerDialogVisible} onClose={handleCreateLedgerDialogClose} />
+                    <input type="file" accept=".csv" style={{ display: "none" }} value=""  onChange={handleLedgerUploadChange} ref={taskInput}/>
                 </div>
             }
         </div>

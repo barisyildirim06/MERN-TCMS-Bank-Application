@@ -19,6 +19,35 @@ module.exports = {
         })
 
     },
+     async generalLedgerImport(req, res) {
+        //save all the data we got from the client into the DB 
+        if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
+        let data = req.body.data;
+        let buff = new Buffer.from(data, 'base64');
+        let allText = buff.toString('ascii');
+        const arr = allText.split('\n'); 
+        var ledgers = [];
+        var headers = arr[0].split(',');
+        for(var i = 1; i < arr.length; i++) {
+            var newData = arr[i].split(',');
+            var obj = {};
+            for(var j = 0; j < newData.length; j++) {
+                obj[headers[j].trim()] = newData[j].trim();
+            }
+            ledgers.push(obj);
+        }
+        await Promise.all(ledgers.map(async ledger => {
+            if (ledger.accountID) {
+                const account = await User.findOne({ userID: Number(ledger.accountID) })
+                if (account) {
+                    const general = {...ledger, transactionNotes: account._id }
+                    const generalLedger = await new GeneralLedger(general)
+                    await generalLedger.save()
+                }
+            }
+        }))
+        return res.status(200).json({ success: true, message: 'Successfully created the Ledger' })
+    },
     generalLedgerList(req,res) {
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
         GeneralLedger.find()

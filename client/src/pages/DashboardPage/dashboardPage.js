@@ -11,6 +11,7 @@ import DepositDialog from 'dialogs/deposit-dialog/deposit-dialog';
 import TransactionDialog from 'dialogs/transaction-dialog/transaction-dialog';
 import ProgressView from 'components/progress-view'
 import { EditOutlined } from '@ant-design/icons'
+import { Utils } from 'utils';
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, transactData}) {
@@ -37,10 +38,6 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const isBigEnough = useMediaQuery({
         query: '(min-width: 1000px)'
     })
-    var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
 
     const handleSummaryClick = () => {
         setProgressViewVisible(true);
@@ -276,7 +273,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                 <thead>
                                     <tr>
                                         <th style={{ width: '25%', textAlign: 'center' }}>Balance</th>
-                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? formatter.format(nzdAcc?.availableBalance + usdAcc?.availableBalance + audAcc?.availableBalance)  : null}</th>
+                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? Utils.formatter.format(nzdAcc?.availableBalance + usdAcc?.availableBalance + audAcc?.availableBalance)  : null}</th>
                                         <th style={{ width: '10%' }}>Yield</th>
                                         <th style={{ width: '10%', textAlign: 'center' }}>0.00%</th>
                                     </tr>
@@ -288,19 +285,19 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                 <tbody>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? formatter.format(nzdAcc?.availableBalance) : null}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? Utils.formatter.format(nzdAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>{usdAcc?.availableBalance !==undefined ? formatter.format(usdAcc?.availableBalance) : null}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{usdAcc?.availableBalance !==undefined ? Utils.formatter.format(usdAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
-                                        <td style={{ width: '45%', textAlign: 'left' }}>{audAcc?.availableBalance !==undefined ? formatter.format(audAcc?.availableBalance) : null}</td>
+                                        <td style={{ width: '45%', textAlign: 'left' }}>{audAcc?.availableBalance !==undefined ? Utils.formatter.format(audAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
                                         <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
                                     </tr>
@@ -319,7 +316,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                     Principal:
                                 </div>
                                 <div>
-                                    {currentAccount?.principal !== undefined ? formatter.format(currentAccount?.principal): null}
+                                    {currentAccount?.principal !== undefined ? Utils.formatter.format(currentAccount?.principal): null}
                                 </div>
                             </div>
                             <div className='accountCardRows'>
@@ -327,7 +324,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                     Interest Acrrued:
                                 </div>
                                 <div>
-                                    {currentAccount?.interestAcrrued  !== undefined ?  formatter.format(currentAccount?.interestAcrrued): null}
+                                    {currentAccount?.interestAcrrued  !== undefined ?  Utils.formatter.format(currentAccount?.interestAcrrued): null}
                                 </div>
                             </div>
                             <br />
@@ -338,7 +335,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                     Fees:
                                 </div>
                                 <div>
-                                    {currentAccount?.fees  !== undefined ?  formatter.format(currentAccount?.fees): null}
+                                    {currentAccount?.fees  !== undefined ?  Utils.formatter.format(currentAccount?.fees): null}
                                 </div>
                             </div>
                             <div className='accountCardRows'>
@@ -346,7 +343,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                     Withdrawls:
                                 </div>
                                 <div>
-                                    {currentAccount?.withdrawls  !== undefined ?  formatter.format(currentAccount?.withdrawls): null}
+                                    {currentAccount?.withdrawls  !== undefined ?  Utils.formatter.format(currentAccount?.withdrawls): null}
                                 </div>
                             </div>
                             <div className='accountCardRows'>
@@ -354,7 +351,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                     Pending Withdrawls:
                                 </div>
                                 <div>
-                                    {currentAccount?.pendingWithdrawls !== undefined ?  formatter.format(currentAccount?.pendingWithdrawls): null}
+                                    {currentAccount?.pendingWithdrawls !== undefined ?  Utils.formatter.format(currentAccount?.pendingWithdrawls): null}
                                 </div>
                             </div>
                             <br />
@@ -365,7 +362,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                     Available Balance:
                                 </div>
                                 <div>
-                                    {currentAccount?.availableBalance !== undefined ?  formatter.format(currentAccount?.availableBalance): null}
+                                    {currentAccount?.availableBalance !== undefined ?  Utils.formatter.format(currentAccount?.availableBalance): null}
                                 </div>
                             </div>
                             <div style={{ display:'flex', justifyContent: 'center' }}>

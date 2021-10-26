@@ -51,7 +51,7 @@ function LeadManagement({ subscribers }) {
         }
     ]
 
-    const data = subscribers.subscribers.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map((s,i) => ({
+    const data = subscribers?.subscribers?.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map((s,i) => ({
         key: i+1,
         number: i+1,
         email: s.email,

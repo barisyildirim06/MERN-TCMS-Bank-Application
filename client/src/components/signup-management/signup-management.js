@@ -91,8 +91,7 @@ function SignupManagement({ users, onUserVerify }) {
         }
     ]
     //
-    const data = users.users
-    .filter(u => new Date(u.createdAt).valueOf() > (filterType.createdAt === 'day' ? oneDayUnix : sevenDaysUnix))
+    const data = users?.users?.filter(u => new Date(u.createdAt).valueOf() > (filterType.createdAt === 'day' ? oneDayUnix : sevenDaysUnix))
     .filter(u => {
         const { verify } = filterType 
         if (verify === 'all') return true;
