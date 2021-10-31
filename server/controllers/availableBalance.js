@@ -33,7 +33,7 @@ const availableBalance = async (req, res) => {
     }
     usdAccount = {
         ...usdAccount,
-        availableBalance : usdAccount.principal + usdAccount.interestAcrrued + usdAccount.fees + usdAccount.withdrawls + usdAccount.pendingWithdrawls + nzdAccount.recipientTransfers + nzdAccount.donorTransfers
+        availableBalance : usdAccount.principal + usdAccount.interestAcrrued + usdAccount.fees + usdAccount.withdrawls + usdAccount.pendingWithdrawls + usdAccount.recipientTransfers + usdAccount.donorTransfers
     }
 
     let audAccount = {
@@ -48,10 +48,19 @@ const availableBalance = async (req, res) => {
 
     audAccount = {
         ...audAccount,
-        availableBalance : audAccount.principal + audAccount.interestAcrrued + audAccount.fees + audAccount.withdrawls + audAccount.pendingWithdrawls + nzdAccount.recipientTransfers + nzdAccount.donorTransfers
+        availableBalance : audAccount.principal + audAccount.interestAcrrued + audAccount.fees + audAccount.withdrawls + audAccount.pendingWithdrawls + audAccount.recipientTransfers + audAccount.donorTransfers
     }
+    const newWithdrawals = withdrawal?.map(el => {
+        return {
+            ...el,
+            transactionDate: el?.dateSubmitted,
+            transactionType: el?.status === 'Confirmed' ? 'WITHDRAWAL' : 'PENDING WITHDRAWAL'
+        }
+    })
+    let transactData = general;
+    if (general && newWithdrawals) transactData = general?.concat(newWithdrawals)
 
-    return res.status(200).json({ success: true, message: 'Successfully created the Ledger', nzdAccount, usdAccount, audAccount, general, withdrawal, donor, recipient })
+    return res.status(200).json({ success: true, message: 'Successfully created the Ledger', nzdAccount, usdAccount, audAccount, transactData })
 }
 
 module.exports = {

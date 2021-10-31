@@ -5,5 +5,6 @@ export const LOGOUT_USER = 'logout_user';
 export const RESET_PASSWORD = 'reset_password';
 export const CREATE_GENERAL = 'create_general';
 export const GET_GENERAL = 'get_general';
+export const GET_AVAILABLE_BALANCE = 'get_available_balance';
 export const CREATE_WITHDRAWAL = 'create_withdrawal';
 export const GET_WITHDRAWAL = 'get_withdrawal';

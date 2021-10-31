@@ -46,7 +46,7 @@ app.use('/api/withdrawals', pendingWithdrawalRoute);
 app.use('/api/subscribers', subscriberRoute);
 app.use('/api/interests', interestRate);
 app.use('/api/transfers', transfersRoute);
-app.use('/api/availableBalance', availableBalanceRoute);
+app.use('/api/balance', availableBalanceRoute);
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
