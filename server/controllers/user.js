@@ -1,5 +1,8 @@
 let { User } = require('../models/User');
 const multer = require('multer');
+let { sendMail } = require('../helper');
+const jwt = require('jsonwebtoken');
+
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -120,7 +123,13 @@ module.exports = {
                     loginSuccess: false,
                     message: "Auth failed, email not found"
                 });
-    
+                
+            if (!user.confirmed) {
+                return res.json({
+                    loginSuccess: false,
+                    message: "Please checkout your inbox & spambox to confirm your account"
+                });
+            }
             user.comparePassword(req.body.password, (err, isMatch) => {
                 if (!isMatch)
                     return res.json({ loginSuccess: false, message: "Wrong password" });
@@ -137,12 +146,12 @@ module.exports = {
             });
         });
     },
-    registerUser (req, res) {
-
+    async registerUser (req, res) {
         const user = new User(req.body);
-    
-        user.save((err, doc) => {
+        user.save(async (err, doc) => {
             if (err) return res.json({ success: false, err });
+            const token = jwt.sign(user._id.toHexString(),'TcmsUpwork')
+            await sendMail('yildrmbaris@gmail.com', token);
             return res.status(200).json({
                 success: true
             });

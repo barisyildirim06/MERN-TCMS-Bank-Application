@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const config = require("./config/key");
+const { confirmEmail } = require("./helper");
 
 // const mongoose = require("mongoose");
 // mongoose
@@ -47,6 +48,7 @@ app.use('/api/subscribers', subscriberRoute);
 app.use('/api/interests', interestRate);
 app.use('/api/transfers', transfersRoute);
 app.use('/api/balance', availableBalanceRoute);
+app.get('/api/confirmation/:token', confirmEmail)
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
