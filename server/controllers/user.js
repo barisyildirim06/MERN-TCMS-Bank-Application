@@ -149,9 +149,9 @@ module.exports = {
     async registerUser (req, res) {
         const user = new User(req.body);
         user.save(async (err, doc) => {
-            if (err) return res.json({ success: false, err });
+            if (err) return res.json({ success: false, err });        
             const token = jwt.sign(user._id.toHexString(),'TcmsUpwork')
-            await sendMail(req.body.email, token);
+            await sendMail(user, token);
             return res.status(200).json({
                 success: true
             });

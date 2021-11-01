@@ -7,7 +7,8 @@ import { useDispatch } from "react-redux";
 
 function Register(props) {
     const dispatch = useDispatch();
-
+    const query = new URLSearchParams(props.location.search);
+    const refCode = query.get('refCode')
     const [values, setValues] = useState({
         name: '',
         lastname: '',
@@ -18,27 +19,27 @@ function Register(props) {
     });
     const handleChange = (e, param) => {
         if (param === 'name') {
-            let _values = {...values, name: e.target.value}
+            let _values = { ...values, name: e.target.value }
             setValues(_values)
         }
         else if (param === 'lastname') {
-            let _values = {...values, lastname: e.target.value}
+            let _values = { ...values, lastname: e.target.value }
             setValues(_values)
         }
         else if (param === 'email') {
-            let _values = {...values, email: e.target.value}
+            let _values = { ...values, email: e.target.value }
             setValues(_values)
         }
         else if (param === 'phone') {
-            let _values = {...values, phone: e.target.value}
+            let _values = { ...values, phone: e.target.value }
             setValues(_values)
         }
         else if (param === 'password') {
-            let _values = {...values, password: e.target.value}
+            let _values = { ...values, password: e.target.value }
             setValues(_values)
         }
         else if (param === 'confirmPassword') {
-            let _values = {...values, confirmPassword: e.target.value}
+            let _values = { ...values, confirmPassword: e.target.value }
             setValues(_values)
         }
     };
@@ -67,7 +68,7 @@ function Register(props) {
             alert("Please enter a confirm password.");
             return false;
         }
-        if (values.password.length <6) {
+        if (values.password.length < 6) {
             alert("Your password should be at least 6 digits.");
             return false;
         }
@@ -78,12 +79,14 @@ function Register(props) {
         return true
     }
     const handleSave = () => {
-        if(!validate()) return;
-        dispatch(registerUser(values)).then(response => {
+        if (!validate()) return;
+        let _values = values;
+        if (refCode) _values = { ..._values, refCode }
+        dispatch(registerUser(_values)).then(response => {
             if (response.payload.success) {
-              props.history.push("/login");
+                props.history.push("/login");
             } else {
-              alert(response.payload.err.errmsg)
+                alert(response.payload.err.errmsg)
             }
         })
     }
@@ -97,34 +100,34 @@ function Register(props) {
                             CREATE YOUR ACCOUNT INFORMATION
                         </span>
                         <span style={{ color: '#c9cad2', display: 'flex' }}>
-                            Already have an account? <span> </span><a href='/login' style={{marginLeft:'6px', color: '#c9cad2', textDecoration: 'underline'}}>Sign In</a>
+                            Already have an account? <span> </span><a href='/login' style={{ marginLeft: '6px', color: '#c9cad2', textDecoration: 'underline' }}>Sign In</a>
                         </span>
                     </p>
                 </div>
                 <div className='registerBottomGrid1'>
                     <div className='registerInputContainer'>
                         <label>First Name</label>
-                        <Input value={values.name} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'name')}/>
+                        <Input value={values.name} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'name')} />
                     </div>
                     <div className='registerInputContainer'>
                         <label>Last Name</label>
-                        <Input value={values.lastname} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'lastname')}/>
+                        <Input value={values.lastname} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'lastname')} />
                     </div>
                     <div className='registerInputContainer'>
                         <label>Contact Email</label>
-                        <Input value={values.email} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'email')}/>
+                        <Input value={values.email} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'email')} />
                     </div>
                     <div className='registerInputContainer'>
                         <label>Contact Number</label>
-                        <Input value={values.phone} type='number' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'phone')}/>
+                        <Input value={values.phone} type='number' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'phone')} />
                     </div>
                     <div className='registerInputContainer'>
                         <label>Password</label>
-                        <Input value={values.password} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'password')}/>
+                        <Input value={values.password} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'password')} />
                     </div>
                     <div className='registerInputContainer'>
                         <label>Confirm Password</label>
-                        <Input value={values.confirmPassword} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'confirmPassword')}/>
+                        <Input value={values.confirmPassword} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'confirmPassword')} />
                     </div>
                 </div>
                 <button className='nextButton' onClick={handleSave}>NEXT</button>
