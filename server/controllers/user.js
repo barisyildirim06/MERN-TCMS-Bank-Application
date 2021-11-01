@@ -121,7 +121,7 @@ module.exports = {
             if (!user)
                 return res.json({
                     loginSuccess: false,
-                    message: "Auth failed, email not found"
+                    message: "Your email is not registered"
                 });
                 
             if (!user.confirmed) {
@@ -132,7 +132,7 @@ module.exports = {
             }
             user.comparePassword(req.body.password, (err, isMatch) => {
                 if (!isMatch)
-                    return res.json({ loginSuccess: false, message: "Wrong password" });
+                    return res.json({ loginSuccess: false, message: "Please provide correct password" });
     
                 user.generateToken((err, user) => {
                     if (err) return res.status(400).send(err);

@@ -48,7 +48,7 @@ function LoginPage(props) {
                         else if (response.payload.loginSuccess) {
                             props.history.push("/dashboard");
                         } else {
-                            setFormErrorMessage('Check out your Account or Password again')
+                            setFormErrorMessage(response.payload.message)
                         }
                         })
                         .catch(err => {
