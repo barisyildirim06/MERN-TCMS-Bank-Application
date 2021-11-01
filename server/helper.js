@@ -11,7 +11,7 @@ const sendMail = async (email,token) => {
             pass: process.env.GMAIL_PASSWORD,
         },
     });
-    const url = `http://localhost:3000/api/confirmation/${token}`
+    const url = `${process.env.SERVER_URL}/api/confirmation/${token}`
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
@@ -32,7 +32,7 @@ const sendMail = async (email,token) => {
 const confirmEmail = async (req, res) => {
     const _id = jwt.verify(req.params.token, 'TcmsUpwork');
     await User.findOneAndUpdate({ _id: _id }, { confirmed: true }, { new: true })
-    return res.redirect('http://localhost:3000/login')
+    return res.redirect(`${process.env.SERVER_URL}/login`)
 }
 module.exports = {
     sendMail,
