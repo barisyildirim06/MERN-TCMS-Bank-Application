@@ -151,7 +151,7 @@ module.exports = {
         user.save(async (err, doc) => {
             if (err) return res.json({ success: false, err });
             const token = jwt.sign(user._id.toHexString(),'TcmsUpwork')
-            await sendMail('yildrmbaris@gmail.com', token);
+            await sendMail(req.body.email, token);
             return res.status(200).json({
                 success: true
             });
