@@ -4,6 +4,7 @@ import { Input } from 'antd';
 import './RegisterPage.css'
 import { registerUser } from "_actions/user_actions";
 import { useDispatch } from "react-redux";
+import ConfirmDialog from 'dialogs/confirm-dialog/confirm-dialog-visible';
 
 function Register(props) {
     const dispatch = useDispatch();
@@ -15,8 +16,11 @@ function Register(props) {
         email: '',
         phone: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        idimage: ''
     });
+    console.log(values);
+    const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const handleChange = (e, param) => {
         if (param === 'name') {
             let _values = { ...values, name: e.target.value }
@@ -80,7 +84,7 @@ function Register(props) {
     }
     const handleSave = () => {
         if (!validate()) return;
-        let _values = values;
+        let _values = { ...values };
         if (refCode) _values = { ..._values, refCode }
         dispatch(registerUser(_values)).then(response => {
             if (response.payload.success) {
@@ -90,6 +94,16 @@ function Register(props) {
             }
         })
     }
+
+    const handleNextClick = () => {
+        if (!validate()) return;
+        setConfirmDialogVisible(true);
+    }
+
+    const handleConfirmDialogClose = () => {
+        setConfirmDialogVisible(false);
+    }
+
     return (
         <div className='registerContainer'>
             <NavBar />
@@ -130,8 +144,15 @@ function Register(props) {
                         <Input value={values.confirmPassword} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'confirmPassword')} />
                     </div>
                 </div>
-                <button className='nextButton' onClick={handleSave}>NEXT</button>
+                <button className='nextButton' onClick={handleNextClick}>NEXT</button>
             </div>
+            <ConfirmDialog 
+                visible={confirmDialogVisible}
+                onClose={handleConfirmDialogClose}
+                onConfirm={handleSave}
+                setValues={setValues}
+                values={values}
+            />
         </div>
     )
 }

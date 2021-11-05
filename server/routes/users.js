@@ -7,7 +7,7 @@ const { auth } = require("../middleware/auth");
 //             User
 //=================================
 
-router.post("/uploadImage", auth, uploadImage);
+router.post("/uploadImage", uploadImage);
 
 router.get("/auth", auth, authUser);
 
