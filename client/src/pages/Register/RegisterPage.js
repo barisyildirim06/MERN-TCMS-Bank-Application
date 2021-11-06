@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import NavBar from 'components/views/NavBar/NavBar'
-import { Input } from 'antd';
+import { Input, Select } from 'antd';
 import './RegisterPage.css'
 import { registerUser } from "_actions/user_actions";
 import { useDispatch } from "react-redux";
 import ConfirmDialog from 'dialogs/confirm-dialog/confirm-dialog-visible';
 
+const { Option } = Select;
 function Register(props) {
     const dispatch = useDispatch();
     const query = new URLSearchParams(props.location.search);
@@ -17,33 +18,45 @@ function Register(props) {
         phone: '',
         password: '',
         confirmPassword: '',
-        idimage: ''
+        idimage: '',
+        type: 'individual',
+        company: ''
     });
-    console.log(values);
+
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const handleChange = (e, param) => {
+        let _values = { ...values }
         if (param === 'name') {
-            let _values = { ...values, name: e.target.value }
+            _values = { ..._values, name: e.target.value }
             setValues(_values)
         }
         else if (param === 'lastname') {
-            let _values = { ...values, lastname: e.target.value }
+            _values = { ..._values, lastname: e.target.value }
             setValues(_values)
         }
         else if (param === 'email') {
-            let _values = { ...values, email: e.target.value }
+            _values = { ..._values, email: e.target.value }
             setValues(_values)
         }
         else if (param === 'phone') {
-            let _values = { ...values, phone: e.target.value }
+            _values = { ..._values, phone: e.target.value }
             setValues(_values)
         }
         else if (param === 'password') {
-            let _values = { ...values, password: e.target.value }
+            _values = { ..._values, password: e.target.value }
             setValues(_values)
         }
         else if (param === 'confirmPassword') {
-            let _values = { ...values, confirmPassword: e.target.value }
+            _values = { ..._values, confirmPassword: e.target.value }
+            setValues(_values)
+        }
+        else if (param === 'type') {
+            if (e === 'individual')  _values = { ..._values, type: e, company: '' }
+            else if (e === 'company')  _values = { ..._values, type: e }
+            setValues(_values)
+        }
+        else if (param === 'company') {
+            _values = { ..._values, company: e.target.value }
             setValues(_values)
         }
     };
@@ -135,6 +148,21 @@ function Register(props) {
                         <label>Contact Number</label>
                         <Input value={values.phone} type='number' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'phone')} />
                     </div>
+                    <div className='registerInputContainer'>
+                        <label>Type</label>
+                        <Select defaultValue={'individual'} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(value) => handleChange(value,'type')}>
+                            <Option key='individual'>Individual</Option>
+                            <Option key='company'>Company</Option>
+                        </Select>
+                    </div>
+                    {
+                        values.type === 'company' ? 
+                        <div className='registerInputContainer'>
+                            <label>Company Name</label>
+                            <Input value={values.company} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'company')} />
+                        </div> : 
+                        <div/>
+                    }
                     <div className='registerInputContainer'>
                         <label>Password</label>
                         <Input value={values.password} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'password')} />
