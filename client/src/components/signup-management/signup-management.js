@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Table, Select } from 'antd'
 import Axios from 'axios';
+import { DownloadOutlined } from '@ant-design/icons';
+import { Utils } from 'utils';
 
 const { Option } = Select;
 function SignupManagement({ users, onUserVerify }) {
@@ -19,6 +21,34 @@ function SignupManagement({ users, onUserVerify }) {
             if (value === 'unapproved') setFilterType(prevState => { return {...prevState, verify: 'unapproved' }});
             if (value === 'all') setFilterType(prevState => { return {...prevState, verify: 'all' }});
         }
+    }
+
+    const handleCsvDownload = () => {
+        if (!users?.users?.filter(u => new Date(u.createdAt).valueOf() > (filterType.createdAt === 'day' ? oneDayUnix : sevenDaysUnix)).filter(u => {
+            const { verify } = filterType 
+            if (verify === 'all') return true;
+            if (verify === 'verified' && u.verified) return true;
+            if (verify === 'unapproved' && !u.verified) return true;
+            return false;
+        }).length) {
+            return alert('There are no users')
+        }
+        const newUsers = users?.users?.filter(u => new Date(u.createdAt).valueOf() > (filterType.createdAt === 'day' ? oneDayUnix : sevenDaysUnix)).filter(u => {
+            const { verify } = filterType 
+            if (verify === 'all') return true;
+            if (verify === 'verified' && u.verified) return true;
+            if (verify === 'unapproved' && !u.verified) return true;
+            return false;
+        }).map(s => ({
+            name: s.name,
+            lastname: s.lastname,
+            email: s.email,
+            verify: s.verified,
+            phone: s.phone,
+            companyName: s.companyName,
+            createdAt: s.createdAt,
+        }))
+        Utils.downloadCsv(newUsers, 'users.csv')
     }
 
     const handleVerifyClick = (_id) => {
@@ -113,7 +143,10 @@ function SignupManagement({ users, onUserVerify }) {
     }))
     return (
         <div >
-            <label>Signup Management</label>
+            <div style={{ display: 'flex', margin: '0 10vw', justifyContent: 'space-between' }}>
+                <h3>Signup Management</h3>
+                <div className='downloadIcon' ><DownloadOutlined onClick={handleCsvDownload}/></div>
+            </div>
             <div  className='flex-center' style={{ flexDirection: 'column' }}>
                 <Table style={{ width: '80%' }} columns={columns} dataSource={data}/>
             </div>
