@@ -2,39 +2,13 @@ import React from 'react'
 import Dialog from '../../components/dialog/dialog/dialog'
 import { DownloadOutlined } from '@ant-design/icons';
 import './transaction-dialog.css'
+import { Utils } from 'utils';
 
 function TransactionDialog({ onClose, visible, transactionData }) {
     const handleClose = () => {
         if (onClose) {
             onClose()
         }
-    }
-
-    const objectToCsv = (data) => {
-        let csvRows = [];
-        const headers = Object.keys(data[0]);
-        csvRows.push(headers.join(','));
-
-        for (const row of data) {
-            const values = headers.map(header => {
-                const escaped = (''+row[header]).replace(/"/g, '\\"');
-                return `"${escaped}"`
-            })
-            csvRows.push(values.join(','));
-        }
-        return csvRows.join('\n');
-    }
-
-    const download = (data) => {
-        const blob = new Blob([data], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.setAttribute('hidden', '');
-        a.setAttribute('href', url);
-        a.setAttribute("download", "transitionHistory.csv");
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
     }
 
     const handleCsvDownload = () => {
@@ -44,8 +18,7 @@ function TransactionDialog({ onClose, visible, transactionData }) {
             amount: el.amount,
             currency: el.currency
         }))
-        const csvData = objectToCsv(newTransactions);
-        download(csvData)
+        Utils.downloadCsv(newTransactions, 'transitionHistory.csv')
     }
 
     return (

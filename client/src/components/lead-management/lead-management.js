@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Table, Select } from 'antd'
+import { DownloadOutlined } from '@ant-design/icons';
+import { Utils } from 'utils';
 
 const { Option } = Select;
 function LeadManagement({ subscribers }) {
@@ -11,6 +13,16 @@ function LeadManagement({ subscribers }) {
     const handleChange = (value) => {
         if (value === 'day') setFilterType('day')
         if (value === 'week') setFilterType('week')
+    }
+    const handleCsvDownload = () => {
+        if (!subscribers?.subscribers.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).length) {
+            return alert('There are no subscribers')
+        }
+        const newSubscribers = subscribers?.subscribers.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map(s => ({
+            email: s.email,
+            dateOfSubmission: s.createdAt
+        }))
+        Utils.downloadCsv(newSubscribers, 'subscribers.csv')
     }
 
     const filteredDropdown = (<>
@@ -59,7 +71,10 @@ function LeadManagement({ subscribers }) {
     }))
     return (
         <div >
-            <label>Lead Management</label>
+            <div style={{ display: 'flex', margin: '0 10vw', justifyContent: 'space-between' }}>
+                <h3>Lead Management</h3>
+                <div className='downloadIcon' ><DownloadOutlined onClick={handleCsvDownload}/></div>
+            </div>
             <div  className='flex-center' style={{ flexDirection: 'column' }}>
                 <Table style={{ width: '80%' }} columns={columns} dataSource={data}/>
             </div>
