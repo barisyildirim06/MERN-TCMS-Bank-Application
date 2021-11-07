@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Table, Select } from 'antd'
 import Axios from 'axios';
+import { DownloadOutlined } from '@ant-design/icons';
 import { Utils } from 'utils';
 
 const { Option } = Select;
@@ -13,6 +14,17 @@ function WithdrawalManagement({ withdrawals, onWithdrawalConfirm }) {
     const handleChange = (value) => {
         if (value === 'day') setFilterType('day')
         if (value === 'week') setFilterType('week')
+    }
+
+    const handleCsvDownload = () => {
+        if (!withdrawals.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).length) {
+            return alert('There are no withdrawals')
+        }
+        const newWithdrawals = withdrawals.filter(s => new Date(s.createdAt).valueOf() > (filterType === 'day' ? oneDayUnix : sevenDaysUnix)).map(s => ({
+            email: s.email,
+            dateOfSubmission: s.createdAt
+        }))
+        Utils.downloadCsv(newWithdrawals, 'withdrawals.csv')
     }
 
     const filteredDropdown = (<>
@@ -88,7 +100,10 @@ function WithdrawalManagement({ withdrawals, onWithdrawalConfirm }) {
     }))
     return (
         <div >
-            <label>Pending Withdrawal Management</label>
+            <div style={{ display: 'flex', margin: '0 10vw', justifyContent: 'space-between' }}>
+                <h3>Pending Withdrawal Management</h3>
+                <div className='downloadIcon' ><DownloadOutlined onClick={handleCsvDownload}/></div>
+            </div>
             <div  className='flex-center' style={{ flexDirection: 'column' }}>
                 <Table style={{ width: '80%' }} columns={columns} dataSource={data}/>
             </div>
