@@ -104,9 +104,11 @@ function AdminDashboardPage({ user }) {
         <div className='adminContainer'>
             {!user?.userData?.isAdmin ? null:
                 <div >
-                    AdminDashboard
+                    <h1>
+                        AdminDashboard
+                    </h1>
                     <br />
-                    <label>Add New Deposit / Fee / Refund</label>
+                    <h2>Add New Deposit / Fee / Refund</h2>
                     <div>
                         <button className='dashboardNextButton' style={{ margin: '0 20px' }}  onClick={handleAddNewLedgerClick}>Add New</button>
                         <button className='dashboardNextButton' style={{ margin: '0 20px', width: '200px' }} onClick={handleLedgerImportClick}>Bulk Upload</button>

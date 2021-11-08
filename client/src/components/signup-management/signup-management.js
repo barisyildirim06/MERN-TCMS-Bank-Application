@@ -59,14 +59,14 @@ function SignupManagement({ users, onUserVerify }) {
     }
 
     const createdAtFilterDropdown = <>
-      <Select defaultValue={'week'} style={{ width: '200px' }} onChange={(value) => handleChange(value,'createdAt')}>
+      <Select defaultValue={'week'} style={{ width: '200px', height: '36px' }} onChange={(value) => handleChange(value,'createdAt')}>
           <Option key='day'>Last 24 Hours</Option>
           <Option key='week'>Last Week</Option>
       </Select>
     </>
 
     const filterVerifyDropdown = <>
-      <Select defaultValue={'all'} style={{ width: '200px' }} onChange={(value) => handleChange(value,'verify')}>
+      <Select defaultValue={'all'} style={{ width: '200px', height: '36px' }} onChange={(value) => handleChange(value,'verify')}>
           <Option key='verified'>Verified</Option>
           <Option key='unapproved'>Unapproved</Option>
           <Option key='all'>All Statuses</Option>
