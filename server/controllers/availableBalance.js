@@ -60,7 +60,7 @@ const availableBalance = async (req, res) => {
     let transactData = general;
     if (general && newWithdrawals) transactData = general?.concat(newWithdrawals)
 
-    return res.status(200).json({ success: true, message: 'Successfully created the Ledger', nzdAccount, usdAccount, audAccount, transactData })
+return res.status(200).json({ success: true, nzdAccount, usdAccount, audAccount, transactData })
 }
 
 module.exports = {

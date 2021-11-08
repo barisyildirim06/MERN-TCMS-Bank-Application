@@ -8,7 +8,7 @@ export default function (SpecificComponent) {
 
         let availableBalance = useSelector(state => state?.availableBalance?.availableBalance);
         const dispatch = useDispatch();
-        console.log(availableBalance)
+
         useEffect(() => {
             //To know my current status, send Auth request 
             dispatch(getAvailableBalance(props?.user?.userData?._id))
