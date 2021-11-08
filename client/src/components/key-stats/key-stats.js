@@ -57,7 +57,9 @@ function KeyStats({ subscribers, users }) {
     ];
     return (
         <div>
-            <label htmlFor="key-stats">Key Stats</label>
+            <div style={{ display: 'flex', margin: '0 10vw' }}>
+                <h3>Key Stats Management</h3>
+            </div>
             <div className='flex-center' style={{ flexDirection: 'column' }}>
                 <Table style={{ width: '80%' }} columns={columns} pagination={false} dataSource={data} />
             </div>

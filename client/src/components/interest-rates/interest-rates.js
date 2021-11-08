@@ -142,7 +142,9 @@ function InterestRates({ interests, generals, rates }) {
 
     return (
         <div >
-        <label htmlFor="KeyFinancialStats">Set Current Interest Rate on Accounts</label>
+        <div style={{ display: 'flex', margin: '0 10vw' }}>
+            <h3>Interest Rate Management</h3>
+        </div>
         <div  className='flex-center' style={{ flexDirection: 'column' }}>
             {interestsState && generals && rates &&
                 <Table style={{ width: '80%' }} columns={columns} pagination={false} dataSource={data}/>
