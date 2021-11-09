@@ -52,9 +52,9 @@ function InterestRates({ interests, generals, rates }) {
                     multipliedValue += (nowUnix - createdAtUnix) * el.rate
                 }
             })
-            if (currency === 'NZD') return Utils.formatter.format(((generals?.totalNzdAmount)* (multipliedValue / calculatedTime) / 100))
-            else if (currency === 'USD') return Utils.formatter.format(((generals?.totalUsdAmount)* (multipliedValue / calculatedTime) / 100))
-            else if (currency === 'AUD') return Utils.formatter.format(((generals?.totalAudAmount)* (multipliedValue / calculatedTime) / 100))
+            if (currency === 'NZD') return Utils.formatter.format(((generals?.totalNzdAmount)* (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+            else if (currency === 'USD') return Utils.formatter.format(((generals?.totalUsdAmount)* (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+            else if (currency === 'AUD') return Utils.formatter.format(((generals?.totalAudAmount)* (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
         }
     }, [interests, generals])
 
