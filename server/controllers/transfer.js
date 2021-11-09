@@ -34,7 +34,7 @@ const transferCreate = async (req, res) => {
             donorAccount: donorAccount._id,
             donorUserID: donorAccount.userID,
         }
-        console.log(transferData)
+
         const transfer = new Transfer(transferData)
         transfer.save((err) => {
             if (err) return res.status(200).json({ success: false, message: 'An error occured during transfer. Please try it later' })

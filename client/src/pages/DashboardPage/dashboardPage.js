@@ -130,6 +130,14 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
         })
     }
 
+    const handleMoneyTransferSave = (amount) => {
+        const newAvailableBalance = currentAccount.availableBalance - amount;
+        const newPrincipal = currentAccount.principal - amount;
+        setCurrentAccount({...currentAccount, availableBalance: newAvailableBalance, principal: newPrincipal });
+        if (currentCurrency === 'NZD') setNzdAcc({...currentAccount, availableBalance: newAvailableBalance, principal: newPrincipal});
+        if (currentCurrency === 'USD') setUsdAcc({...currentAccount, availableBalance: newAvailableBalance, principal: newPrincipal});
+        if (currentCurrency === 'AUD') setAudAcc({...currentAccount, availableBalance: newAvailableBalance, principal: newPrincipal});
+    }
 
     const handleDepositDialogClick = () => {
         handleNavClose();
@@ -414,6 +422,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 currentCurrency={currentCurrency}
                 onClose={handleMoneyTransferDialogClose}
                 availableBalance={currentAccount?.availableBalance}
+                onSave={handleMoneyTransferSave}
             />
             <ProgressView 
                 visible={progressViewVisible}

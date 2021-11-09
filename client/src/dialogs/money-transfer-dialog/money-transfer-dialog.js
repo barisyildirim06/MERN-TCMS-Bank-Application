@@ -3,7 +3,7 @@ import Dialog from '../../components/dialog/dialog/dialog'
 import { Input } from 'antd';
 import Axios from 'axios';
 
-function MoneyTransferDialog({ onClose, visible, currentCurrency }) {
+function MoneyTransferDialog({ onClose, visible, currentCurrency, onSave }) {
     const handleClose = () => {
         if (onClose) {
             onClose()
@@ -31,6 +31,9 @@ function MoneyTransferDialog({ onClose, visible, currentCurrency }) {
         const request = await Axios.post('/api/transfers/create', _values);
         alert(request.data.message);
         handleClose();
+        if (onSave) {
+            onSave(values.amount)
+        }
     }
 
     return (
