@@ -11,7 +11,7 @@ const availableBalance = async (req, res) => {
     let nzdAccount = {
         principal: general?.filter(el => el.transactionType === 'CREDIT' && el.currency === 'NZD' )?.length? general?.filter(el => el.transactionType === 'CREDIT' && el.currency === 'NZD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
         interestAcrrued: general?.filter(el => el.transactionType === 'ACRUED INTEREST' && el.currency === 'NZD' )?.length ? general?.filter(el => el.transactionType === 'ACRUED INTEREST' && el.currency === 'NZD' ).reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
-        fees: general?.filter(el => el.transactionType === 'FEES' && el.currency === 'NZD' )?.length? general?.filter(el => el.transactionType === 'FEES' && el.currency === 'NZD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
+        fees: general?.filter(el => el.transactionType === 'FEES' && el.currency === 'NZD' )?.length? general?.filter(el => el.transactionType === 'FEES' && el.currency === 'NZD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount * -1 : 0,
         withdrawls: general?.filter(el => el.transactionType === 'DEBIT' && el.currency === 'NZD' )?.length? general?.filter(el => el.transactionType === 'DEBIT' && el.currency === 'NZD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount * -1 : 0,
         pendingWithdrawls: withdrawal?.filter(el => el.status === 'Pending' && el.currency === 'NZD')?.length? withdrawal?.filter(el => el.status === 'Pending' && el.currency === 'NZD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
         recipientTransfers: recipient?.filter(el => el.currency === 'NZD')?.length? recipient?.filter(el => el.currency === 'NZD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
@@ -19,13 +19,14 @@ const availableBalance = async (req, res) => {
     }
     nzdAccount = {
         ...nzdAccount,
+        principal: nzdAccount.principal + nzdAccount.donorTransfers,
         availableBalance : nzdAccount.principal + nzdAccount.interestAcrrued + nzdAccount.fees + nzdAccount.withdrawls + nzdAccount.pendingWithdrawls + nzdAccount.recipientTransfers + nzdAccount.donorTransfers
     }
 
     let usdAccount = {
         principal: general?.filter(el => el.transactionType === 'CREDIT' && el.currency === 'USD' )?.length? general?.filter(el => el.transactionType === 'CREDIT' && el.currency === 'USD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
         interestAcrrued: general?.filter(el => el.transactionType === 'ACRUED INTEREST' && el.currency === 'USD' )?.length ? general?.filter(el => el.transactionType === 'ACRUED INTEREST' && el.currency === 'USD' ).reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
-        fees: general?.filter(el => el.transactionType === 'FEES' && el.currency === 'USD' )?.length? general?.filter(el => el.transactionType === 'FEES' && el.currency === 'USD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
+        fees: general?.filter(el => el.transactionType === 'FEES' && el.currency === 'USD' )?.length? general?.filter(el => el.transactionType === 'FEES' && el.currency === 'USD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount * -1 : 0,
         withdrawls: general?.filter(el => el.transactionType === 'DEBIT' && el.currency === 'USD' )?.length? general?.filter(el => el.transactionType === 'DEBIT' && el.currency === 'USD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount * -1 : 0,
         pendingWithdrawls: withdrawal?.filter(el => el.status === 'Pending' && el.currency === 'USD')?.length? withdrawal?.filter(el => el.status === 'Pending' && el.currency === 'USD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
         recipientTransfers: recipient?.filter(el => el.currency === 'USD')?.length? recipient?.filter(el => el.currency === 'USD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
@@ -33,21 +34,23 @@ const availableBalance = async (req, res) => {
     }
     usdAccount = {
         ...usdAccount,
+        principal: usdAccount.principal + usdAccount.donorTransfers,
         availableBalance : usdAccount.principal + usdAccount.interestAcrrued + usdAccount.fees + usdAccount.withdrawls + usdAccount.pendingWithdrawls + usdAccount.recipientTransfers + usdAccount.donorTransfers
     }
-
+    
     let audAccount = {
         principal: general?.filter(el => el.transactionType === 'CREDIT' && el.currency === 'AUD' )?.length? general?.filter(el => el.transactionType === 'CREDIT' && el.currency === 'AUD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
         interestAcrrued: general?.filter(el => el.transactionType === 'ACRUED INTEREST' && el.currency === 'AUD' )?.length ? general?.filter(el => el.transactionType === 'ACRUED INTEREST' && el.currency === 'AUD' ).reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
-        fees: general?.filter(el => el.transactionType === 'FEES' && el.currency === 'AUD' )?.length? general?.filter(el => el.transactionType === 'FEES' && el.currency === 'AUD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
+        fees: general?.filter(el => el.transactionType === 'FEES' && el.currency === 'AUD' )?.length? general?.filter(el => el.transactionType === 'FEES' && el.currency === 'AUD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount * -1 : 0,
         withdrawls: general?.filter(el => el.transactionType === 'DEBIT' && el.currency === 'AUD' )?.length? general?.filter(el => el.transactionType === 'DEBIT' && el.currency === 'AUD' )?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount * -1 : 0,
         pendingWithdrawls: withdrawal?.filter(el => el.status === 'Pending' && el.currency === 'AUD')?.length? withdrawal?.filter(el => el.status === 'Pending' && el.currency === 'AUD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
         recipientTransfers: recipient?.filter(el => el.currency === 'AUD')?.length? recipient?.filter(el => el.currency === 'AUD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount : 0,
         donorTransfers: donor?.filter(el => el.currency === 'AUD')?.length? donor?.filter(el => el.currency === 'AUD')?.reduce((a, b) => ({amount: a?.amount + b?.amount}))?.amount  * -1 : 0,
     }
-
+    
     audAccount = {
         ...audAccount,
+        principal: audAccount.principal + audAccount.donorTransfers,
         availableBalance : audAccount.principal + audAccount.interestAcrrued + audAccount.fees + audAccount.withdrawls + audAccount.pendingWithdrawls + audAccount.recipientTransfers + audAccount.donorTransfers
     }
     const newWithdrawals = withdrawal?.map(el => {
