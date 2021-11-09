@@ -25,7 +25,7 @@ function KeyFinancialStats({ generals, rates, withdrawals }) {
           key: 'aud',
         },
         {
-          title: 'Sum of All Acounts ($)',
+          title: 'Sum of All Accounts (USD)',
           dataIndex: 'sum',
           key: 'sum',
         },
