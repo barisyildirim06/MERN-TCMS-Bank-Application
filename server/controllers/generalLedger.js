@@ -56,9 +56,16 @@ module.exports = {
             var totalAudAmount = 0;
             var totalUsdAmount = 0;
             generalLedgers.forEach(g => {
-                if (g.currency === 'NZD') totalNzdAmount = totalNzdAmount + g.amount;
-                if (g.currency === 'USD') totalUsdAmount = totalUsdAmount + g.amount;
-                if (g.currency === 'AUD') totalAudAmount = totalAudAmount + g.amount;
+                if (g.transactionType === 'CREDIT' || g.transactionType === 'ACRUED INTEREST') {
+                    if (g.currency === 'NZD') totalNzdAmount += g.amount;
+                    if (g.currency === 'USD') totalUsdAmount += g.amount;
+                    if (g.currency === 'AUD') totalAudAmount += + g.amount;
+                }
+                else if (g.transactionType === 'FEES' || g.transactionType === 'DEBIT' ) {
+                    if (g.currency === 'NZD') totalNzdAmount -= g.amount;
+                    if (g.currency === 'USD') totalUsdAmount -= g.amount;
+                    if (g.currency === 'AUD') totalAudAmount -= g.amount;
+                }
             })
             return res.json({ totalNzdAmount, totalUsdAmount, totalAudAmount })
         })
