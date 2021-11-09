@@ -29,11 +29,12 @@ const transferCreate = async (req, res) => {
         if (req.body.amount > availableBalance) return res.status(200).json({ success: false, message: 'Transfer amount cannot be larger than available balance' })
         const transferData = {
             ...req.body,
-            recipientAccount: recipient._id,
-            recipientUserID: recipient.userID,
-            donorAccount: donor._id,
-            donorUserID: donor.userID,
+            recipientAccount: recipientAccount._id,
+            recipientUserID: recipientAccount.userID,
+            donorAccount: donorAccount._id,
+            donorUserID: donorAccount.userID,
         }
+        console.log(transferData)
         const transfer = new Transfer(transferData)
         transfer.save((err) => {
             if (err) return res.status(200).json({ success: false, message: 'An error occured during transfer. Please try it later' })
