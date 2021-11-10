@@ -20,7 +20,7 @@ function Register(props) {
         confirmPassword: '',
         idimage: '',
         type: 'individual',
-        company: ''
+        companyName: ''
     });
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
@@ -51,12 +51,12 @@ function Register(props) {
             setValues(_values)
         }
         else if (param === 'type') {
-            if (e === 'individual')  _values = { ..._values, type: e, company: '' }
-            else if (e === 'company')  _values = { ..._values, type: e }
+            if (e === 'individual')  _values = { ..._values, type: e, companyName: '' }
+            else if (e === 'companyName')  _values = { ..._values, type: e }
             setValues(_values)
         }
-        else if (param === 'company') {
-            _values = { ..._values, company: e.target.value }
+        else if (param === 'companyName') {
+            _values = { ..._values, companyName: e.target.value }
             setValues(_values)
         }
     };
@@ -152,14 +152,14 @@ function Register(props) {
                         <label>Type</label>
                         <Select defaultValue={'individual'} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(value) => handleChange(value,'type')}>
                             <Option key='individual'>Individual</Option>
-                            <Option key='company'>Company</Option>
+                            <Option key='companyName'>Company</Option>
                         </Select>
                     </div>
                     {
-                        values.type === 'company' ? 
+                        values.type === 'companyName' ? 
                         <div className='registerInputContainer'>
                             <label>Company Name</label>
-                            <Input value={values.company} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'company')} />
+                            <Input value={values.companyName} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'companyName')} />
                         </div> : 
                         <div/>
                     }
