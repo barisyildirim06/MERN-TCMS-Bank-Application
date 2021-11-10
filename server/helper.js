@@ -7,30 +7,34 @@ const sendMail = async (user,token) => {
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: process.env.GMAIL,
-            pass: process.env.GMAIL_PASSWORD,
+            user: 'tcmsupwork@gmail.com',
+            pass: 'Tcms_Upwork0',
         },
     });
-    const confirmUrl = `${process.env.SERVER_URL}/api/confirmation/${token}`
-    const refUrl = `${process.env.SERVER_URL}/register?refCode=${user.userID}`
+    const confirmUrl = `https://tcms-upwork.herokuapp.com/api/confirmation/${token}`
+    const refUrl = `https://tcms-upwork.herokuapp.com/register?refCode=${user.userID}`
 
     // send mail with defined transport object
-    let info = await transporter.sendMail({
-        to: user.email, 
-        subject: "TCMS Confirmation Email", 
-        html: `
-            <div>
-            <div>
-            Please click this link to confirm your email: <a href="${confirmUrl}">${confirmUrl}</a>
-            <div />
-            <div>
-            If you want to invite other users here is your referrance Link: <a href="${refUrl}">${refUrl}</a>
-            <div />
-            </div>
-        `, 
-    });
-
-    return;
+    try {
+        await transporter.sendMail({
+            to: user.email, 
+            subject: "TCMS Confirmation Email", 
+            html: `
+                <div>
+                <div>
+                Please click this link to confirm your email: <a href="${confirmUrl}">${confirmUrl}</a>
+                <div />
+                <div>
+                If you want to invite other users here is your referrance Link: <a href="${refUrl}">${refUrl}</a>
+                <div />
+                </div>
+            `, 
+        });
+    }
+    catch (error) {
+        console.log(error)
+    }
+    return 
 }
 
 const confirmEmail = async (req, res) => {
