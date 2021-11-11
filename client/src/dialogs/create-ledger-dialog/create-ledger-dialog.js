@@ -20,6 +20,7 @@ function CreateLedgerDialog({ onClose, visible }) {
 
     const handleChange = (e, param) => {
         if (param === 'accountID') {
+            if (e.target.value.length >= 9) return e.preventDefault(); 
             let _values = {...values, accountID: e.target.value}
             setValues(_values)
         }
@@ -49,7 +50,7 @@ function CreateLedgerDialog({ onClose, visible }) {
             <div className='accountCardTop' style={{  width: '100%', margin: '1vh' }}>
                 <p className='depositText'>Create New Ledger</p>
                 <label>AccountID</label>
-                <Input type='number' value={values.accountID} style={{  marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'accountID')}/>
+                <Input value={values.accountID} style={{  marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'accountID')}/>
                 <label>Currency</label>
                 <Select defaultValue={'nzd'} style={{ width: '100%', backgroundColor: 'white', marginTop: '1vh', fontSize: '20px', height: '36px' }} onChange={(e) => handleChange(e,'currency')}>
                     <Option key='NZD'>NZD</Option>
