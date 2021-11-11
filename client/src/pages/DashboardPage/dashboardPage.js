@@ -250,6 +250,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                         <a href = {() => false} style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</a>
                         <a href = {() => false} onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
                         <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
+                        {user?.userData?.isAdmin && <Link onClick={handleNavClose} to='/admin/dashboard' style={{color:'white', fontSize: '16px'}}>Admin Dashboard</Link>}
                     </div>
                 </div>
             </div>
@@ -271,7 +272,9 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 <div style={{ height: '35vh', display: 'flex', flexDirection: 'column-reverse'}}>
                     <a href = {() => false} style={{color:'white', fontSize: '16px'}} onClick={logoutHandler}>Logout</a>
                     <a href = {() => false} onClick={handleSupportClick} style={{color:'white', fontSize: '16px'}}>Support</a>
-                        <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
+                    <Link onClick={handleNavClose} to='/' style={{color:'white', fontSize: '16px'}}>Home</Link>
+                    {user?.userData?.isAdmin && <Link onClick={handleNavClose} to='/admin/dashboard' style={{color:'white', fontSize: '16px'}}>Admin Dashboard</Link>}
+
                 </div>
             </div>
             <div className='dashboardRight'>

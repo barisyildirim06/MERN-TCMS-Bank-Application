@@ -78,6 +78,11 @@ function Navbar(props) {
                             <li>
                                 <Link to="/dashboard">Dashboard</Link>
                             </li>
+                            {user.userData.isAdmin &&
+                            <li>
+                                <Link to="/admin/dashboard">Admin Dashboard</Link>
+                            </li>
+                            }
                             <li>
                                 <a href = {() => false} onClick={logoutHandler}>Logout</a>
                             </li>

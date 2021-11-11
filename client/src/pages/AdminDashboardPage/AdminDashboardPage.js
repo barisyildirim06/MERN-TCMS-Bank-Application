@@ -9,6 +9,7 @@ import WithdrawalManagement from 'components/withdrawal-management/withdrawal-ma
 import './AdminDashboardPage.css'
 import CreateLedgerDialog from 'dialogs/create-ledger-dialog/create-ledger-dialog';
 import { Utils } from 'utils';
+import NavBar from 'components/views/NavBar/NavBar';
 
 function AdminDashboardPage({ user }) {
     const taskInput = useRef(null);
@@ -104,7 +105,8 @@ function AdminDashboardPage({ user }) {
         <div className='adminContainer'>
             {!user?.userData?.isAdmin ? null:
                 <div >
-                    <h1>
+                    <NavBar />
+                    <h1 style={{ paddingTop: '16vh' }}>
                         Admin Dashboard
                     </h1>
                     <br />
