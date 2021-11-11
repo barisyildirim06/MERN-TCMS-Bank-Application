@@ -31,6 +31,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const [image, setImage] = useState('');
     const [progressViewVisible, setProgressViewVisible] = useState(false);
     const [moneyTransferDialogVisible, setMoneyTransferDialogVisible] = useState(false);
+    const [sliderValue, setSliderValue] = useState([0,0])
 
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
@@ -99,6 +100,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
 
     const handleSliderChange = (value) => {
         setPersentage(value[1]);
+        setSliderValue(value)
         if(currentAccount?.availableBalance) {
             setAmount((currentAccount.availableBalance * value[1] / 100)?.toFixed(2))
         }
@@ -120,6 +122,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
         }
         axios.post(`/api/withdrawals/create`, data).then(res => {
             if (res.data.success) {
+                setSliderValue([0,0]);
+                setPersentage(0);
+                setAmount(0);
+                alert('Withdrawal successfully created.')
                 const newPendingWithdrawal = currentAccount.pendingWithdrawls - amount;
                 const newAvailableBalance = currentAccount.availableBalance - amount;
                 setCurrentAccount({...currentAccount, pendingWithdrawls: newPendingWithdrawal, availableBalance: newAvailableBalance});
@@ -398,7 +404,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                 <span className="dolarSuffix">$</span>
                             </div>
                             <div style={{ height: '2vh' }}/>
-                            <Slider range defaultValue={[0,0]} onChange={handleSliderChange}/>
+                            <Slider range value={sliderValue} onChange={handleSliderChange}/>
                             <div style={{ display:'flex', flexDirection:'row-reverse' }}>{`${persentage}%`}</div>
                             <button className='dashboardNextButton' style={{ marginTop: '2vh' }} onClick={handleSubmit}>Submit</button>
                         </div>
