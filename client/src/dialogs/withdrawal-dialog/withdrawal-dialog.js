@@ -10,7 +10,13 @@ function WithdrawalDialog({ onClose, visible, user }) {
     const [disabled, setDisabled] = useState(true);
     const [isEditMode, setIsEditMode] = useState(true);
     const handleWithdrawalAccountNumberChange = (e) => {
-        setWithdrawalAccountNumber(e.target.value)
+        if (e.target.value.length >= 19) return e.preventDefault()
+        if (withdrawalAccountNumber.length > e.target.value.length) return setWithdrawalAccountNumber(e.target.value)
+        if (e.target.value.length === 2 || e.target.value.length === 7 || e.target.value.length === 14) {
+            setWithdrawalAccountNumber(e.target.value + '-')
+        } else {
+            setWithdrawalAccountNumber(e.target.value)
+        }
     }
 
     const handleEditClick = () => {
@@ -95,7 +101,7 @@ function WithdrawalDialog({ onClose, visible, user }) {
                 <div style={{ height:'50px' }}/>
                 Available Funds
                 <div style={{ height:'50px' }}/>
-                <input value={withdrawalAccountNumber} disabled={user?.userData && user?.userData[`${accountType}`] !== '' && user?.userData[`${accountType}`] !== undefined ? disabled : false} onChange={handleWithdrawalAccountNumberChange} placeholder={`Account Number`} className='withdrawlInput' width='100%'/>
+                <input value={withdrawalAccountNumber} disabled={user?.userData && user?.userData[`${accountType}`] !== '' && user?.userData[`${accountType}`] !== undefined ? disabled : false} onChange={handleWithdrawalAccountNumberChange} placeholder={`XX-XXXX-XXXXXXX-XXX`} className='withdrawlInput' width='100%'/>
                 <br />
                 <br />
                 <div style={{  display:'flex', justifyContent:'center', flexDirection: 'column', alignItems:'center' }}>
