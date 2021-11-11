@@ -34,7 +34,7 @@ function KeyFinancialStats({ generals, rates, withdrawals }) {
     const data = [
         {
             key: '1',
-            item: 'Total Fudning Under Management',
+            item: 'Total Funding Under Management',
             nzd: Utils.formatter.format(generals?.totalNzdAmount?.toFixed(2)),
             usd: Utils.formatter.format(generals?.totalUsdAmount?.toFixed(2)),
             aud: Utils.formatter.format(generals?.totalAudAmount?.toFixed(2)),

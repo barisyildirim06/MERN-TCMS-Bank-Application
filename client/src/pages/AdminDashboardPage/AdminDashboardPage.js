@@ -105,7 +105,7 @@ function AdminDashboardPage({ user }) {
             {!user?.userData?.isAdmin ? null:
                 <div >
                     <h1>
-                        AdminDashboard
+                        Admin Dashboard
                     </h1>
                     <br />
                     <h2>Add New Deposit / Fee / Refund</h2>

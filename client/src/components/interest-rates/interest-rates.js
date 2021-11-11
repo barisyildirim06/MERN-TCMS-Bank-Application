@@ -113,7 +113,7 @@ function InterestRates({ interests, generals, rates }) {
             rate: 'NZD',
             edit: 'NZD',
             lastWeek: lastWeekReturns.NZD,
-            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalNzdAmount)* (interestsState?.filter(i=> i.currency === 'NZD')[interestsState?.filter(i=> i.currency === 'NZD')?.length - 1].rate / 100))?.toFixed(2)) : null
+            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalNzdAmount)* (interestsState?.filter(i=> i.currency === 'NZD')[interestsState?.filter(i=> i.currency === 'NZD')?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)) : null
         },
         {
             key: '2',
@@ -121,7 +121,7 @@ function InterestRates({ interests, generals, rates }) {
             rate: 'USD',
             edit: 'USD',
             lastWeek: lastWeekReturns.USD,
-            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalUsdAmount) * (interestsState?.filter(i=> i.currency === 'USD')[interestsState?.filter(i=> i.currency === 'USD')?.length - 1].rate / 100))?.toFixed(2)) : null
+            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalUsdAmount) * (interestsState?.filter(i=> i.currency === 'USD')[interestsState?.filter(i=> i.currency === 'USD')?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)) : null
         },
         {
             key: '3',
@@ -129,7 +129,7 @@ function InterestRates({ interests, generals, rates }) {
             rate: 'AUD',
             edit: 'AUD',
             lastWeek: lastWeekReturns.AUD,
-            calculated:(generals && interestsState?.length)? Utils.formatter.format(((generals?.totalAudAmount) * (interestsState?.filter(i=> i.currency === 'AUD')[interestsState?.filter(i=> i.currency === 'AUD')?.length - 1].rate / 100)).toFixed(2)) : null
+            calculated:(generals && interestsState?.length)? Utils.formatter.format(((generals?.totalAudAmount) * (interestsState?.filter(i=> i.currency === 'AUD')[interestsState?.filter(i=> i.currency === 'AUD')?.length - 1].rate / (100 * 365.25 / 7))).toFixed(2)) : null
         },
     ];
     useEffect(() => {
