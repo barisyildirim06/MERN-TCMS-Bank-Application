@@ -11,18 +11,20 @@ function InterestRates({ interests, generals, rates }) {
     })
     const [interestsState, setInterestsState] = useState([]);
     const [lastWeekReturns, setlastWeekReturns] = useState({ NZD: 0, USD: 0, AUD: 0 })
-    
+    const [calculatedReturn, setCalculatedReturn] = useState({ NZD: 0, USD: 0, AUD: 0 })
+    const [confirmReturn, setConfirmReturn] = useState({ NZD: 0, USD: 0, AUD: 0 })
+
     const handleEditClick = (currency) => {
-        let _disabled = {...disabled};
+        let _disabled = { ...disabled };
         _disabled[currency] = false;
         setDisabled(_disabled)
     }
-    
+
     const handleInterestChange = (e, currency) => {
         let _interestsRate = interestsState.map(i => {
-            if (i._id === interestsState?.filter(i=> i.currency === currency)[interestsState?.filter(i=> i.currency === currency)?.length - 1]._id) {
-                return {...i, rate: e.target.value}
-            } 
+            if (i._id === interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1]._id) {
+                return { ...i, rate: e.target.value }
+            }
             return i;
         })
         setInterestsState(_interestsRate);
@@ -52,11 +54,26 @@ function InterestRates({ interests, generals, rates }) {
                     multipliedValue += (nowUnix - createdAtUnix) * el.rate
                 }
             })
-            if (currency === 'NZD') return Utils.formatter.format(((generals?.totalNzdAmount)* (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
-            else if (currency === 'USD') return Utils.formatter.format(((generals?.totalUsdAmount)* (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
-            else if (currency === 'AUD') return Utils.formatter.format(((generals?.totalAudAmount)* (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+            if (currency === 'NZD') return Utils.formatter.format(((generals?.totalNzdAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+            else if (currency === 'USD') return Utils.formatter.format(((generals?.totalUsdAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+            else if (currency === 'AUD') return Utils.formatter.format(((generals?.totalAudAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
         }
-    }, [interests, generals])
+    }, [interests, generals]);
+
+    const handleCalculatedReturn = useCallback((currency, formatted) => {
+        if (generals && interestsState?.length) {
+            if (formatted) {
+                return Utils.formatter.format(((generals?.totalNzdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2))
+            }
+            return ((generals?.totalNzdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)
+        }
+    }, [generals, interestsState]);
+
+    const handleConfirmReturnChange = useCallback((e, currency) => {
+        if (currency === 'NZD') setConfirmReturn({ ...confirmReturn, NZD: e.target.value });
+        if (currency === 'USD') setConfirmReturn({ ...confirmReturn, USD: e.target.value });
+        if (currency === 'AUD') setConfirmReturn({ ...confirmReturn, AUD: e.target.value });
+    }, [confirmReturn]);
 
     const handleConfirm = async (currency) => {
         if (!window.confirm('Upon clicking apportion the confirmed return into each account as an INTEREST ACCRUED ledger item for each account? This action is irreversible.')) {
@@ -64,17 +81,16 @@ function InterestRates({ interests, generals, rates }) {
         }
         const interest = interestsState.filter(i => i.currency === currency)[interestsState.filter(i => i.currency === currency).length - 1];
 
-        Axios.post('/api/interests/create', { currency: interest.currency, rate: interest.rate }).then(res => {
+        Axios.post('/api/interests/update', { currency: interest.currency, rate: interest.rate, confirmAmount: confirmReturn[currency] }).then(res => {
             if (res.data.success) {
-                setInterestsState([...interests, res.data.interest])
                 alert(res.data.message)
-                let _disabled = {...disabled};
+                let _disabled = { ...disabled };
                 _disabled[currency] = true;
                 setDisabled(_disabled)
             }
         })
     }
-    
+
     const columns = [
         {
             title: 'Item',
@@ -90,7 +106,7 @@ function InterestRates({ interests, generals, rates }) {
             title: 'Current Interest Rate',
             dataIndex: 'rate',
             key: 'rate',
-            render: currency => interestsState?.length? <Input type='number' onChange={(e)=> handleInterestChange(e, currency)} disabled={disabled[currency]} value={interestsState?.filter(i=> i.currency === currency)[interestsState?.filter(i=> i.currency === currency)?.length - 1]?.rate} style={{ width: '50%' }}/> : null
+            render: currency => interestsState?.length ? <Input type='number' onChange={(e) => handleInterestChange(e, currency)} disabled={disabled[currency]} value={interestsState?.find(i => i.currency === currency).rate} style={{ width: '50%' }} /> : null
         },
         {
             title: 'Calculated Return ($)',
@@ -98,38 +114,47 @@ function InterestRates({ interests, generals, rates }) {
             key: 'calculated',
         },
         {
+            title: 'Confirm Return ($)',
+            dataIndex: 'confirm',
+            key: 'confirm',
+            render: currency => <Input onChange={(e) => handleConfirmReturnChange(e, currency)} disabled={disabled[currency]} value={confirmReturn[currency]} style={{ width: '50%' }} />
+        },
+        {
             title: '',
             dataIndex: 'edit',
             key: 'edit',
             render: currency => disabled[currency] ? <button className='dashboardNextButton' style={{ margin: '0', backgroundColor: '#f0ad4e' }} onClick={() => handleEditClick(currency)}>Edit</button>
-            :<button className='dashboardNextButton' style={{ margin: '0' }} onClick={() => handleConfirm(currency)}>Confirm</button>,
+                : <button className='dashboardNextButton' style={{ margin: '0' }} onClick={() => handleConfirm(currency)}>Confirm</button>,
         }
     ]
-                
+
     const data = [
         {
             key: '1',
             item: 'NZD Account',
             rate: 'NZD',
             edit: 'NZD',
+            confirm: 'NZD',
             lastWeek: lastWeekReturns.NZD,
-            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalNzdAmount)* (interestsState?.filter(i=> i.currency === 'NZD')[interestsState?.filter(i=> i.currency === 'NZD')?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)) : null
+            calculated: calculatedReturn.NZD
         },
         {
             key: '2',
             item: 'USD Account',
             rate: 'USD',
             edit: 'USD',
+            confirm: 'USD',
             lastWeek: lastWeekReturns.USD,
-            calculated: (generals && interestsState?.length)? Utils.formatter.format(((generals?.totalUsdAmount) * (interestsState?.filter(i=> i.currency === 'USD')[interestsState?.filter(i=> i.currency === 'USD')?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)) : null
+            calculated: calculatedReturn.USD
         },
         {
             key: '3',
             item: 'AUD Account',
             rate: 'AUD',
             edit: 'AUD',
+            confirm: 'AUD',
             lastWeek: lastWeekReturns.AUD,
-            calculated:(generals && interestsState?.length)? Utils.formatter.format(((generals?.totalAudAmount) * (interestsState?.filter(i=> i.currency === 'AUD')[interestsState?.filter(i=> i.currency === 'AUD')?.length - 1].rate / (100 * 365.25 / 7))).toFixed(2)) : null
+            calculated: calculatedReturn.AUD
         },
     ];
     useEffect(() => {
@@ -137,20 +162,25 @@ function InterestRates({ interests, generals, rates }) {
     }, [interests]);
 
     useEffect(() => {
-        setlastWeekReturns(prevState => ({...prevState, NZD: calculateLastWeekInterest('NZD'), USD: calculateLastWeekInterest('USD'), AUD: calculateLastWeekInterest('AUD') }))
-    }, [interests, generals, calculateLastWeekInterest])
-
+        console.log(interestsState)
+        if (interestsState.length) setlastWeekReturns(prevState => ({ ...prevState, NZD: interestsState?.find(i => i.currency === 'lastWeekNZD').confirmAmount, USD: interestsState?.find(i => i.currency === 'lastWeekUSD').confirmAmount, AUD: interestsState?.find(i => i.currency === 'lastWeekAUD').confirmAmount }))
+    }, [interestsState])
+    console.log(lastWeekReturns)
+    useEffect(() => {
+        setCalculatedReturn(prevState => ({ ...prevState, NZD: handleCalculatedReturn('NZD',true), USD: handleCalculatedReturn('USD',true), AUD: handleCalculatedReturn('AUD',true) }))
+        setConfirmReturn(prevState => ({ ...prevState, NZD: handleCalculatedReturn('NZD'), USD: handleCalculatedReturn('USD'), AUD: handleCalculatedReturn('AUD') }))
+    }, [interests, generals, handleCalculatedReturn])
     return (
         <div >
-        <div style={{ display: 'flex', margin: '0 10vw' }}>
-            <h3>Interest Rate Management</h3>
+            <div style={{ display: 'flex', margin: '0 10vw' }}>
+                <h3>Interest Rate Management</h3>
+            </div>
+            <div className='flex-center' style={{ flexDirection: 'column' }}>
+                {interestsState && generals && rates &&
+                    <Table style={{ width: '80%' }} columns={columns} pagination={false} dataSource={data} />
+                }
+            </div>
         </div>
-        <div  className='flex-center' style={{ flexDirection: 'column' }}>
-            {interestsState && generals && rates &&
-                <Table style={{ width: '80%' }} columns={columns} pagination={false} dataSource={data}/>
-            }
-        </div>
-    </div>
     )
 }
 

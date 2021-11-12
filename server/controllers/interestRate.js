@@ -22,10 +22,10 @@ module.exports = {
             })
             .catch(err => res.status(400).json('Error: ' + err));
     },
-    interestRateUpdate(req, res) {
+    async interestRateUpdate(req, res) {
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
-        InterestRate.findOneAndUpdate({ currency: req.body.currency }, { rate: req.body.rate }, () => {
-            return res.status(200).json({ success: true, message: "Interest Rate is updated" })
-        })
+        await InterestRate.findOneAndUpdate({ currency: req.body.currency }, { rate: req.body.rate })
+        await InterestRate.findOneAndUpdate({ currency: 'lastWeek' + req.body.currency }, { rate: req.body.rate, confirmAmount: req.body.confirmAmount })
+        return res.status(200).json({ success: true, message: "Interest Rate is updated" });
     }
 }
