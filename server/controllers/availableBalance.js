@@ -60,14 +60,20 @@ const availableBalance = async (req, res) => {
             transactionType: el?.status === 'Confirmed' ? 'WITHDRAWAL' : 'PENDING WITHDRAWAL'
         }
     })
-    const newTransferData = donor?.map(el => {
+    const donorTransferData = donor?.map(el => {
         return {
             ...el._doc,
             amount: el.amount * -1
         }
     })
+    const recipientTransferData = recipient?.map(el => {
+        return {
+            ...el._doc,
+            amount: el.amount
+        }
+    })
 
-    let transactData = [...general, ...newWithdrawals, ...newTransferData];
+    let transactData = [...general, ...newWithdrawals, ...donorTransferData, ...recipientTransferData];
     
 
 return res.status(200).json({ success: true, nzdAccount, usdAccount, audAccount, transactData: transactData.filter(el => el.transactionType !== 'DEBIT') })
