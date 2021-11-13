@@ -12,17 +12,11 @@ const generalLedgerSchema = mongoose.Schema({
     transactionDate: {
         type: String
     },
-    ledgerSource: {
-        type: String
-    },
     amount:{
         type: Number
     },
     currency:{
         type: String
-    },
-    nzdAmount:{
-        type: Number
     },
 }, { timestamps: true })
 
