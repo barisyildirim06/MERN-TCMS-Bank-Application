@@ -97,7 +97,7 @@ function Register(props) {
     }
     const handleSave = () => {
         if (!validate()) return;
-        let _values = { ...values, userID: Math.floor(100000000 + Math.random() * 900000000) };
+        let _values = { ...values, userID: Math.floor(10000000 + Math.random() * 900000000) };
         if (refCode) _values = { ..._values, refCode }
         dispatch(registerUser(_values)).then(response => {
             if (response.payload.success) {

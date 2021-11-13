@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
     userID: {
         type:Number,
         unique: 1,
-        default: Math.floor(100000000 + Math.random() * 900000000)
+        default: Math.floor(10000000 + Math.random() * 900000000)
     },
     name: {
         type:String,
@@ -85,6 +85,10 @@ const userSchema = mongoose.Schema({
     audWithdrawalAccount: {
         type: String
     },
+    availableBalance: {
+        type: Number,
+        default: 0
+    }
 }, { timestamps: true })
 
 
