@@ -17,12 +17,15 @@ module.exports = {
             if (err) return res.status(400).json({ success: false, err })
         })
         if (req.body.transactionType === 'CREDIT' || req.body.transactionType === 'ACCRUED INTEREST') {
-            await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) + Number(req.body.amount) })
+            if (req.body.currency === 'NZD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceNZD: Number(account.availableBalanceNZD) + Number(req.body.amount) })
+            if (req.body.currency === 'USD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceUSD: Number(account.availableBalanceUSD) + Number(req.body.amount) })
+            if (req.body.currency === 'AUD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceAUD: Number(account.availableBalanceAUD) + Number(req.body.amount) })
         } else if (req.body.transactionType === 'FEES' || req.body.transactionType === 'DEBIT') {
-            await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) - Number(req.body.amount) })
+            if (req.body.currency === 'NZD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceNZD: Number(account.availableBalanceNZD) - Number(req.body.amount) })
+            if (req.body.currency === 'USD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceUSD: Number(account.availableBalanceUSD) - Number(req.body.amount) })
+            if (req.body.currency === 'AUD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceAUD: Number(account.availableBalanceAUD) - Number(req.body.amount) })
         }
         return res.status(200).json({ success: true, message: 'Successfully created the Ledger' })
-
     },
      async generalLedgerImport(req, res) {
         //save all the data we got from the client into the DB 
@@ -49,9 +52,13 @@ module.exports = {
                     const generalLedger = await new GeneralLedger(general)
                     await generalLedger.save()
                     if (ledger.transactionType === 'CREDIT' || ledger.transactionType === 'ACCRUED INTEREST') {
-                        await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) + Number(ledger.amount) })
+                        if (req.body.currency === 'NZD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceNZD: Number(account.availableBalanceNZD) + Number(ledger.amount) })
+                        if (req.body.currency === 'USD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceUSD: Number(account.availableBalanceUSD) + Number(ledger.amount) })
+                        if (req.body.currency === 'AUD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceAUD: Number(account.availableBalanceAUD) + Number(ledger.amount) })
                     } else if (ledger.transactionType === 'FEES' || ledger.transactionType === 'DEBIT') {
-                        await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) - Number(ledger.amount) })
+                        if (req.body.currency === 'NZD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceNZD: Number(account.availableBalanceNZD) - Number(ledger.amount) })
+                        if (req.body.currency === 'USD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceUSD: Number(account.availableBalanceUSD) - Number(ledger.amount) })
+                        if (req.body.currency === 'AUD') await User.findByIdAndUpdate({ _id: account._id }, { availableBalanceAUD: Number(account.availableBalanceAUD) - Number(ledger.amount) })
                     }
                 }
             }

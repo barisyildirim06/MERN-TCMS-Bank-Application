@@ -22,8 +22,16 @@ const transferCreate = async (req, res) => {
     await transfer.save((err) => {
         if (err) return res.status(200).json({ success: false, message: 'An error occured during transfer. Please try it later' })
     })
-    await User.findByIdAndUpdate({ _id: recipientAccount._id }, { availableBalance: Number(recipientAccount.availableBalance) + Number(req.body.amount) })
-    await User.findByIdAndUpdate({ _id: donorAccount._id }, { availableBalance: Number(donorAccount.availableBalance) - Number(req.body.amount) })
+    // update recipient accounts
+    if (req.body.currency === 'NZD') await User.findByIdAndUpdate({ _id: recipientAccount._id }, { availableBalanceNZD: Number(recipientAccount.availableBalanceNZD) + Number(req.body.amount) })
+    if (req.body.currency === 'USD') await User.findByIdAndUpdate({ _id: recipientAccount._id }, { availableBalanceUSD: Number(recipientAccount.availableBalanceUSD) + Number(req.body.amount) })
+    if (req.body.currency === 'AUD') await User.findByIdAndUpdate({ _id: recipientAccount._id }, { availableBalanceAUD: Number(recipientAccount.availableBalanceAUD) + Number(req.body.amount) })
+
+    // Update donor accounts
+    if (req.body.currency === 'NZD') await User.findByIdAndUpdate({ _id: donorAccount._id }, { availableBalanceNZD: Number(donorAccount.availableBalanceNZD) - Number(req.body.amount) })
+    if (req.body.currency === 'USD') await User.findByIdAndUpdate({ _id: donorAccount._id }, { availableBalanceUSD: Number(donorAccount.availableBalanceUSD) - Number(req.body.amount) })
+    if (req.body.currency === 'AUD') await User.findByIdAndUpdate({ _id: donorAccount._id }, { availableBalanceAUD: Number(donorAccount.availableBalanceAUD) - Number(req.body.amount) })
+
     return res.status(200).json({ success: true, message: 'The transfer done successfully' })
 }
 

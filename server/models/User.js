@@ -85,10 +85,18 @@ const userSchema = mongoose.Schema({
     audWithdrawalAccount: {
         type: String
     },
-    availableBalance: {
+    availableBalanceNZD: {
         type: Number,
         default: 0
-    }
+    },
+    availableBalanceUSD: {
+        type: Number,
+        default: 0
+    },
+    availableBalanceAUD: {
+        type: Number,
+        default: 0
+    },
 }, { timestamps: true })
 
 

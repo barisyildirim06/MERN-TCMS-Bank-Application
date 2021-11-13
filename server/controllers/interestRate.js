@@ -33,9 +33,11 @@ module.exports = {
         const totalAmount = await users.reduce((a, b) => ({ availableBalance: a.availableBalance + b.availableBalance })).availableBalance;
 
         users.forEach(async user => {
-            const { _id, availableBalance } = user;
+            const { _id, availableBalanceNZD, availableBalanceUSD, availableBalanceAUD } = user;
             const calculatedReturn = confirmAmount * (availableBalance / totalAmount)
-            await User.findByIdAndUpdate({ _id: _id }, { availableBalance: Number(availableBalance) + Number(calculatedReturn) })
+            if (currency === 'NZD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceNZD: Number(availableBalanceNZD) + Number(calculatedReturn) })
+            if (currency === 'USD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceUSD: Number(availableBalanceUSD) + Number(calculatedReturn) })
+            if (currency === 'AUD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceAUD: Number(availableBalanceAUD) + Number(calculatedReturn) })
             const general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: calculatedReturn, transactionType: 'ACCRUED INTEREST' }
             const generalLedger = new GeneralLedger(general)
             await generalLedger.save((err) => {
