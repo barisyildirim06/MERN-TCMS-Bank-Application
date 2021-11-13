@@ -63,9 +63,13 @@ function InterestRates({ interests, generals, rates }) {
     const handleCalculatedReturn = useCallback((currency, formatted) => {
         if (generals && interestsState?.length) {
             if (formatted) {
-                return Utils.formatter.format(((generals?.totalNzdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2))
+                if (currency === 'NZD') return Utils.formatter.format(((generals?.totalNzdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2))
+                if (currency === 'USD') return Utils.formatter.format(((generals?.totalUsdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2))
+                if (currency === 'AUD') return Utils.formatter.format(((generals?.totalAudAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2))
             }
-            return ((generals?.totalNzdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)
+            if (currency === 'NZD') return ((generals?.totalNzdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)
+            if (currency === 'USD') return ((generals?.totalUsdAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)
+            if (currency === 'AUD') return ((generals?.totalAudAmount) * (interestsState?.filter(i => i.currency === currency)[interestsState?.filter(i => i.currency === currency)?.length - 1].rate / (100 * 365.25 / 7)))?.toFixed(2)
         }
     }, [generals, interestsState]);
 
@@ -162,10 +166,9 @@ function InterestRates({ interests, generals, rates }) {
     }, [interests]);
 
     useEffect(() => {
-        console.log(interestsState)
         if (interestsState.length) setlastWeekReturns(prevState => ({ ...prevState, NZD: interestsState?.find(i => i.currency === 'lastWeekNZD').confirmAmount, USD: interestsState?.find(i => i.currency === 'lastWeekUSD').confirmAmount, AUD: interestsState?.find(i => i.currency === 'lastWeekAUD').confirmAmount }))
     }, [interestsState])
-    console.log(lastWeekReturns)
+
     useEffect(() => {
         setCalculatedReturn(prevState => ({ ...prevState, NZD: handleCalculatedReturn('NZD',true), USD: handleCalculatedReturn('USD',true), AUD: handleCalculatedReturn('AUD',true) }))
         setConfirmReturn(prevState => ({ ...prevState, NZD: handleCalculatedReturn('NZD'), USD: handleCalculatedReturn('USD'), AUD: handleCalculatedReturn('AUD') }))
