@@ -33,6 +33,9 @@ const transferSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    transactionDate:{
+        type: String
+    }
 }, { timestamps: true })
 
 const Transfer = mongoose.model('Transfer', transferSchema);

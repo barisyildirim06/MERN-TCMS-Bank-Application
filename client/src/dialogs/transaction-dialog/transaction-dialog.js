@@ -42,7 +42,7 @@ function TransactionDialog({ onClose, visible, transactionData }) {
                             return (<tr>
                                 <td>{el?.transactionDate}</td>
                                 <td>{el?.transactionType}</td>
-                                <td>{el?.amount}</td>
+                                <td>{el?.amount?.toFixed(2)}</td>
                                 <td>{el?.currency}</td>
                             </tr>)
                         })

@@ -16,6 +16,7 @@ const transferCreate = async (req, res) => {
         recipientUserID: recipientAccount.userID,
         donorAccount: donorAccount._id,
         donorUserID: donorAccount.userID,
+        transactionDate: new Date().toISOString().split('T')[0]
     }
 
     const transfer = new Transfer(transferData)

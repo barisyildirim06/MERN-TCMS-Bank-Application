@@ -55,15 +55,22 @@ const availableBalance = async (req, res) => {
     }
     const newWithdrawals = withdrawal?.map(el => {
         return {
-            ...el,
+            ...el._doc,
             transactionDate: el?.dateSubmitted,
             transactionType: el?.status === 'Confirmed' ? 'WITHDRAWAL' : 'PENDING WITHDRAWAL'
         }
     })
-    let transactData = general;
-    if (general && newWithdrawals) transactData = general?.concat(newWithdrawals)
+    const newTransferData = donor?.map(el => {
+        return {
+            ...el._doc,
+            amount: el.amount * -1
+        }
+    })
 
-return res.status(200).json({ success: true, nzdAccount, usdAccount, audAccount, transactData })
+    let transactData = [...general, ...newWithdrawals, ...newTransferData];
+    
+
+return res.status(200).json({ success: true, nzdAccount, usdAccount, audAccount, transactData: transactData.filter(el => el.transactionType !== 'DEBIT') })
 }
 
 module.exports = {
