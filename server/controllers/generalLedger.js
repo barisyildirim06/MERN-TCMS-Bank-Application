@@ -10,13 +10,18 @@ module.exports = {
      async generalLedgerCreate(req, res) {
         //save all the data we got from the client into the DB 
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
-        const account = await User.findOne({ userID: req.body.accountID })
+        const account = await User.findOne({ userID: Number(req.body.accountID) })
         const general = {...req.body, transactionNotes: account._id }
         const generalLedger = new GeneralLedger(general)
-        generalLedger.save((err) => {
+        await generalLedger.save((err) => {
             if (err) return res.status(400).json({ success: false, err })
-            return res.status(200).json({ success: true, message: 'Successfully created the Ledger' })
         })
+        if (req.body.transactionType === 'CREDIT' || req.body.transactionType === 'ACRUED INTEREST') {
+            await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) + Number(req.body.amount) })
+        } else if (req.body.transactionType === 'FEES' || req.body.transactionType === 'DEBIT') {
+            await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) - Number(req.body.amount) })
+        }
+        return res.status(200).json({ success: true, message: 'Successfully created the Ledger' })
 
     },
      async generalLedgerImport(req, res) {
@@ -43,6 +48,11 @@ module.exports = {
                     const general = {...ledger, transactionNotes: account._id, transactionDate: new Date().toISOString().split('T')[0] }
                     const generalLedger = await new GeneralLedger(general)
                     await generalLedger.save()
+                    if (ledger.transactionType === 'CREDIT' || ledger.transactionType === 'ACRUED INTEREST') {
+                        await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) + Number(ledger.amount) })
+                    } else if (ledger.transactionType === 'FEES' || ledger.transactionType === 'DEBIT') {
+                        await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) - Number(ledger.amount) })
+                    }
                 }
             }
         }))
