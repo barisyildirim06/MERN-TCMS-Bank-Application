@@ -1,16 +1,17 @@
 const { PendingWithdrawal } = require("../models/PendingWithdrawal");
 const { GeneralLedger } = require("../models/GeneralLedger");
+const { User } = require("../models/User");
 
 module.exports = {
-    pendingWithdrawalCreate(req, res) {
+    async pendingWithdrawalCreate(req, res) {
         //save all the data we got from the client into the DB 
         const pendingWithdrawal = new PendingWithdrawal(req.body)
-
         pendingWithdrawal.save((err) => {
             if (err) return res.status(400).json({ success: false, err })
-            return res.status(200).json({ success: true })
         })
-
+        const account = await User.findOne({ _id: req.body.account })
+        await User.findByIdAndUpdate({ _id: req.body.account }, { availableBalance: Number(account.availableBalance) + Number(req.body.amount) })
+        return res.status(200).json({ success: true })
     },
     pendingWithdrawalIndex(req,res,next) {
         PendingWithdrawal.find({ account: req.body.userID })
