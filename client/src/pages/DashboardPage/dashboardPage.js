@@ -347,10 +347,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                             </div>
                             <div className='accountCardRows'>
                                 <div>
-                                    Interest Acrrued:
+                                    Interest Accrued:
                                 </div>
                                 <div>
-                                    {currentAccount?.interestAcrrued  !== undefined ?  Utils.formatter.format(currentAccount?.interestAcrrued): null}
+                                    {currentAccount?.interestAccrued  !== undefined ?  Utils.formatter.format(currentAccount?.interestAccrued): null}
                                 </div>
                             </div>
                             <br />

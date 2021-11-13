@@ -16,7 +16,7 @@ module.exports = {
         await generalLedger.save((err) => {
             if (err) return res.status(400).json({ success: false, err })
         })
-        if (req.body.transactionType === 'CREDIT' || req.body.transactionType === 'ACRUED INTEREST') {
+        if (req.body.transactionType === 'CREDIT' || req.body.transactionType === 'ACCRUED INTEREST') {
             await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) + Number(req.body.amount) })
         } else if (req.body.transactionType === 'FEES' || req.body.transactionType === 'DEBIT') {
             await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) - Number(req.body.amount) })
@@ -48,7 +48,7 @@ module.exports = {
                     const general = {...ledger, transactionNotes: account._id, transactionDate: new Date().toISOString().split('T')[0] }
                     const generalLedger = await new GeneralLedger(general)
                     await generalLedger.save()
-                    if (ledger.transactionType === 'CREDIT' || ledger.transactionType === 'ACRUED INTEREST') {
+                    if (ledger.transactionType === 'CREDIT' || ledger.transactionType === 'ACCRUED INTEREST') {
                         await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) + Number(ledger.amount) })
                     } else if (ledger.transactionType === 'FEES' || ledger.transactionType === 'DEBIT') {
                         await User.findByIdAndUpdate({ _id: account._id }, { availableBalance: Number(account.availableBalance) - Number(ledger.amount) })
@@ -66,7 +66,7 @@ module.exports = {
             var totalAudAmount = 0;
             var totalUsdAmount = 0;
             generalLedgers.forEach(g => {
-                if (g.transactionType === 'CREDIT' || g.transactionType === 'ACRUED INTEREST') {
+                if (g.transactionType === 'CREDIT' || g.transactionType === 'ACCRUED INTEREST') {
                     if (g.currency === 'NZD') totalNzdAmount += g.amount;
                     if (g.currency === 'USD') totalUsdAmount += g.amount;
                     if (g.currency === 'AUD') totalAudAmount += + g.amount;
