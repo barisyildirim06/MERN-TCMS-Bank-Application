@@ -31,8 +31,8 @@ function MoneyTransferDialog({ onClose, visible, currentCurrency, onSave }) {
         const _values = { ...values, currency: currentCurrency }
         const request = await Axios.post('/api/transfers/create', _values);
         alert(request.data.message);
-        handleClose();
-        if (onSave) {
+        if (onSave && request.data.message === 'The transfer done successfully') {
+            handleClose();
             onSave(values.amount)
         }
     }

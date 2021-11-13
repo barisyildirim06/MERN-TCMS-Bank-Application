@@ -30,35 +30,35 @@ function InterestRates({ interests, generals, rates }) {
         setInterestsState(_interestsRate);
     }
 
-    const calculateLastWeekInterest = useCallback((currency) => {
-        const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
-        const nowUnix = new Date().setDate((new Date()).getDate());
+    // const calculateLastWeekInterest = useCallback((currency) => {
+    //     const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
+    //     const nowUnix = new Date().setDate((new Date()).getDate());
 
-        let calculatedTime = 0
-        let multipliedValue = 0
-        if (interests.length) {
-            const filteredInterests = interests.filter(el => el.currency === currency)
-            filteredInterests.forEach((el, index) => {
-                const createdAtUnix = new Date(el.createdAt).valueOf();
-                if (index === 0) {
-                    calculatedTime = calculatedTime + createdAtUnix - sevenDaysUnix
-                    multipliedValue += (createdAtUnix - sevenDaysUnix) * el.rate
-                }
-                else if (index + 1 < filteredInterests.length) {
-                    const nextCreatedAtUnix = new Date(filteredInterests[index + 1].createdAt).valueOf();
-                    calculatedTime = calculatedTime + nextCreatedAtUnix - createdAtUnix
-                    multipliedValue += (nextCreatedAtUnix - createdAtUnix) * el.rate
-                }
-                else {
-                    calculatedTime = calculatedTime + nowUnix - createdAtUnix
-                    multipliedValue += (nowUnix - createdAtUnix) * el.rate
-                }
-            })
-            if (currency === 'NZD') return Utils.formatter.format(((generals?.totalNzdAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
-            else if (currency === 'USD') return Utils.formatter.format(((generals?.totalUsdAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
-            else if (currency === 'AUD') return Utils.formatter.format(((generals?.totalAudAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
-        }
-    }, [interests, generals]);
+    //     let calculatedTime = 0
+    //     let multipliedValue = 0
+    //     if (interests.length) {
+    //         const filteredInterests = interests.filter(el => el.currency === currency)
+    //         filteredInterests.forEach((el, index) => {
+    //             const createdAtUnix = new Date(el.createdAt).valueOf();
+    //             if (index === 0) {
+    //                 calculatedTime = calculatedTime + createdAtUnix - sevenDaysUnix
+    //                 multipliedValue += (createdAtUnix - sevenDaysUnix) * el.rate
+    //             }
+    //             else if (index + 1 < filteredInterests.length) {
+    //                 const nextCreatedAtUnix = new Date(filteredInterests[index + 1].createdAt).valueOf();
+    //                 calculatedTime = calculatedTime + nextCreatedAtUnix - createdAtUnix
+    //                 multipliedValue += (nextCreatedAtUnix - createdAtUnix) * el.rate
+    //             }
+    //             else {
+    //                 calculatedTime = calculatedTime + nowUnix - createdAtUnix
+    //                 multipliedValue += (nowUnix - createdAtUnix) * el.rate
+    //             }
+    //         })
+    //         if (currency === 'NZD') return Utils.formatter.format(((generals?.totalNzdAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+    //         else if (currency === 'USD') return Utils.formatter.format(((generals?.totalUsdAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+    //         else if (currency === 'AUD') return Utils.formatter.format(((generals?.totalAudAmount) * (multipliedValue / calculatedTime) / (100 * 365.25 / 7)))
+    //     }
+    // }, [interests, generals]);
 
     const handleCalculatedReturn = useCallback((currency, formatted) => {
         if (generals && interestsState?.length) {
