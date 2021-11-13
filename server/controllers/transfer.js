@@ -8,8 +8,9 @@ const transferCreate = async (req, res) => {
     if (donorAccount._id === recipientAccount._id || donorAccount.userID === recipientAccount.userID) {
         return res.status(200).json({ success: false, message: 'Users cannot transfer money to their own accounts' })
     }
-
-    if (req.body.amount > donorAccount.availableBalance) return res.status(200).json({ success: false, message: 'Transfer amount cannot be larger than available balance' })
+    if (req.body.amount > donorAccount.availableBalanceNZD && req.body.currency === 'NZD' ) return res.status(200).json({ success: false, message: 'Transfer amount cannot be larger than available balance' })
+    if (req.body.amount > donorAccount.availableBalanceUSD && req.body.currency === 'USD' ) return res.status(200).json({ success: false, message: 'Transfer amount cannot be larger than available balance' })
+    if (req.body.amount > donorAccount.availableBalanceAUD && req.body.currency === 'AUD' ) return res.status(200).json({ success: false, message: 'Transfer amount cannot be larger than available balance' })
     const transferData = {
         ...req.body,
         recipientAccount: recipientAccount._id,
