@@ -30,15 +30,22 @@ module.exports = {
         await InterestRate.findOneAndUpdate({ currency: currency }, { rate: rate })
         await InterestRate.findOneAndUpdate({ currency: 'lastWeek' + currency }, { rate: rate, confirmAmount: confirmAmount })
         const users = await User.find();
-        const totalAmount = await users.reduce((a, b) => ({ availableBalance: a.availableBalance + b.availableBalance })).availableBalance;
+        let totalAmount = 0
+        if (currency === 'NZD') totalAmount = await users.reduce((a, b) => ({ availableBalanceNZD: a.availableBalanceNZD + b.availableBalanceNZD })).availableBalanceNZD;
+        if (currency === 'USD') totalAmount = await users.reduce((a, b) => ({ availableBalanceUSD: a.availableBalanceUSD + b.availableBalanceUSD })).availableBalanceUSD;
+        if (currency === 'AUD') totalAmount = await users.reduce((a, b) => ({ availableBalanceAUD: a.availableBalanceAUD + b.availableBalanceAUD })).availableBalanceAUD;
 
         users.forEach(async user => {
             const { _id, availableBalanceNZD, availableBalanceUSD, availableBalanceAUD } = user;
-            const calculatedReturn = confirmAmount * (availableBalance / totalAmount)
-            if (currency === 'NZD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceNZD: Number(availableBalanceNZD) + Number(calculatedReturn) })
-            if (currency === 'USD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceUSD: Number(availableBalanceUSD) + Number(calculatedReturn) })
-            if (currency === 'AUD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceAUD: Number(availableBalanceAUD) + Number(calculatedReturn) })
-            const general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: calculatedReturn, transactionType: 'ACCRUED INTEREST' }
+
+            if (currency === 'NZD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceNZD: availableBalanceNZD + confirmAmount * (availableBalanceNZD / totalAmount) })
+            if (currency === 'USD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceUSD: availableBalanceUSD + confirmAmount * (availableBalanceUSD / totalAmount) })
+            if (currency === 'AUD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceAUD: availableBalanceAUD + confirmAmount * (availableBalanceAUD / totalAmount) })
+            let general = {}
+            if (currency === 'NZD') general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceNZD / totalAmount), transactionType: 'ACCRUED INTEREST' }
+            if (currency === 'USD') general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceUSD / totalAmount), transactionType: 'ACCRUED INTEREST' }
+            if (currency === 'AUD') general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceAUD / totalAmount), transactionType: 'ACCRUED INTEREST' }
+            
             const generalLedger = new GeneralLedger(general)
             await generalLedger.save((err) => {
                 if (err) return res.status(400).json({ success: false, err })
