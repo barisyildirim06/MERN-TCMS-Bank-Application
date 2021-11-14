@@ -32,6 +32,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const [progressViewVisible, setProgressViewVisible] = useState(false);
     const [moneyTransferDialogVisible, setMoneyTransferDialogVisible] = useState(false);
     const [sliderValue, setSliderValue] = useState([0,0])
+    const [withdrawalDisabled, setWithdrawalDisabled] = useState(false);
 
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
@@ -107,8 +108,10 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     }
 
     const handleSubmit = () => {
+        setWithdrawalDisabled(true)
         if (amount === 0 || amount === '') {
             alert('Please provide any amount');
+            setWithdrawalDisabled(false);
             return;
         }
         let today = new Date().toISOString().split('T')[0]
@@ -125,7 +128,8 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                 setSliderValue([0,0]);
                 setPersentage(0);
                 setAmount(0);
-                alert('Withdrawal successfully created.')
+                alert('Withdrawal successfully created.');
+                setWithdrawalDisabled(false);
                 const newPendingWithdrawal = currentAccount.pendingWithdrawls - amount;
                 const newAvailableBalance = currentAccount.availableBalance - amount;
                 setCurrentAccount({...currentAccount, pendingWithdrawls: newPendingWithdrawal, availableBalance: newAvailableBalance});
@@ -406,7 +410,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                             <div style={{ height: '2vh' }}/>
                             <Slider range value={sliderValue} onChange={handleSliderChange}/>
                             <div style={{ display:'flex', flexDirection:'row-reverse' }}>{`${persentage}%`}</div>
-                            <button className='dashboardNextButton' style={{ marginTop: '2vh' }} onClick={handleSubmit}>Submit</button>
+                            <button className='dashboardNextButton' style={{ marginTop: '2vh' }} disabled={withdrawalDisabled} onClick={handleSubmit}>Submit</button>
                         </div>
                     </div>
                 }
