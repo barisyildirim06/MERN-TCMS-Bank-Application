@@ -19,7 +19,7 @@ const availableBalance = async (req, res) => {
     }
     nzdAccount = {
         ...nzdAccount,
-        principal: nzdAccount.principal + nzdAccount.donorTransfers,
+        principal: nzdAccount.principal + nzdAccount.donorTransfers + nzdAccount.recipientTransfers,
         availableBalance : nzdAccount.principal + nzdAccount.interestAccrued + nzdAccount.fees + nzdAccount.withdrawls + nzdAccount.pendingWithdrawls + nzdAccount.recipientTransfers + nzdAccount.donorTransfers
     }
 
@@ -34,7 +34,7 @@ const availableBalance = async (req, res) => {
     }
     usdAccount = {
         ...usdAccount,
-        principal: usdAccount.principal + usdAccount.donorTransfers,
+        principal: usdAccount.principal + usdAccount.donorTransfers + usdAccount.recipientTransfers,
         availableBalance : usdAccount.principal + usdAccount.interestAccrued + usdAccount.fees + usdAccount.withdrawls + usdAccount.pendingWithdrawls + usdAccount.recipientTransfers + usdAccount.donorTransfers
     }
     
@@ -50,7 +50,7 @@ const availableBalance = async (req, res) => {
     
     audAccount = {
         ...audAccount,
-        principal: audAccount.principal + audAccount.donorTransfers,
+        principal: audAccount.principal + audAccount.donorTransfers + audAccount.recipientTransfers,
         availableBalance : audAccount.principal + audAccount.interestAccrued + audAccount.fees + audAccount.withdrawls + audAccount.pendingWithdrawls + audAccount.recipientTransfers + audAccount.donorTransfers
     }
     const newWithdrawals = withdrawal?.map(el => {
