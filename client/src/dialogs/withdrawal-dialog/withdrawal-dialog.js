@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Dialog from '../../components/dialog/dialog/dialog'
 import Axios from 'axios';
 import { Select } from 'antd';
@@ -80,6 +80,14 @@ function WithdrawalDialog({ onClose, visible, user }) {
         setAccountType('');
         setWithdrawalAccountNumber('');
     }
+
+    useEffect(() => {
+        if (user?.userData?.nzdWithdrawalAccount && user?.userData?.nzdWithdrawalAccount !== "") {
+            setWithdrawalAccountNumber(user?.userData?.nzdWithdrawalAccount)
+        } else {
+            setWithdrawalAccountNumber("");
+        }
+    }, [user]);
 
     return (
         <Dialog visible={visible} width={1000} onClose={handleClose}>
