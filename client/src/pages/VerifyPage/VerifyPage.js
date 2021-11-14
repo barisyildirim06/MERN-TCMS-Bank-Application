@@ -123,7 +123,7 @@ function VerifyPage(props) {
                         <Input value={values.agentJobTitle} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'agentJobTitle')}/>
                     </div>
                     <div className='registerInputContainer'>
-                        <label>Upload Your ID</label>
+                        <label>Upload Your Eligible Investor Form</label>
                         <Upload {...test} fileList={fileList} showUploadList={{ showRemoveIcon : false}}>
                             <div style={{ display: 'flex' }}>
                                 <Input placeholder='PDF, JPEG, PNG' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px'}} disabled={true}/>
