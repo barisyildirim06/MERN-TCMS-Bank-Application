@@ -11,6 +11,7 @@ module.exports = {
         //save all the data we got from the client into the DB 
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
         const account = await User.findOne({ userID: Number(req.body.accountID) })
+        if (!account) return res.status(200).json({ success: false, message: 'Please provide a valid accountID' })
         const general = {...req.body, transactionNotes: account._id, transactionDate: new Date().toISOString().split('T')[0] }
         const generalLedger = new GeneralLedger(general)
         await generalLedger.save((err) => {
