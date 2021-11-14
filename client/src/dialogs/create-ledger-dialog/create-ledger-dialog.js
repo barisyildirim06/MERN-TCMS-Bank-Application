@@ -6,17 +6,19 @@ import Axios from 'axios';
 
 const { Option } = Select;
 function CreateLedgerDialog({ onClose, visible }) {
-    const handleClose = () => {
-        if (onClose) {
-            onClose()
-        }
-    }
+    const [disabled, setDisabled] = useState(false);
     const [values, setValues] = useState({
         accountID: '',
         currency: 'NZD',
         transactionType: 'CREDIT',
         amount: ''
     });
+    const handleClose = () => {
+        setDisabled(false);
+        if (onClose) {
+            onClose()
+        }
+    }
 
     const handleChange = (e, param) => {
         if (param === 'accountID') {
@@ -40,6 +42,7 @@ function CreateLedgerDialog({ onClose, visible }) {
     };
 
     const handleSubmit = async () => {
+        setDisabled(true);
         const request = await Axios.post('/api/generals/create', values);
         alert(request.data.message);
         handleClose();
@@ -66,7 +69,7 @@ function CreateLedgerDialog({ onClose, visible }) {
                 <Input type='number' value={values.amount} style={{  marginTop: '1vh', fontSize: '20px'}} onChange={(e) => handleChange(e,'amount')}/>
                 <br />
                 <div className='flex-center'>
-                    <button className='dashboardNextButton' style={{ margin: '20px 0 0 0' }} onClick={handleSubmit}>Submit</button>
+                    <button className='dashboardNextButton' disabled={disabled} style={{ margin: '20px 0 0 0' }} onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
         </Dialog>

@@ -4,16 +4,17 @@ import { Input } from 'antd';
 import Axios from 'axios';
 
 function MoneyTransferDialog({ onClose, visible, currentCurrency, onSave }) {
-    const handleClose = () => {
-        if (onClose) {
-            onClose()
-        }
-    }
+    const [disabled, setDisabled] = useState(false);
     const [values, setValues] = useState({
         accountID: '',
         transactionType: 'TRANSFER',
         amount: ''
     });
+    const handleClose = () => {
+        if (onClose) {
+            onClose()
+        }
+    }
 
     const handleChange = (e, param) => {
         if (param === 'accountID') {
@@ -28,9 +29,11 @@ function MoneyTransferDialog({ onClose, visible, currentCurrency, onSave }) {
     };
 
     const handleSubmit = async () => {
+        setDisabled(true);
         const _values = { ...values, currency: currentCurrency }
         const request = await Axios.post('/api/transfers/create', _values);
         alert(request.data.message);
+        setDisabled(false);
         if (onSave && request.data.message === 'The transfer done successfully') {
             handleClose();
             onSave(values.amount)
@@ -51,7 +54,7 @@ function MoneyTransferDialog({ onClose, visible, currentCurrency, onSave }) {
                 <Input type='number' value={values.amount} style={{ marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'amount')} />
                 <br />
                 <div className='flex-center'>
-                    <button className='dashboardNextButton' style={{ margin: '20px 0 0 0' }} onClick={handleSubmit}>Submit</button>
+                    <button className='dashboardNextButton' disabled={disabled} style={{ margin: '20px 0 0 0' }} onClick={handleSubmit}>Submit</button>
                 </div>
             </div>
         </Dialog>
