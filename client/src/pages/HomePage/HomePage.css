@@ -82,13 +82,8 @@
         margin: 1.5vw;
     }
     .gridContainerInnerText0{
-        display: flex;
-        align-items: center;
-        text-align: left;
         font-size: 12px;
-        font-weight: bold;
-        margin-right: 3vw;
-        margin-left: 0.5vw;
+        margin-left: 1vw;
     }
     .gridContainer2080{
         background-color: white;
@@ -219,12 +214,8 @@
         margin: 0vw 0.75vw 1.5vw 1.5vw;
     }
     .gridContainerInnerText0{
-        display: flex;
-        align-items: center;
-        text-align: left;
         font-size: 20px;
-        margin-right: 3vw;
-        margin-left: 0.5vw;
+        margin-left: 1vw;
     }
     .gridContainer2080{
         background-color: white;
@@ -457,7 +448,6 @@
 }
 .whiteFlexContainer{
     background-color: white;
-    display: flex
 }
 
 .getToKnowUs {

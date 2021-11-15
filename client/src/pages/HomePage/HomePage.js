@@ -36,9 +36,6 @@ function HomePage() {
             <div className='watchThisSpaceContainer'>
                 <div />
                 <div className='flexColumn'>
-                    <p className='watchThisSpaceText'>
-                        WATCH THIS SPACE
-                    </p>
                     <p className='letUsKnowText'>Let us know if you are interested</p>
                     <div className='subscribeInputContainer'>
                         <Input value={subscriberEmail} onChange={handleSubscribeEmailChange} placeholder='Email Address' type="text" suffix={<ArrowRightOutlined onClick={handleSubscribeClick} />} className='subscribeInput' />
@@ -48,18 +45,43 @@ function HomePage() {
             <div className='whatWeDo'>
                 <div className='mobileWhatWeDo'>WHAT WE DO</div>
                 <div className='background1' />
-                <div className='gridContainer2080'>
+                <div className='whiteFlexContainer'>
                     <div className='gridContainer2080text0'>WHAT WE DO</div>
-                    <div className='gridContainerInnerText0'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </div>
+                    <div className='gridContainerInnerText0' style={{ marginLeft: '20px', textAlign: 'left' }}>We protect our clients most precious capital from inflation</div>
+                    <br /><br /><br />
+                    <ul className='gridContainerInnerText0' style={{ marginLeft: '20px', textAlign: 'left' }}>
+                        <li ><p style={{ display:'flex', alignItems: 'center' }}>Earn&nbsp;<h1>6-10%</h1>&nbsp;per annum</p></li>
+                        <li ><p style={{ display:'flex', alignItems: 'center' }}>Withdraw anytime, &nbsp;<h2 style={{ marginBottom: 0 }}>two working days</h2></p></li>
+                        <li >Use our online platform, or call for support</li>
+                    </ul>
                 </div>
                 <div className='background2SmallScreens' />
-                <div className='whiteFlexContainer'>
-                    <div className='gridContainerInnerText0'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </div>
+                <div className='whiteFlexContainer' style={{ marginLeft: '20px', textAlign: 'left' }}>
+                    <h1>Low Risk</h1>
+                    <div className='gridContainerInnerText0'>We eliminate most forms of risk through our investing style</div>
+                    <br /><br /><br />
+                    <ul className='gridContainerInnerText0'>
+                        <li >No market or asset price risk, we are fully hedged</li>
+                        <br />
+                        <li >No currency risk, investing in a range of currencies</li>
+                        <br />
+                        <li >No credit risk, we do not invest in bonds or other debt instruments</li>
+                    </ul>
                 </div>
                 <div className='background2' />
                 <div className='background3' />
-                <div className='whiteFlexContainer'>
-                    <div className='gridContainerInnerText0'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </div>
+                <div className='whiteFlexContainer' style={{ marginLeft: '20px', textAlign: 'left' }}>
+                    <h1>Why use us?</h1>
+                    <br /><br /><br />
+                    <ul className='gridContainerInnerText0'>
+                        <li >New Zealand domiciled and regulated wholesale offer</li>
+                        <br />
+                        <li >New Zealand trust holds your capital on your behalf</li>
+                        <br />
+                        <li >Standard, tax efficient, PIE fund structure</li>
+                        <br />
+                        <li >Specialists in this specific investment</li>
+                    </ul>
                 </div>
             </div>
             <div className='getToKnowUs'>
@@ -74,11 +96,12 @@ function HomePage() {
                 <div className='cardsListGrid'>
                     <div className='cardStyle'>
                         <div className='cardImage0'>
-                            JOHNATHAN
+                            DAVE
                         </div>
                         <div className='cardTextArea'>
-                            <p className='cardTextType0'>RDYGES</p>
-                            <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+                            <p className='cardTextType0'>JOHNSTON</p>
+                            <p className='cardTextType0'>Advisory</p>
+                            <p className='cardTextType1'>Dave is a partner at global law firm DLA Piper. He has substantial experience in tax law, associated with funds management.</p>
                         </div>
                     </div>
                     <div className='cardStyle'>
@@ -101,16 +124,17 @@ function HomePage() {
                     <div className='mobileCard'>
                         <div className='cardImage0'>
                             <div className='cardTextArea'>
-                                <p className='cardTextType0'>JOHNATHAN RDYGES</p>
-                                <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+                                <p className='cardTextType0'>JOHNATHAN JOHNSTON</p>
+                                <p className='cardTextType1'>Dave is a partner at global law firm DLA Piper. He has substantial experience in tax law, associated with funds management. </p>
                             </div>
                         </div>
                     </div>
                     <div className='mobileCard'>
-                        <div className='cardImage1'>                        
+                        <div className='cardImage3'>                        
                             <div className='cardTextArea'>
-                                <p className='cardTextType0'>MIRANDA HOBBES</p>
-                                <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+                                <p className='cardTextType0'>MATT GRAHAM</p>
+                                <p className='cardTextType0'>Managing Director</p>
+                                <p className='cardTextType1'>Matt Graham comes from a corporate finance, M&A and strategy background. Having spent time in various corporate finance and strategy teams in Fonterra, Steel & Tube and Woolworths. </p>
                             </div>
                         </div>
                     </div>
@@ -132,11 +156,12 @@ function HomePage() {
                 <div className='cardsListGrid'>
                     <div className='cardStyle'>
                         <div className='cardImage3'>
-                            GINA
+                            MATT
                         </div>
                         <div className='cardTextArea'>
-                            <p className='cardTextType0'>MANOBAN</p>
-                            <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+                            <p className='cardTextType0'>GRAHAM</p>
+                            <p className='cardTextType0'>Managing Director</p>
+                            <p className='cardTextType1'>Matt Graham comes from a corporate finance, M&A and strategy background. Having spent time in various corporate finance and strategy teams in Fonterra, Steel & Tube and Woolworths. </p>
                         </div>
                     </div>
                     <div className='cardStyle'>
@@ -164,7 +189,7 @@ function HomePage() {
                 </div>
                 <br /><br />
                 <div className='signUpText'>
-                    SIGN UP FOR NEWS AND UPDATE
+                    SIGN UP FOR NEWS AND UPDATES
                 </div>
                 <br />
                 <div className='subscribeInputContainer' style={{ marginLeft:'10vw' }}>
