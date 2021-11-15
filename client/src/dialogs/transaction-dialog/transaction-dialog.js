@@ -33,14 +33,21 @@ function TransactionDialog({ onClose, visible, transactionData }) {
                 <table style={{ width: '100%', overflowY: 'scroll' }}>
                     <tr>
                         <th style={{ width: '25%', textAlign: 'center' }}>Date</th>
+                        <th style={{ width: '25%', textAlign: 'center' }}>Time</th>
                         <th style={{ width: '35%', textAlign: 'center' }}>Transaction Type</th>
                         <th style={{ width: '20%', textAlign: 'center' }}>Amount</th>
                         <th style={{ width: '20%', textAlign: 'center' }}>Currency</th>
                     </tr>
                     <br />
-                    {transactionData?.map(el => {
+                    {transactionData?.sort((a, b) => new Date(b.createdAt)?.valueOf() - new Date(a.createdAt)?.valueOf())?.map(el => {
+                            const addZero = (i) => {
+                                if (i < 10) {i = "0" + i}
+                                return i;
+                            }
+                            let hours = addZero(new Date(el?.createdAt).getHours()) + ":" + addZero(new Date(el?.createdAt).getMinutes());
                             return (<tr>
                                 <td>{el?.transactionDate}</td>
+                                <td>{hours}</td>
                                 <td>{el?.transactionType}</td>
                                 <td>{el?.amount?.toFixed(2)}</td>
                                 <td>{el?.currency}</td>
