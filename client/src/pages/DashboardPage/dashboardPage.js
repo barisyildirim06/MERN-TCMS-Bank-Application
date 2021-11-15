@@ -197,6 +197,12 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
           });
     }
 
+    const handleRefCodeCopyClick = () => {
+        const copyText = `https://tcms-upwork.herokuapp.com/register?refCode=${user?.userData?.userID}`;
+        navigator.clipboard.writeText(copyText);
+        alert("Copied the refCode: " + copyText);
+    }
+
     const test = {
         name: 'file',
         action: '/api/users/uploadImage',
@@ -253,6 +259,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                         <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
                         <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.userID}</div>
                         {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify' onClick={handleNavClose}>(Verify Your Account)</Link></span>}
+                        <div><a href={() => false} style={{ color: 'white' }} onClick={handleRefCodeCopyClick}>Copy Ref Code</a></div>
                     </div>
                     <div style={{ height: '2vh' }}/>
                     <p style={{ height: '25vh' }}><a href={() => false} onClick={handleSummaryClick}>Summary</a><a href={() => false} onClick={handleNzdClick}>NZD</a><a href={() => false} onClick={handleUsdClick}>USD</a><a href={() => false} onClick={handleAudClick}>AUD</a><a href={() => false} onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a href={() => false} onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a href={() => false} onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
@@ -276,6 +283,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                     <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.companyName}</div>
                     <div style={{color:'white', fontSize: '16px'}}>{user?.userData?.userID}</div>
                     {user?.userData?.verified? <p className='verifiedText'>Verified</p> : <span ><p className='unapprovedText'>Unapproved</p><Link to='/verify'>(Verify Your Account)</Link></span>}
+                    <div><a href={() => false} onClick={handleRefCodeCopyClick}>Copy Ref Code</a></div>
                 </div>
                 <div style={{ height: '2vh' }}/>
                 <p style={{ height: '25vh' }}><a href={() => false} onClick={handleSummaryClick}>Summary</a><a href={() => false} onClick={handleNzdClick}>NZD</a><a href={() => false} onClick={handleUsdClick}>USD</a><a href={() => false} onClick={handleAudClick}>AUD</a><a href={() => false} onClick={handleWithdrawalDialogClick} style={{ fontSize: '14px' }}>Withdrawal</a><a href={() => false} onClick={handleDepositDialogClick} style={{ fontSize: '14px' }}>Deposit</a><a href={() => false} onClick={handleTransactionDialogClick} style={{ fontSize: '14px' }}>Transaction History</a></p>
