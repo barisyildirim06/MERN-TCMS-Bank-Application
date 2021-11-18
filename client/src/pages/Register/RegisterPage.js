@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import NavBar from 'components/views/NavBar/NavBar'
-import { Input, Select } from 'antd';
+import { Input } from 'antd';
 import './RegisterPage.css'
 import { registerUser } from "_actions/user_actions";
 import { useDispatch } from "react-redux";
 import ConfirmDialog from 'dialogs/confirm-dialog/confirm-dialog-visible';
 
-const { Option } = Select;
 function Register(props) {
     const dispatch = useDispatch();
     const query = new URLSearchParams(props.location.search);
@@ -149,11 +148,11 @@ function Register(props) {
                         <Input value={values.phone} type='number' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'phone')} />
                     </div>
                     <div className='registerInputContainer'>
-                        <label>Type</label>
-                        <Select defaultValue={'individual'} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(value) => handleChange(value,'type')}>
-                            <Option key='individual'>Individual</Option>
-                            <Option key='companyName'>Company</Option>
-                        </Select>
+                        <label>Password</label>
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                            <button className='nextButton' onClick={(e) => handleChange('individual', 'type')} style={{ height: '100%', width: '100%', backgroundColor: values.type === 'individual' ? '#00a2e8' : '#99d9ea' }}>Individual</button>
+                            <button className='nextButton' onClick={(e) => handleChange('companyName', 'type')} style={{ height: '100%', width: '100%', backgroundColor: values.type === 'individual' ? '#99d9ea' : '#00a2e8' }}>Institution</button>
+                        </div>
                     </div>
                     {
                         values.type === 'companyName' ? 

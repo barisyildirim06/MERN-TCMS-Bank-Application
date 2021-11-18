@@ -51,7 +51,7 @@ function HomePage() {
                     <br /><br /><br />
                     <ul className='gridContainerInnerText0' style={{ marginLeft: '20px', textAlign: 'left' }}>
                         <li ><p style={{ display:'flex', alignItems: 'center' }}>Earn&nbsp;<h1>6-10%</h1>&nbsp;per annum</p></li>
-                        <li ><p style={{ display:'flex', alignItems: 'center' }}>Withdraw anytime, &nbsp;<h2 style={{ marginBottom: 0 }}>two working days</h2></p></li>
+                        <li ><p style={{ display:'flex', alignItems: 'center' }}>Withdraw anytime, &nbsp;<h2 style={{ marginBottom: '12px' }}>two working days</h2></p></li>
                         <li >Use our online platform, or call for support</li>
                     </ul>
                 </div>
