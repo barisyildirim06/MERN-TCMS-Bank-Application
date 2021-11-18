@@ -13,13 +13,14 @@ import VerifyPage from 'pages/VerifyPage/VerifyPage';
 import SideNavBar from './views/SideNavBar/SideNavBar';
 import AdminDashboardPage from 'pages/AdminDashboardPage/AdminDashboardPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage/ResetPasswordPage';
+import ResetEmailPage from 'pages/ResetEmailPage/ResetEmailPage';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
 
 function App() {
-    return (
+    return (    
         <Suspense fallback={(<div>Loading...</div>)}>
             <div id="marginLeft">
                 <SideNavBar />
@@ -29,6 +30,7 @@ function App() {
                     <Route exact path="/admin/dashboard" component={Auth(general(AdminDashboardPage),true,true)} />
                     <Route exact path="/login" component={Auth(LoginPage, false)} />
                     <Route exact path="/reset-password" component={Auth(ResetPasswordPage, false)} />
+                    <Route exact path="/reset-password-email" component={Auth(ResetEmailPage, false)} />
                     <Route exact path="/register" component={Auth(RegisterPage, false)} />
                     <Route exact path="/verify" component={Auth(VerifyPage, true)} />
                 </Switch>

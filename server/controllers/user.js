@@ -1,6 +1,6 @@
 let { User } = require('../models/User');
 const multer = require('multer');
-let { sendMail } = require('../helper');
+let { sendMail, passwordResetMail } = require('../helper');
 const jwt = require('jsonwebtoken');
 
 
@@ -68,13 +68,22 @@ module.exports = {
         })
         .catch(err => res.status(400).json('Error: ' + err));
     },
+    async passwordEmail (req, res) {
+        const email = req.body.email;
+        const user = await User.findOne({ email: email });
+        const token = jwt.sign(user._id.toHexString(),'TcmsUpwork')
+        await passwordResetMail(user, token);
+        return res.status(200).json({
+            success: true
+        });
+        // user.save(async (err, doc) => {
+        //     if (err) return res.json({ success: false, err });        
+        //     
+        // });
+    },
     resetPassword(req, res) {
-        const { email, currentPassword, newPassword, confirmPassword } = req.body;
+        const { token, newPassword, confirmPassword } = req.body;
         let errors = [];
-        //Check required fields
-        if (!currentPassword || !newPassword || !confirmPassword) {
-            errors.push({ msg: "Please fill in all fields." });
-        }
         
         //Check passwords match
         if (newPassword !== confirmPassword) {
@@ -93,20 +102,16 @@ module.exports = {
             });
         } 
         else {
-            User.findOne({ email: email }).then(user => {
-                user.comparePassword(currentPassword, (err, isMatch) => {
-                    if (!isMatch) return res.json({ loginSuccess: false, message: "Wrong password" });
-                    else {
-                        //VALIDATION PASSED
-                        user.password = newPassword
-                        user.save((err, doc) => {
-                            if (err) return res.json({ success: false, err });
-                            return res.status(200).json({
-                                success: true
-                            });
-                        })
-                    }
-                });
+            const _id = jwt.verify(token, 'TcmsUpwork');
+            User.findOne({ _id: _id }).then(user => {
+                //VALIDATION PASSED
+                user.password = newPassword
+                user.save((err, doc) => {
+                    if (err) return res.json({ success: false, err });
+                    return res.status(200).json({
+                        success: true
+                    });
+                })
             });
         }
     },

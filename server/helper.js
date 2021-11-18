@@ -36,6 +36,35 @@ const sendMail = async (user,token) => {
     }
     return 
 }
+const passwordResetMail = async (user,token) => {
+    let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'tcmsupwork@gmail.com',
+            pass: 'Tcms_Upwork0',
+        },
+    });
+    const confirmUrl = `https://tcms-upwork.herokuapp.com/reset-password?token=${token}`
+
+    // send mail with defined transport object
+    try {
+        await transporter.sendMail({
+            to: user.email, 
+            subject: "TCMS Password Reset Link", 
+            html: `
+                <div>
+                    <div>
+                    Please click this link to reset your password: <a href="${confirmUrl}">${confirmUrl}</a>
+                    <div />
+                </div>
+            `, 
+        });
+    }
+    catch (error) {
+        console.log(error)
+    }
+    return 
+}
 
 const confirmEmail = async (req, res) => {
     const _id = jwt.verify(req.params.token, 'TcmsUpwork');
@@ -44,5 +73,6 @@ const confirmEmail = async (req, res) => {
 }
 module.exports = {
     sendMail,
-    confirmEmail
+    confirmEmail,
+    passwordResetMail
 }

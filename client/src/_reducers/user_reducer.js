@@ -4,6 +4,7 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     RESET_PASSWORD,
+    PASSWORD_EMAIL,
 } from '../_actions/types';
  
 
@@ -18,7 +19,9 @@ export default function(state={},action){
         case LOGOUT_USER:
             return {...state }
         case RESET_PASSWORD:
-            return {...state, resetPasswordSucces: action.payload }
+            return {...state, resetPasswordSuccess: action.payload }
+        case PASSWORD_EMAIL:
+            return {...state, passwordEmailSuccess: action.payload }
         default:
             return state;
     }
