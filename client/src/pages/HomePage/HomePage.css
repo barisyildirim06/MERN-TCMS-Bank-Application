@@ -375,7 +375,7 @@
 .backgroundimage0{
     /* top: 0px;
     position: absolute; */
-    background-image: url(./images/Background_2.svg);
+    background-image: url(./images/Background2.PNG);
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
@@ -388,7 +388,7 @@
     position: absolute; */
     top: 146vh;
     z-index: -1;
-    background-image: url(./images/Background_1.svg);
+    background-image: url(./images/Background1.PNG);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100vw;
