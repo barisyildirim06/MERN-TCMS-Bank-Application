@@ -52,7 +52,7 @@ function AdminDashboardPage({ user }) {
     }
 
     const handleUserVerify = (e) => {
-        const _users = users.map(u => {
+        const _users = users?.users?.map(u => {
             if (u._id === e.target.value) {
                 return {
                     ...u,
@@ -61,7 +61,7 @@ function AdminDashboardPage({ user }) {
             }
             return u;
         })
-        setUsers(_users);
+        setUsers({...users, users: _users});
     }
 
     const handleAddNewLedgerClick = () => {
