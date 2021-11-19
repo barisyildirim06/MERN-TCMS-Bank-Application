@@ -148,7 +148,7 @@ function Register(props) {
                         <Input value={values.phone} type='number' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'phone')} />
                     </div>
                     <div className='registerInputContainer'>
-                        <label>Password</label>
+                        <label>Account Type</label>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <button className='nextButton' onClick={(e) => handleChange('individual', 'type')} style={{ height: '100%', width: '100%', backgroundColor: values.type === 'individual' ? '#00a2e8' : '#99d9ea' }}>Individual</button>
                             <button className='nextButton' onClick={(e) => handleChange('companyName', 'type')} style={{ height: '100%', width: '100%', backgroundColor: values.type === 'individual' ? '#99d9ea' : '#00a2e8' }}>Institution</button>
