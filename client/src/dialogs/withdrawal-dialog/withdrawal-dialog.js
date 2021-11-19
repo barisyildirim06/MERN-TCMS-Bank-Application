@@ -21,31 +21,36 @@ function WithdrawalDialog({ onClose, visible, user }) {
 
     const handleEditClick = () => {
         setDisabled(false);
-        setIsEditMode(false);
+        setIsEditMode(true);
     }
 
     const handleAccountChange = (value) => {
         setAccountType(value);
         setDisabled(true);
-        setIsEditMode(true);
         if (value === "nzdWithdrawalAccount") {
             if (user?.userData?.nzdWithdrawalAccount && user?.userData?.nzdWithdrawalAccount !== "") {
                 setWithdrawalAccountNumber(user?.userData?.nzdWithdrawalAccount)
+                setIsEditMode(false);
             } else {
                 setWithdrawalAccountNumber("");
+                setIsEditMode(true);
             }
         }
         else if (value === "usdWithdrawalAccount") {
             if (user?.userData?.usdWithdrawalAccount && user?.userData?.usdWithdrawalAccount !== "") {
+                setIsEditMode(false);
                 setWithdrawalAccountNumber(user?.userData?.usdWithdrawalAccount)
             } else {
+                setIsEditMode(true);
                 setWithdrawalAccountNumber("");
             }
         }
         else if (value === "audWithdrawalAccount") {
             if (user?.userData?.audWithdrawalAccount && user?.userData?.audWithdrawalAccount !== "") {
+                setIsEditMode(false);
                 setWithdrawalAccountNumber(user?.userData?.audWithdrawalAccount)
             } else {
+                setIsEditMode(true);
                 setWithdrawalAccountNumber("");
             }
         }
@@ -53,7 +58,7 @@ function WithdrawalDialog({ onClose, visible, user }) {
 
     const handleSubmit = () => {
         setDisabled(true);
-        setIsEditMode(true);
+        setIsEditMode(false);
         if (accountType === "" || !accountType.trim()) {
             alert('Please select an account type');
             return
@@ -68,23 +73,26 @@ function WithdrawalDialog({ onClose, visible, user }) {
         if (onClose) {
             onClose()
         }
-        setAccountType('');
-        setWithdrawalAccountNumber('');
+        setAccountType('nzdWithdrawalAccount');
+        setWithdrawalAccountNumber(user?.userData?.nzdWithdrawalAccount)
     }
     const handleClose = () => {
         setDisabled(true);
-        setIsEditMode(true);
         if (onClose) {
             onClose()
         }
-        setAccountType('');
-        setWithdrawalAccountNumber('');
+        setAccountType('nzdWithdrawalAccount');
+        setWithdrawalAccountNumber(user?.userData?.nzdWithdrawalAccount)
+        setIsEditMode(false);
     }
 
     useEffect(() => {
         if (user?.userData?.nzdWithdrawalAccount && user?.userData?.nzdWithdrawalAccount !== "") {
             setWithdrawalAccountNumber(user?.userData?.nzdWithdrawalAccount)
+            setIsEditMode(false);
+            setAccountType('nzdWithdrawalAccount');
         } else {
+            setIsEditMode(true);
             setWithdrawalAccountNumber("");
         }
     }, [user]);
@@ -113,7 +121,7 @@ function WithdrawalDialog({ onClose, visible, user }) {
                 <br />
                 <br />
                 <div style={{  display:'flex', justifyContent:'center', flexDirection: 'column', alignItems:'center' }}>
-                    {!(user?.userData && user?.userData[`${accountType}`] !== '' && user?.userData[`${accountType}`] !== undefined && isEditMode) ?
+                    {isEditMode ?
                         <button className='dashboardNextButton' style={{ margin: '0' }} onClick={handleSubmit}>Submit</button>
                         :<button className='dashboardNextButton' style={{ margin: '0', backgroundColor: '#f0ad4e' }} onClick={handleEditClick}>Edit</button>
                     }

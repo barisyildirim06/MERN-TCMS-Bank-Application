@@ -36,7 +36,6 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const [withdrawalDisabled, setWithdrawalDisabled] = useState(false);
     const [rates, setRates] = useState({});
     const [interests, setInterests] = useState([]);
-    console.log(interests)
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
         document.getElementById("marginLeft").style.paddingLeft = "0px"
@@ -251,7 +250,6 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
             setInterests(interests.data);
         })
     }, []);
-    console.log(rates)
     return (
         <div id='dashboardContainer'>
             {!isBigEnough?
