@@ -13,6 +13,7 @@ import ProgressView from 'components/progress-view'
 import { EditOutlined } from '@ant-design/icons'
 import { Utils } from 'utils';
 import MoneyTransferDialog from 'dialogs/money-transfer-dialog/money-transfer-dialog';
+import Axios from 'axios';
 
 
 function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, transactData}) {
@@ -33,7 +34,9 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     const [moneyTransferDialogVisible, setMoneyTransferDialogVisible] = useState(false);
     const [sliderValue, setSliderValue] = useState([0,0])
     const [withdrawalDisabled, setWithdrawalDisabled] = useState(false);
-
+    const [rates, setRates] = useState({});
+    const [interests, setInterests] = useState([]);
+    console.log(interests)
     const handleNavClose = useCallback(() => {
         document.getElementById("mySidenav").style.width = "0px"
         document.getElementById("marginLeft").style.paddingLeft = "0px"
@@ -237,8 +240,18 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
         if (isBigEnough) {
             handleNavClose();
         }
-    }, [handleNavClose, isBigEnough])
+    }, [handleNavClose, isBigEnough]);
 
+    useEffect(() => {
+        Promise.all([
+            Axios.get('https://api.exchangerate.host/latest?base=USD&symbols=NZD,AUD'),
+            Axios.get('/api/interests/list'),
+        ]).then(([rates, interests]) => {
+            setRates(rates.data.rates)
+            setInterests(interests.data);
+        })
+    }, []);
+    console.log(rates)
     return (
         <div id='dashboardContainer'>
             {!isBigEnough?
@@ -311,9 +324,9 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                 <thead>
                                     <tr>
                                         <th style={{ width: '25%', textAlign: 'center' }}>Balance</th>
-                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? Utils.formatter.format(nzdAcc?.availableBalance + usdAcc?.availableBalance + audAcc?.availableBalance)  : null}</th>
+                                        <th style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? Utils.formatter.format((nzdAcc?.availableBalance / rates?.NZD) + usdAcc?.availableBalance + (audAcc?.availableBalance / rates?.AUD))  : null}</th>
                                         <th style={{ width: '10%' }}>Yield</th>
-                                        <th style={{ width: '10%', textAlign: 'center' }}>0.00%</th>
+                                        <th style={{ width: '10%', textAlign: 'center' }}>%</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -325,19 +338,19 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>NZD ACCOUNT</td>
                                         <td style={{ width: '45%', textAlign: 'left' }}>{nzdAcc?.availableBalance !==undefined ? Utils.formatter.format(nzdAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
-                                        <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                        <td style={{ width: '10%', textAlign: 'center' }}>{(interests?.find(el => el.currency === 'NZD')?.rate)?.toFixed(2)}%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>USD ACCOUNT</td>
                                         <td style={{ width: '45%', textAlign: 'left' }}>{usdAcc?.availableBalance !==undefined ? Utils.formatter.format(usdAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
-                                        <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                        <td style={{ width: '10%', textAlign: 'center' }}>{(interests?.find(el => el.currency === 'USD')?.rate)?.toFixed(2)}%</td>
                                     </tr>
                                     <tr>
                                         <td style={{ width: '25%', textAlign: 'center', fontSize: '14px' }}>AUD ACCOUNT</td>
                                         <td style={{ width: '45%', textAlign: 'left' }}>{audAcc?.availableBalance !==undefined ? Utils.formatter.format(audAcc?.availableBalance) : null}</td>
                                         <td style={{ width: '10%' }}></td>
-                                        <td style={{ width: '10%', textAlign: 'center' }}>0.00%</td>
+                                        <td style={{ width: '10%', textAlign: 'center' }}>{(interests?.find(el => el.currency === 'AUD')?.rate)?.toFixed(2)}%</td>
                                     </tr>
                                 </tbody>
                             </table>

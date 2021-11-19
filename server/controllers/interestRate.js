@@ -16,13 +16,14 @@ module.exports = {
 
     },
     interestRateList(req, res) {
-        if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
-        const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
-        InterestRate.find({ createdAt: { $gte: sevenDaysUnix } })
-            .then(interestRates => {
-                return res.json(interestRates)
-            })
-            .catch(err => res.status(400).json('Error: ' + err));
+        // if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
+        // const sevenDaysUnix = new Date().setDate((new Date()).getDate() - 7);
+        // { createdAt: { $gte: sevenDaysUnix } }
+        InterestRate.find()
+        .then(interestRates => {
+            return res.json(interestRates)
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
     },
     async interestRateUpdate(req, res) {
         if (!req.user.isAdmin) return res.status(400).json({ success: false, message: "You don't have access" })
