@@ -37,20 +37,25 @@ module.exports = {
         if (currency === 'AUD') totalAmount = await users.reduce((a, b) => ({ availableBalanceAUD: a.availableBalanceAUD + b.availableBalanceAUD })).availableBalanceAUD;
 
         users.forEach(async user => {
-            const { _id, availableBalanceNZD, availableBalanceUSD, availableBalanceAUD } = user;
+            const { _id, availableBalanceNZD, availableBalanceUSD, availableBalanceAUD, taxRate } = user;
 
-            if (currency === 'NZD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceNZD: availableBalanceNZD + confirmAmount * (availableBalanceNZD / totalAmount) })
-            if (currency === 'USD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceUSD: availableBalanceUSD + confirmAmount * (availableBalanceUSD / totalAmount) })
-            if (currency === 'AUD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceAUD: availableBalanceAUD + confirmAmount * (availableBalanceAUD / totalAmount) })
-            let general = {}
-            if (currency === 'NZD') general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceNZD / totalAmount), transactionType: 'ACCRUED INTEREST' }
-            if (currency === 'USD') general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceUSD / totalAmount), transactionType: 'ACCRUED INTEREST' }
-            if (currency === 'AUD') general = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceAUD / totalAmount), transactionType: 'ACCRUED INTEREST' }
+            if (currency === 'NZD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceNZD: availableBalanceNZD + (confirmAmount - confirmAmount * taxRate / 100) * (availableBalanceNZD / totalAmount) })
+            if (currency === 'USD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceUSD: availableBalanceUSD + (confirmAmount - confirmAmount * taxRate / 100) * (availableBalanceUSD / totalAmount) })
+            if (currency === 'AUD') await User.findByIdAndUpdate({ _id: _id }, { availableBalanceAUD: availableBalanceAUD + (confirmAmount - confirmAmount * taxRate / 100) * (availableBalanceAUD / totalAmount) })
+            let accruedInterest = {}
+            if (currency === 'NZD') accruedInterest = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceNZD / totalAmount), transactionType: 'ACCRUED INTEREST' }
+            if (currency === 'USD') accruedInterest = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceUSD / totalAmount), transactionType: 'ACCRUED INTEREST' }
+            if (currency === 'AUD') accruedInterest = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: confirmAmount * (availableBalanceAUD / totalAmount), transactionType: 'ACCRUED INTEREST' }
             
-            const generalLedger = new GeneralLedger(general)
-            await generalLedger.save((err) => {
-                if (err) return res.status(400).json({ success: false, err })
-            })
+            let taxCost = {}
+            if (currency === 'NZD') taxCost = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: (confirmAmount * taxRate / 100) * (availableBalanceNZD / totalAmount), transactionType: 'TAX COST' }
+            if (currency === 'USD') taxCost = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: (confirmAmount * taxRate / 100) * (availableBalanceUSD / totalAmount), transactionType: 'TAX COST' }
+            if (currency === 'AUD') taxCost = { currency, transactionNotes: _id, transactionDate: new Date().toISOString().split('T')[0], amount: (confirmAmount * taxRate / 100) * (availableBalanceAUD / totalAmount), transactionType: 'TAX COST' }
+            
+            const interestLedger = new GeneralLedger(accruedInterest)
+            await interestLedger.save((err) => { if (err) return res.status(400).json({ success: false, err })})
+            const costLedger = new GeneralLedger(taxCost)
+            await costLedger.save((err) => { if (err) return res.status(400).json({ success: false, err })})
         })
         return res.status(200).json({ success: true, message: "Interest Rate is updated" });
     }
