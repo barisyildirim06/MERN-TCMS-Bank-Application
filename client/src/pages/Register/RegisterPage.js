@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import NavBar from 'components/views/NavBar/NavBar'
-import { Input } from 'antd';
+import { Input, Select } from 'antd';
 import './RegisterPage.css'
 import { registerUser } from "_actions/user_actions";
 import { useDispatch } from "react-redux";
 import ConfirmDialog from 'dialogs/confirm-dialog/confirm-dialog-visible';
+const { Option } = Select;
 
 function Register(props) {
     const dispatch = useDispatch();
-    const query = new URLSearchParams(props.location.search);
-    const refCode = query.get('refCode')
+
     const [values, setValues] = useState({
         name: '',
         lastname: '',
@@ -19,7 +19,9 @@ function Register(props) {
         confirmPassword: '',
         idimage: '',
         type: 'individual',
-        companyName: ''
+        companyName: '',
+        refCode: '',
+        taxRate: 28
     });
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
@@ -58,7 +60,16 @@ function Register(props) {
             _values = { ..._values, companyName: e.target.value }
             setValues(_values)
         }
+        else if (param === 'refCode') {
+            _values = { ..._values, refCode: e.target.value }
+            setValues(_values)
+        }
+        else if (param === 'taxRate') {
+            _values = { ..._values, taxRate: Number(e) }
+            setValues(_values)
+        }
     };
+
     const validate = () => {
         if (values.name === "" || !values.name.trim()) {
             alert("Please enter a name.");
@@ -97,7 +108,6 @@ function Register(props) {
     const handleSave = () => {
         if (!validate()) return;
         let _values = { ...values, userID: Math.floor(10000000 + Math.random() * 900000000) };
-        if (refCode) _values = { ..._values, refCode }
         dispatch(registerUser(_values)).then(response => {
             if (response.payload.success) {
                 props.history.push("/login");
@@ -150,8 +160,8 @@ function Register(props) {
                     <div className='registerInputContainer'>
                         <label>Account Type</label>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <button className='nextButton' onClick={(e) => handleChange('individual', 'type')} style={{ height: '100%', width: '100%', backgroundColor: values.type === 'individual' ? '#00a2e8' : '#99d9ea' }}>Individual</button>
-                            <button className='nextButton' onClick={(e) => handleChange('companyName', 'type')} style={{ height: '100%', width: '100%', backgroundColor: values.type === 'individual' ? '#99d9ea' : '#00a2e8' }}>Institution</button>
+                            <button className='nextButton' onClick={(e) => handleChange('individual', 'type')} style={{ marginTop:'10px', height: '65.8px', width: '100%', backgroundColor: values.type === 'individual' ? '#00a2e8' : '#99d9ea' }}>Individual</button>
+                            <button className='nextButton' onClick={(e) => handleChange('companyName', 'type')} style={{ marginTop:'10px', height: '65.8px', width: '100%', backgroundColor: values.type === 'individual' ? '#99d9ea' : '#00a2e8' }}>Institution</button>
                         </div>
                     </div>
                     {
@@ -162,6 +172,19 @@ function Register(props) {
                         </div> : 
                         <div/>
                     }
+                    <div className='registerInputContainer'>
+                        <label>Ref Code</label>
+                        <Input value={values.refCode} style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'refCode')} />
+                    </div>
+                    <div className='registerInputContainer'>
+                        <label>Pescribed Investor Tax Rate (PIR)</label>
+                        <Select defaultValue={'28'} style={{ width: '100%', height: '7vh', marginTop: '10px' }} onChange={(e) => handleChange(e, 'taxRate')}>
+                            <Option key='0'>0</Option>
+                            <Option key='10.5'>10.5</Option>
+                            <Option key='17.5'>17.5</Option>
+                            <Option key='28'>28</Option>
+                        </Select>
+                    </div>
                     <div className='registerInputContainer'>
                         <label>Password</label>
                         <Input value={values.password} type='password' style={{ height: '7vh', marginTop: '1vh', fontSize: '20px' }} onChange={(e) => handleChange(e, 'password')} />

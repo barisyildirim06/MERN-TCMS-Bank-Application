@@ -97,6 +97,11 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    taxRate: {
+        type: Number,
+        default: 28,
+        required: true
+    }
 }, { timestamps: true })
 
 

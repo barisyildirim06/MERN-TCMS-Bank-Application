@@ -13,7 +13,7 @@
 }
 @media (min-width: 1000px) {
     .registerBottomGrid1{
-        grid-template-rows: repeat(4, minmax(0, 1fr));
+        grid-template-rows: repeat(5, minmax(0, 1fr));
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-column-gap: 6vw;
     }
@@ -23,7 +23,7 @@
     }
     .registerBottom{
         display: grid;
-        grid-template-rows: 17.6% 60% auto;
+        grid-template-rows: 15% 70% auto;
         padding: 0px 6vw;
     }
 }
@@ -80,4 +80,6 @@ p a {
 
 .ant-select-selection--single {
     height: inherit !important;
+    padding: 13px;
+    font-size: 20px;
 }
