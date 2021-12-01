@@ -200,7 +200,7 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
     }
 
     const handleRefCodeCopyClick = () => {
-        const copyText = `https://tcms-upwork.herokuapp.com/register?refCode=${user?.userData?.userID}`;
+        const copyText = `${user?.userData?.userID}`;
         navigator.clipboard.writeText(copyText);
         alert("Copied the refCode: " + copyText);
     }
@@ -389,6 +389,14 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                             </div>
                             <div className='accountCardRows'>
                                 <div>
+                                    Tax Cost:
+                                </div>
+                                <div>
+                                    {currentAccount?.taxCost  !== undefined ?  Utils.formatter.format(currentAccount?.taxCost): null}
+                                </div>
+                            </div>
+                            <div className='accountCardRows'>
+                                <div>
                                     Withdrawls:
                                 </div>
                                 <div>
@@ -415,8 +423,8 @@ function DashboardPage({ nzdAccount, usdAccount, audAccount, user, history, tran
                                 </div>
                             </div>
                             <div style={{ display:'flex', justifyContent: 'space-evenly' }}>
-                                <button className='dashboardNextButton' style={{ marginTop: '2vh', width: '240px' }} onClick={handleAccountTransactionHistoryClick}>Transaction History</button>
-                                <button className='dashboardNextButton' style={{ marginTop: '2vh', width: '200px' }} onClick={handleMoneyTransferDialogClick}>Transfer {currentCurrency}</button>
+                                <button className='dashboardNextButton' style={{ marginTop: '1vh', width: '240px' }} onClick={handleAccountTransactionHistoryClick}>Transaction History</button>
+                                <button className='dashboardNextButton' style={{ marginTop: '1vh', width: '200px' }} onClick={handleMoneyTransferDialogClick}>Transfer {currentCurrency}</button>
                             </div>
                         </div>
                         <div className='accountCardBottom'>
