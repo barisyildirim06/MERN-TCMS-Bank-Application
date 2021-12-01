@@ -160,8 +160,8 @@ function Register(props) {
                     <div className='registerInputContainer'>
                         <label>Account Type</label>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <button className='nextButton' onClick={(e) => handleChange('individual', 'type')} style={{ marginTop:'10px', height: '65.8px', width: '100%', backgroundColor: values.type === 'individual' ? '#00a2e8' : '#99d9ea' }}>Individual</button>
-                            <button className='nextButton' onClick={(e) => handleChange('companyName', 'type')} style={{ marginTop:'10px', height: '65.8px', width: '100%', backgroundColor: values.type === 'individual' ? '#99d9ea' : '#00a2e8' }}>Institution</button>
+                            <button className='nextButton' onClick={(e) => handleChange('individual', 'type')} style={{ marginTop:'10px', height: '7vh', width: '100%', backgroundColor: values.type === 'individual' ? '#00a2e8' : '#99d9ea' }}>Individual</button>
+                            <button className='nextButton' onClick={(e) => handleChange('companyName', 'type')} style={{ marginTop:'10px', height: '7vh', width: '100%', backgroundColor: values.type === 'individual' ? '#99d9ea' : '#00a2e8' }}>Institution</button>
                         </div>
                     </div>
                     {
