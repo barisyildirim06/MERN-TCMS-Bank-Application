@@ -183,7 +183,7 @@
         background-color: white;
     }
     .cardsListGrid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .advisoryBoardText {
         line-height: 2vh;
@@ -192,7 +192,7 @@
         font-size: 36px;
     }
     .getToKnowUsTextContainer{
-        height: 12vh;
+        height: 13vh;
     }
     .getToKnowUsText {
         line-height: 50px;
@@ -292,7 +292,7 @@
         font-size: 60px;
     }
     .cardsListGrid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .thirdItem {
         display: grid;
@@ -329,7 +329,7 @@
 }
 .watchThisSpaceContainer{
     position: absolute;
-    top: 49vh;
+    top: 40vh;
     width: 100vw;
 }
 .watchThisSpaceText{
@@ -416,7 +416,7 @@
 }
 .whatWeDo {
     position: absolute;
-    top: 73vh;
+    top: 60vh;
     width: 80vw;
     margin: 0px 10vw;
     display: grid;
@@ -487,6 +487,7 @@
 .cardStyle{
     background-color: #c5cfd5;
     height: 100%;
+    min-height: 50vh;
     grid-template-columns: repeat(2, minmax(0, 1fr))
 }
 
@@ -552,7 +553,7 @@
 }
 .interestedContainer{
     position: absolute;
-    top: 370vh;
+    top: 377vh;
     color: white;
     display: flex;
     flex-direction: column;

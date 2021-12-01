@@ -89,7 +89,7 @@ function HomePage() {
                     <div className='getToKnowUsText'>
                         GET TO KNOW US
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column-reverse', alignItems: 'start', marginLeft: '5vw', fontFamily:'sans-serif', fontStyle: 'normal', fontWeight: '400', fontSize: '2vw', lineHeight: '2vh', letterSpacing: '0.5vw', color: '#000005' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column-reverse', marginTop: '10px', alignItems: 'start', marginLeft: '5vw', fontFamily:'sans-serif', fontStyle: 'normal', fontWeight: '400', fontSize: '2vw', lineHeight: '2vh', letterSpacing: '0.5vw', color: '#000005' }}>
                         ADVISORY BOARD
                     </div>
                 </div>
@@ -110,14 +110,6 @@ function HomePage() {
                         </div>
                         <div className='cardTextArea'>
                             <p className='cardTextType0'>HOBBES</p>
-                            <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
-                        </div>
-                    </div>
-                    <div className='thirdItem cardStyle'>
-                        <div className='cardImage2'>JAMES
-                        </div>
-                        <div className='cardTextArea'>
-                            <p className='cardTextType0'>BUNNINGHAM</p>
                             <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
                         </div>
                     </div>
@@ -169,14 +161,6 @@ function HomePage() {
                         </div>
                         <div className='cardTextArea'>
                             <p className='cardTextType0'>NGUYEN</p>
-                            <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
-                        </div>
-                    </div>
-                    <div className='thirdItem cardStyle'>
-                        <div className='cardImage5'>NATHAN
-                        </div>
-                        <div className='cardTextArea'>
-                            <p className='cardTextType0'>RYDER</p>
                             <p className='cardTextType1'>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
                         </div>
                     </div>
