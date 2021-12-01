@@ -99,13 +99,13 @@ function WithdrawalDialog({ onClose, visible, user }) {
 
     return (
         <Dialog visible={visible} width={1000} onClose={handleClose}>
-            <div className='accountCardTop' style={{ height: '500px', width: '100%', margin: '1vh', overflowY: 'scroll' }}>
+            <div className='accountCardTop' style={{ height: '600px', width: '100%', margin: '1vh', overflowY: 'scroll' }}>
                 <p className='depositText'>Withdrawal</p>
                 <div style={{ height:'50px' }}/>
                 Select Account
                 <br />
                 <Select
-                    style={{ width: '100%', background: 'linear-gradient(90deg, #5B9EA4 -11.44%, #CADEEA 68.31%)', height: '36px' }}
+                    style={{ width: '100%', background: 'linear-gradient(90deg, #5B9EA4 -11.44%, #CADEEA 68.31%)', height: '7vh', fontSize: '25px' }}
                     size={'large'}
                     defaultValue='nzdWithdrawalAccount'
                     onChange={handleAccountChange}
